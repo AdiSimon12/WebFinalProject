@@ -1,0 +1,78 @@
+
+.Wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../images/Background_image.png");
+  background-repeat: no-repeat;     /* לא לחזור על התמונה */
+  background-size: 100% 100%;  /* רוחב מלא, גובה מותאם אוטומטית */
+}
+
+.logo{
+  margin-top: 147px;
+  margin-bottom: 65px;
+  padding: 0;
+  width: 1200px; 
+  height: 440px;
+  background-image: url("../images/Backgroung_logo.png");
+  background-size: 100% auto;  /* רוחב מלא, גובה מותאם אוטומטית */
+  background-repeat: no-repeat;     /* לא לחזור על התמונה */
+  background-position: center;
+  
+
+}
+h1{
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-size: 50px;
+  text-align: right;
+  direction: rtl;
+}
+h2{
+  font-size: 50px;
+  margin: 0;
+  padding: 0;
+  color: #256586;
+  text-align: right;
+  direction: rtl;
+}
+.userBlock{
+  padding: 0;
+  margin-left: 25px;
+  margin-top: 20px;
+  width: 1150px; 
+  height: 100px;
+  background-color:#FFFFFF ;
+  display: flex;
+  align-items: center; 
+  text-align: right;   
+  direction: rtl; 
+}
+.userBlock img{
+  margin-right :20px;
+}
+.userBlock h1{
+  margin-right: 20px;
+  font-size: 32px;
+  font-weight: normal;
+}
+.selection{
+  margin-top: 70px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 100px;
+}
+.selection button{
+  width: 1000px; 
+  height: 100px;
+  border-radius: 45px;
+  font-size: 32px;
+  font-weight: bold;
+  background-color: #55E8D5;
+}
