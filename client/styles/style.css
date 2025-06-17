@@ -483,7 +483,7 @@ textarea:focus{
 .thank-you-footer button:hover{
   color: #10435c;
 }
-/*for myReportsPage.html & reportingDetails.html pages*/
+/*for myReportsPage.html & reportingDetailsPage.html pages*/
 .main-reports-header {
     display: flex;
     align-items: center;
