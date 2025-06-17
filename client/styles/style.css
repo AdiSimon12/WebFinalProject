@@ -1,3 +1,4 @@
+/*for index.html page*/
 body {
   margin: 0;
   padding: 0;
@@ -107,8 +108,7 @@ footer{
     white-space: nowrap; /* מונע שבירת שורה בטקסט */
     font-family: 'Plus Jakarta Sans', sans-serif;
 }
-
-
+/*for login.html page*/
 .login-form{
     display: flex;
     flex-direction: column; /* אלמנטים אחד מעל השני */
@@ -174,15 +174,10 @@ footer{
 .helper a:hover{
     color: #065da8;
 }
-
-
-
-
-/**/
+/*for homePageCitizen&Employee.html pages*/
 Header{
   display: flex;
   margin-left: 40px;
-  gap: 700px;
   align-items: center;
 
 }
@@ -193,6 +188,7 @@ Header{
   color: #308075;
   font-size: 24px;
   font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-left: 700px;
 }
 .profile-link p{
   text-align: right;
@@ -278,6 +274,121 @@ Header{
   width: 100px;
   height: 100px;
 }
+/*for newReportPage.html page*/
+.app-container {
+    background-color: #EBFFF8;
+    border-radius: 20px; 
+    padding: 25px;
+    margin-bottom: 40px; 
+    margin-right: 109px;
+}
+.main-top-header{
+    margin-bottom: 100px;
+    margin-top: 20px;
+}
+.header-logo {
+    height: 200px; 
+    width: auto;
+    margin-top: 100px;
+    margin-right: 70px;
+}
+.back-arrow {
+    height: 100px;
+    cursor: pointer;
+}
+.report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px; /* רווח בין שדות הטופס */
+}
+.form-label {
+    font-size: 35px;
+    font-weight: bold;
+    color: #333;
+}
+.form-label .required {
+    color: #EB5252;
+}
+.form-label .optional {
+    color: #5bc0de;
+}
+/* קונטיינר כללי לשדה + אייקון X חיצוני */
+.input-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+/* קונטיינר לשדה עצמו ולאייקונים הפנימיים */
+.input-with-inside-icons {
+    position: relative;
+    flex-grow: 1; /* יגרום ל-section להתרחב למלוא הרוחב הזמין */
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+.input-with-inside-icons .svg-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px; /* גובה ברירת מחדל לאייקונים */
+    padding-right: 15px;
+}
+.asterisk {
+    height: 24px;
+    margin-right: 5px;
+}
+.input-with-inside-icons select {
+    width: 98%;
+    padding: 12px 45px 12px 15px; 
+    border: none;
+    background-color: transparent;
+    color: #333;
+    cursor: pointer;
+    font-size: 30px;
+}
+.input-with-inside-icons:focus-within {
+    border-color: #00BCD4; /* גבול טורקיז בפוקוס */
+}
+select {
+  outline: none;
+  box-shadow: none;
+  border: none;
+}  
+.report-form textarea {
+    padding: 12px 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 30px;
+    color: #333;
+    outline: none;
+    box-shadow: none;
+}
+textarea:focus{
+    border: 1px solid #00BCD4;
+}
+.description-hint {
+    font-size: 30px;
+    color: #666;
+    margin-top: 5px;
+    line-height: 1.5;
+}
+.submit-button {
+    background: #41D2CF;
+    color: #266686;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.submit-button:hover {
+  color: #10435c;
+}
+
+
 
 
 
