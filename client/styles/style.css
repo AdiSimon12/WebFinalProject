@@ -1,8 +1,3 @@
-.Wrapper {
-  max-width: 1000px;
-  width: 100%;
-  margin: 0 auto;
-}
 body {
   margin: 0;
   padding: 0;
@@ -11,6 +6,11 @@ body {
   background-size: 100% 100%;  /* רוחב מלא, גובה מותאם אוטומטית */
   min-height: 100vh;
 }  
+.Wrapper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
 .logo{
   margin-top: 20px;
   margin-bottom: 40px;
@@ -174,3 +174,110 @@ footer{
 .helper a:hover{
     color: #065da8;
 }
+
+
+
+
+/**/
+Header{
+  display: flex;
+  margin-left: 40px;
+  gap: 700px;
+  align-items: center;
+
+}
+.profile-link{
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  color: #308075;
+  font-size: 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.profile-link p{
+  text-align: right;
+}
+.language-link {
+  display: flex;
+  flex-direction: column; 
+  align-items: center;       
+  text-decoration: none;     
+}
+.language-link img{
+  width: 60px;
+}
+.language-link p{
+  margin: 0;
+  padding: 0;
+  color: #308075;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.image-with-background{
+  position: relative;
+  display: flex;
+  justify-content: center; 
+}
+.logo-back-elipse {
+  width: 1000px;
+  height: 400px;
+  display: block;
+}
+.front-logo {
+  position: absolute;
+  top: 80px;
+  left: 100px;
+  width: 800px;
+  height: 250px;
+}
+.button-background {
+  width: 10000px;
+  height: 300px;
+  display: block;
+}
+.button-on-background {
+  position: absolute;
+  top: 50%;           /* מיקום אנכי */
+  left: 50%;          /* מיקום אופקי */
+  transform: translate(-50%, -50%); /* ממרכז את הכפתור */
+  width: 400px;
+  height: 100px;
+  background-color: #3EC5DA;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  font-size: 40px;
+  -webkit-text-stroke: 1px #3F98B8; /* מסגרת שחורה */
+}
+.icons-container{
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 200px; 
+  row-gap: 0px;   
+  justify-content: center;
+}
+.icon-with-background{
+  position: relative;
+  display: flex;
+  justify-content: center; 
+  width: 200px;
+  height: 200px;
+}
+.icon-background{
+  width: 200px;
+  height: 200px;
+  display: block;
+  opacity: 0.7; /* 0 = שקוף לגמרי, 1 = אטום לגמרי */
+
+}
+.icon-on-background{
+  position: absolute;
+  top: 60px;          
+  left: 45px;        
+  width: 100px;
+  height: 100px;
+}
+
+
+
