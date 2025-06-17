@@ -278,17 +278,13 @@ Header{
 .app-container {
     background-color: #EBFFF8;
     border-radius: 20px; 
-    padding: 25px;
+    padding: 20px;
     margin-bottom: 40px; 
 }
-.main-top-header{
-    margin-bottom: 50px;
-    margin-top: 20px;
-}
+
 .header-logo {
     height: 200px; 
     width: auto;
-    margin-top: 100px;
     margin-right: 70px;
 }
 .back-arrow {
@@ -462,11 +458,13 @@ textarea:focus{
   margin-bottom: 30px;
 }
 .thank-you-footer {
-    flex-direction: column;
+    display: flex;               /* הפעלת Flexbox */
+    flex-direction: column;      /* סידור אנכי */
+    align-items: center;         /* יישור אופקי של תוכן למרכז */
+    justify-content: center; 
     gap: 10px; /* רווח בין הכפתורים */
-    width: 90%;
+    width: 1000px;
     margin-bottom: 30px;
-
 }
 .thank-you-footer button{
     background: #41D2CF;
@@ -478,27 +476,27 @@ textarea:focus{
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
-    width: 100%;
+    width: 900px;
 }
 .thank-you-footer button:hover{
   color: #10435c;
 }
 /*for myReportsPage.html & reportingDetailsPage.html pages*/
-.main-reports-header {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    margin-right: 25px; /* יישור לימין עם הכותרת והחץ */
-}
 .reports-title {
+    display:flex;      
+    direction: ltr;
+    margin: 0;    
+    margin-bottom: 40px;
+}
+.reports-title h1{
+  width: 600px;
     font-size: 100px; /* גודל כותרת "הדיווחים שלי" */
     color: #266686; /* צבע הכותרת */
     font-weight: bold;
-    margin: 0;
-    margin-right: 220px;
-    margin-left: 95px;
     white-space: nowrap;
+    display: flex;
+  justify-content: center;
+  margin-left: 75px;
 }
 .reports-filters-container {
     background-color: #EBFFF8; /* רקע ירוק-תכלת בהיר */

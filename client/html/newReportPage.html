@@ -9,58 +9,56 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
 </head>
-<body>
-    <section class="Wrapper">
-        <header class="main-top-header">
-            <img class="header-logo" src="../images/Logo-report.png" alt="דיווח חדש - לוגו">
-            <a><img class="header-image back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
-        </header>
-        <section class="app-container"> 
-            <form class="report-form">
-                <label for="fault-type" class="form-label">סוג תקלה: <span class="required">(חובה)</span></label>
-                <section class="input-container">
-                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk"> 
-                    <section class="input-with-inside-icons">
-                        <img class="svg-icon" src="../images/Input_icon.svg" alt="קלסר"> 
-                        <select id="fault-type" name="fault-type" required>
-                            <option value="">בחר תקלה</option> 
-                            <option value="type1">בור בכביש</option>
-                            <option value="type2">דליפת מים</option>
-                            <option value="type3">חוטי חשמל חשופים</option>
-                            <option value="type4">אחר</option>
-                        </select>
-                    </section>
+<body class="Wrapper">
+    <header>
+        <img class="header-logo" src="../images/Logo-report.png" alt="דיווח חדש - לוגו">
+        <a><img class="back-arrow"  src="../images/arrow_left.svg" alt="חזור"></a>
+    </header>
+    <main class="app-container"> 
+        <form class="report-form">
+            <label for="fault-type" class="form-label">סוג תקלה: <span class="required">(חובה)</span></label>
+            <section class="input-container">
+                <img class="asterisk" src="../images/asterisk.png" alt="asterisk"> 
+                <section class="input-with-inside-icons">
+                    <img class="svg-icon" src="../images/Input_icon.svg" alt="קלסר"> 
+                    <select id="fault-type" name="fault-type" required>
+                        <option value="">בחר תקלה</option> 
+                        <option value="type1">בור בכביש</option>
+                        <option value="type2">דליפת מים</option>
+                        <option value="type3">חוטי חשמל חשופים</option>
+                        <option value="type4">אחר</option>
+                    </select>
                 </section>
-                <label class="form-label" for="fault-description">תיאור תקלה: <span class="optional">(לא חובה)</span></label>
-                <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
-                <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p> 
-                <label class="form-label" for="location">מיקום: <span class="required">(חובה)</span></label>
-                <section class="input-container">
-                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
-                    <section class="input-with-inside-icons">
-                        <img class="svg-icon" src="../images/Map.svg" alt="מפה"> 
-                        <select id="location" name="location" required>
-                            <option value="">בחר מיקום</option>
-                            <option value="loc1">מיקומך הנוכחי</option>
-                            <option value="loc2">הקלדת מיקום ידני</option>
-                        </select>
-                    </section> 
+            </section>
+            <label class="form-label" for="fault-description">תיאור תקלה: <span class="optional">(לא חובה)</span></label>
+            <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
+            <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p> 
+            <label class="form-label" for="location">מיקום: <span class="required">(חובה)</span></label>
+            <section class="input-container">
+                <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                <section class="input-with-inside-icons">
+                    <img class="svg-icon" src="../images/Map.svg" alt="מפה"> 
+                    <select id="location" name="location" required>
+                        <option value="">בחר מיקום</option>
+                        <option value="loc1">מיקומך הנוכחי</option>
+                        <option value="loc2">הקלדת מיקום ידני</option>
+                    </select>
+                </section> 
+            </section>
+            <label for="upload" class="form-label">העלאת תמונה/סרטון: <span class="required">(חובה)</span></label>
+            <section class="input-container">
+                <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                <section class="input-with-inside-icons">
+                    <img class="svg-icon" src="../images/Camera_icon.svg" alt="מצלמה"> 
+                    <select id="upload" name="upload" required>
+                        <option value="">בחר אפשרות</option>
+                        <option value="option1">מצלמה</option>
+                        <option value="option2">ספריית תמונות</option>
+                    </select>
                 </section>
-                <label for="upload" class="form-label">העלאת תמונה/סרטון: <span class="required">(חובה)</span></label>
-                <section class="input-container">
-                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
-                    <section class="input-with-inside-icons">
-                        <img class="svg-icon" src="../images/Camera_icon.svg" alt="מצלמה"> 
-                        <select id="upload" name="upload" required>
-                            <option value="">בחר אפשרות</option>
-                            <option value="option1">מצלמה</option>
-                            <option value="option2">ספריית תמונות</option>
-                        </select>
-                    </section>
-                </section>
-                <button class="submit-button" type="submit">שליחה</button>
-            </form>
-        </section>
-    </section>
+            </section>
+            <button class="submit-button" type="submit">שליחה</button>
+        </form>
+    </main>
 </body>
 </html>
