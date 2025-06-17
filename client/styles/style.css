@@ -280,10 +280,9 @@ Header{
     border-radius: 20px; 
     padding: 25px;
     margin-bottom: 40px; 
-    margin-right: 109px;
 }
 .main-top-header{
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     margin-top: 20px;
 }
 .header-logo {
@@ -385,6 +384,102 @@ textarea:focus{
     margin-top: 20px;
 }
 .submit-button:hover {
+  color: #10435c;
+}
+/*for reportReceivedPage.html page*/
+.thank-you-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* מרכז אופקית את התוכן */
+    margin-top: 10px;
+}
+/* כותרת עליונה של דף התודה */
+.thank-you-header {
+    display: block;
+}
+.thank-you-header h1 {
+    font-size: 100px; /* גודל כותרת "תודה!" */
+    color: #3F98B8; /* צבע טורקיז */
+    font-weight: bold;
+    text-align: center;
+}
+.thank-you-header h2{
+    font-size: 50px;
+    color: #256586;
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+.thank-you-header p{
+    margin: 0px;
+    font-size: 40px;
+    color: #256586;
+    font-weight: bold;
+    text-align: center;
+}
+/* קונטיינר פרטי הדיווח (המלבן הלבן) */
+.report-details-container {
+    background-color: #EBFFF8;
+    border-radius: 20px; 
+    padding: 25px;
+    margin-top: 30px;
+    margin-bottom: 40px; 
+    width: 950px;
+    height: auto;
+    text-align: right;
+}
+.report-details-container h2 {
+    font-size: 60px; /* גודל כותרת "פרטי הדיווח" */
+    font-weight: bold;
+    color: #1D7B7E;
+    text-align: center; /* כותרת זו במרכז */
+}
+.detail-item {
+    display: flex;
+    justify-content: flex-end; /* יישור לימין של התווית והערך */
+    font-size: 30px; /* גודל טקסט לפרטים */
+}
+.detail-item h3 {
+    color: #000000;
+    margin-left: 5px; /* רווח בין התווית לערך */
+}
+.detail-item span {
+    color: #000000;
+    flex-grow: 1; /* מאפשר לערך לתפוס את המקום הנותר */
+    text-align: right; /* יישור הערך לימין */
+}
+.uploaded-media-preview {
+    width: 80px; /* גודל התמונה המוקטנת */
+    height: 80px; /* גודל התמונה המוקטנת */
+    object-fit: cover; /* חיתוך התמונה למילוי הקופסה */
+    border-radius: 8px; /* פינות מעוגלות לתמונה */
+    margin-top: 10px; /* רווח מהתווית */
+    border: 1px solid #ddd; /* גבול דק לתמונה */
+}
+.gray-frame{
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+.thank-you-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* רווח בין הכפתורים */
+    width: 90%;
+    margin-bottom: 30px;
+}
+.thank-you-footer button{
+    background: #41D2CF;
+    color: #266686;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+.thank-you-footer button:hover{
   color: #10435c;
 }
 
