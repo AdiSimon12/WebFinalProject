@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דיווח בטוח</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body class="Wrapper">
+    <header class="reports-title">
+        <a href="#"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
+    </header>
+    <main>
+        <section class="reports-filter-buttons-container">
+            <button class="filter-button active">כל הדיווחים</button>
+            <button class="filter-button">דיווחים פתוחים</button>
+            <button class="filter-button">דיווחים בטיפול</button>
+            <button class="filter-button">דיווחים שנסגרו</button>
+        </section>
+        <section class="reports-filters-container">
+            <h2 class="filters-title">הדיווחים ממוינים לפי:</h2>
+            <section class="filter-dropdown-wrapper"> 
+                <select class="sort-dropdown" id="sort-reports-dropdown">
+                <option value="date-default" selected>תאריך (ברירת מחדל)</option>
+                <option value="status">סטטוס פנייה</option>
+                <option value="alphabetical">סדר א'-ב'</option>
+                </select>
+            </section>
+            <section class="report-summary-card">
+                <section class="report-info">
+                    <span class="report-id-type">דיווח #<span class="report-id">132</span> 
+                    <span class="report-type-name">חוטי חשמל</span></span>
+                </section>
+                <a href="reportDetails.html?id=132" class="view-details-link">צפייה בפרטים</a>
+            </section>
+        </section>
+    </main>    
+</body>
+</html>

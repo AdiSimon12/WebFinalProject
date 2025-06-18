@@ -1,4 +1,3 @@
-/*for index.html page*/
 body {
   margin: 0;
   padding: 0;
@@ -6,12 +5,14 @@ body {
   background-repeat: no-repeat;     /* לא לחזור על התמונה */
   background-size: 100% 100%;  /* רוחב מלא, גובה מותאם אוטומטית */
   min-height: 100vh;
+  font-family: 'Heebo', sans-serif; 
 }  
 .Wrapper {
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
 }
+/*for index.html page*/
 .logo{
   margin-top: 20px;
   margin-bottom: 40px;
@@ -31,7 +32,6 @@ h1{
   font-size: 50px;
   text-align: right;
   direction: rtl;
-  font-family: 'Inter', sans-serif;
 }
 h2{
   font-size: 50px;
@@ -40,7 +40,6 @@ h2{
   color: #256586;
   text-align: right;
   direction: rtl;
-  font-family: 'Inter', sans-serif;
 }
 .userBlock{
   padding: 0;
@@ -62,7 +61,6 @@ h2{
   margin-right: 20px;
   font-size: 32px;
   font-weight: normal;
-  font-family: 'Inter', sans-serif;
 }
 .selection{
   margin-top: 70px;
@@ -74,7 +72,7 @@ h2{
   width: 600px; 
   height: 130px;
   border-radius: 45px;
-  font-size: 40px;
+  font-size: 60px;
   font-weight: bold;
   background-color: #55E8D5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -93,7 +91,6 @@ footer{
     flex-direction: column;
     align-items: center;
     text-align: center;
-    font-family: Arial, sans-serif;
     cursor: pointer;
     margin-bottom: 40px;
 }
@@ -106,7 +103,6 @@ footer{
     color: #0E4866;
     margin: 0;
     white-space: nowrap; /* מונע שבירת שורה בטקסט */
-    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 /*for login.html page*/
 .login-form{
@@ -152,7 +148,6 @@ footer{
     align-items: center;
     gap: 5px;
     margin-top: 10px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
     direction: rtl;
     margin-bottom: 5px;
 }
@@ -187,7 +182,6 @@ Header{
   align-items: center;
   color: #308075;
   font-size: 24px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   margin-left: 700px;
 }
 .profile-link p{
@@ -206,7 +200,6 @@ Header{
   margin: 0;
   padding: 0;
   color: #308075;
-  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 .image-with-background{
   position: relative;
@@ -281,7 +274,6 @@ Header{
     padding: 20px;
     margin-bottom: 40px; 
 }
-
 .header-logo {
     height: 200px; 
     width: auto;
@@ -520,10 +512,14 @@ textarea:focus{
     overflow: hidden; /* לוודא שהתוכן לא גולש מהפינות המעוגלות */
     margin-bottom: 20px;
 }
+.filter-dropdown-wrapper select {
+  width: 98%;
+  font-family: 'Heebo', sans-serif;
+}    
 .sort-dropdown {
     width: 100%;
     padding: 12px 20px; /* ריווח פנימי */
-    font-size: 30px;  
+    font-size: 28px;  
     color: #333;
     border: none; /* מסיר גבולות ברירת מחדל של הדפדפן */
     cursor: pointer;
@@ -600,7 +596,86 @@ textarea:focus{
 .status-in-progress {
     color: #2e23c2;
 }
+/*for reportEditPage page*/
+.footer-employee{
+    display: flex;               /* הפעלת Flexbox */
+    align-items: center;         /* יישור אופקי של תוכן למרכז */
+    justify-content: center; 
+    margin-bottom: 30px;
+    gap: 30px;
+}
+.footer-employee button{
+    background: #41D2CF;
+    color: #266686;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 300px;
+}
+.footer-employee button:hover{
+  color: #10435c;
+}
+/*for reportsViewPage page*/
+.reports-filter-buttons-container {
+    display: flex; /* כדי שהכפתורים יהיו בשורה */
+    padding: 10px 25px; /* ריווח פנימי מהצדדים */
+    border-radius: 20px; /* פינות מעוגלות כמו הקונטיינרים האחרים */
+    margin: 40px 25px 20px 25px; /* מרווחים מהצדדים ומתחת */
+    direction: rtl; /* לכיוון מימין לשמאל */
+    gap: 10px;
+}
+.filter-button {
+    flex-grow: 1; /* כל כפתור יתפוס חלק שווה מהרוחב הזמין */
+    flex-basis: 0; /* יחד עם flex-grow, זה מבטיח חלוקה שווה */
+    padding: 12px 15px; /* ריווח פנימי בכפתור */
+    margin: 0 5px; /* רווח קטן בין הכפתורים */
+    background-color: transparent; /* כפתורים שקופים כברירת מחדל */
+    border: none; /* ללא גבולות ברירת מחדל */
+    border-radius: 10px; /* פינות מעוגלות קטנות יותר לכפתור עצמו */
+    font-size: 30px; /* גודל פונט */
+    font-weight: bold; /* */
+    color: #3F98B8; /* צבע טקסט ברירת מחדל */
+    cursor: pointer; /* סמן עכבר כ-pointer */
+    white-space: nowrap; /* מונע שבירת שורה בטקסט הכפתור */
+    background-color: #EBFFF8; /* רקע כמו של אזור המיון */
 
+}
+/* עיצוב לכפתור פעיל (נבחר) */
+.filter-button.active {
+    color: #256586; /* צבע טקסט בולט יותר */
+}
+.filter-button:hover {
+    transform: scale(1.1);            /* הגדלה קלה */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.report-summary-card {
+    display: flex; /* כדי שהאלמנטים יהיו באותה שורה */
+    justify-content: space-between; /* ידחוף את האלמנטים לקצוות */
+    background-color: #EBF7FB; /* רקע תכלכל כמו בתמונה */
+    border-radius: 10px; /* פינות מעוגלות */
+    padding: 15px 20px; /* ריווח פנימי */
+}
+.report-id-type {
+    font-size: 28px;
+    font-weight: bold; 
+    color: #000000; 
+    white-space: nowrap; /* מונע שבירת שורה בטקסט הראשי */
+    font-family: 'Heebo', sans-serif;
+}
+.view-details-link {
+    font-size: 28px;
+    color: #076FCA; 
+    text-decoration: none;
+    font-weight: normal;
+    white-space: nowrap; /* מונע שבירת שורה בקישור */
+}
+.view-details-link:hover {
+  font-weight: bold;
+}
 
 
 
