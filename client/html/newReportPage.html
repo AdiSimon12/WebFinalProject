@@ -12,7 +12,7 @@
 <body class="Wrapper">
     <header>
         <img class="header-logo" src="../images/Logo-report.png" alt="דיווח חדש - לוגו">
-        <a><img class="back-arrow"  src="../images/arrow_left.svg" alt="חזור"></a>
+        <a id="backButton"><img class="back-arrow"  src="../images/arrow_left.svg" alt="חזור"></a>
     </header>
     <main class="app-container"> 
         <form class="report-form">
@@ -22,7 +22,7 @@
                 <section class="input-with-inside-icons">
                     <img class="svg-icon" src="../images/Input_icon.svg" alt="קלסר"> 
                     <select id="fault-type" name="fault-type" required>
-                        <option value="">בחר תקלה</option> 
+                        <option value="" disabled selected hidden>בחר תקלה</option> 
                         <option value="type1">בור בכביש</option>
                         <option value="type2">דליפת מים</option>
                         <option value="type3">חוטי חשמל חשופים</option>
@@ -39,11 +39,21 @@
                 <section class="input-with-inside-icons">
                     <img class="svg-icon" src="../images/Map.svg" alt="מפה"> 
                     <select id="location" name="location" required>
-                        <option value="">בחר מיקום</option>
+                        <option value="" disabled selected hidden>בחר מיקום</option>
                         <option value="loc1">מיקומך הנוכחי</option>
                         <option value="loc2">הקלדת מיקום ידני</option>
                     </select>
                 </section> 
+            </section>
+            <section id="manualAddressSection" style="display: none;">
+                <label class="form-label" for="manual-address">כתובת ידנית: <span class="required">(חובה)</span></label>
+                <section class="input-container">
+                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="עיר:" />
+                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="רחוב:" />
+                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="מספר בית:(לא חובה)" />
+                </section>
+                <p class="description-hint">נא הקלד את הכתובת המלאה של התקלה.</p>
             </section>
             <label for="upload" class="form-label">העלאת תמונה/סרטון: <span class="required">(חובה)</span></label>
             <section class="input-container">
@@ -51,14 +61,25 @@
                 <section class="input-with-inside-icons">
                     <img class="svg-icon" src="../images/Camera_icon.svg" alt="מצלמה"> 
                     <select id="upload" name="upload" required>
-                        <option value="">בחר אפשרות</option>
+                        <option value="" disabled selected hidden>בחר אפשרות</option>
                         <option value="option1">מצלמה</option>
                         <option value="option2">ספריית תמונות</option>
                     </select>
                 </section>
             </section>
+            <section id="mediaUploadSection" style="display: none;">
+                <label class="form-label" for="media-file">בחירת קובץ: <span class="required">(חובה)</span></label>
+                <section class="input-container">
+                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                    <section class="input-with-inside-icons">
+                        <input type="file" id="media-file" name="mediaFile" accept="image/,video/" />
+                    </section>
+                </section>
+                <p class="description-hint">בחר קובץ תמונה או וידאו.</p>
+            </section>
             <button class="submit-button" type="submit">שליחה</button>
         </form>
     </main>
+    <script src="../js/newReportPage.js"></script>
 </body>
 </html>

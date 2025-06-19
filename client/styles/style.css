@@ -104,6 +104,16 @@ footer{
     margin: 0;
     white-space: nowrap; /* מונע שבירת שורה בטקסט */
 }
+/**/
+.check-icon {
+  display: none !important; 
+  height: 40px; /* גודל אייקון ה-V */
+  width: auto;
+}
+.userBlock.selected .check-icon {
+  display: block !important; /* מציג את ה-V רק כשבלוק הפרופיל נבחר */
+  margin-right: 760px;
+}
 /*for login.html page*/
 .login-form{
     display: flex;
@@ -312,6 +322,13 @@ Header{
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     border-radius: 10px;
+
+}
+.input-container input{
+  font-size: 30px;
+  height: 50px; /* או כל גובה שאתה רוצה */
+  width: 20px;
+  padding: 4px 8px;
 }
 .input-with-inside-icons .svg-icon {
     position: absolute;
@@ -319,6 +336,11 @@ Header{
     transform: translateY(-50%);
     height: 25px; /* גובה ברירת מחדל לאייקונים */
     padding-right: 15px;
+}
+#media-file{
+  font-size: 20px;   /* מגדיל את הטקסט של הכפתור */
+  padding-left:  300px;     /* מגדיל את שטח הלחיצה */
+  padding-top: 20px;
 }
 .asterisk {
     height: 24px;
