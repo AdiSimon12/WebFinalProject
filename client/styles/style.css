@@ -13,60 +13,73 @@ body {
   margin: 0 auto;
 }
 /*for index.html page*/
+.none-header{
+  margin: 0;
+}
 .logo{
-  margin-top: 20px;
-  margin-bottom: 40px;
-  margin-left: 100px;
+  margin-top: 150px;
+  margin-bottom: 90px;
+  margin-left: 20px;
   padding: 0;
-  width: 800px; 
-  height: 300px;
+  width: 1000px; 
+  height: 400px;
   background-image: url("../images/Backgroung_logo.png");
   background-size: 100% auto;  /* רוחב מלא, גובה מותאם אוטומטית */
   background-repeat: no-repeat;     /* לא לחזור על התמונה */
   background-position: center;
 }
-h1{
+.index-page-text h1{
   margin: 0;
   padding: 0;
   color: black;
-  font-size: 50px;
+  font-size: 80px;
   text-align: right;
   direction: rtl;
 }
-h2{
-  font-size: 50px;
+.index-page-text h2{
+  font-size: 80px;
   margin: 0;
   padding: 0;
   color: #256586;
   text-align: right;
   direction: rtl;
+  font-weight: normal;
+  margin-right: 5px;
+}
+.index-page-text{
+  margin-bottom: 100px;
 }
 .userBlock{
   padding: 0;
   margin-left: 25px;
   margin-top: 20px;
-  width: 975px; 
-  height: 100px;
+  margin-bottom: 30px;
+  width: 975px;
+  height: 150px;
   background-color:#FFFFFF ;
   display: flex;
   align-items: center; 
   text-align: right;   
   direction: rtl; 
   cursor: pointer;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.4);
 }
 .userBlock img{
   margin-right :20px;
+  margin-left: 30px;
+  width: 80px;
 }
 .userBlock h3{
   margin-right: 20px;
-  font-size: 32px;
+  font-size: 80px;
   font-weight: normal;
 }
 .selection{
   margin-top: 70px;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-top: 50px;
+  margin-bottom: 150px;
 }
 .selection button{
   width: 600px; 
@@ -75,7 +88,7 @@ h2{
   font-size: 60px;
   font-weight: bold;
   background-color: #55E8D5;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 4px rgba(0, 0, 0, 0.4);
   border: none;
   cursor: pointer;
 }
@@ -84,7 +97,7 @@ footer{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 140px;
+    gap: 180px;
 }
 .icon{
     display: flex;
@@ -96,10 +109,11 @@ footer{
 }
 .icon img{
     margin-bottom: 5px;
+    width: 150px;
 }
 .icon h3{
-    font-size: 20px;
-    font-weight: normal;
+    font-size: 40px;
+    font-weight: bold;
     color: #0E4866;
     margin: 0;
     white-space: nowrap; /* מונע שבירת שורה בטקסט */
@@ -108,37 +122,41 @@ footer{
 .check-icon {
   display: none !important; 
   height: 40px; /* גודל אייקון ה-V */
-  width: auto;
 }
 .userBlock.selected .check-icon {
   display: block !important; /* מציג את ה-V רק כשבלוק הפרופיל נבחר */
-  margin-right: 760px;
+  margin-right: 550px;
 }
 /*for login.html page*/
+.space{
+  margin-top: 150px;
+}
 .login-form{
     display: flex;
     flex-direction: column; /* אלמנטים אחד מעל השני */
     align-items: center;
+    margin-top: 100px;
 }
 .input-with-icon{
   position: relative;
   width: 100%;
   direction: rtl; /* מתאים לעברית */
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   margin-right: 20px;
 }
 .input-with-icon input{
   border: 1px solid #ccc;
   font-size: 50px;
-  border-radius: 45px;
+  border-radius: 90px;
   padding: 0;
   margin-left: 25px;
   margin-top: 20px;
   width: 915px; 
-  height: 100px;
+  height: 130px;
   text-align: right;   
   direction: rtl; 
   padding-right: 60px;
+  font-size: 70px;
 }
 .input-with-icon input::placeholder {
   color: #000;
@@ -146,12 +164,15 @@ footer{
 .input-icon{
   position: absolute;
   top: 60%;
-  margin-right: 900px;
+  margin-right: 870px;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   pointer-events: none; /* שלא יפריע ללחיצה */
   opacity: 0.6;
+}
+.helpers-block{
+  margin-bottom: 170px;
 }
 .helper{
     display: flex;
@@ -160,14 +181,15 @@ footer{
     margin-top: 10px;
     direction: rtl;
     margin-bottom: 5px;
+    margin-right: 30px;
 }
 .helper h2{
     margin: 0;
     padding: 0;
-    font-weight: normal;
-    font-size: 40px;
+    font-size: 50px;
     color: #256586;
     margin-right: 20px;
+    margin-left: 10px;
 }
 .helper a{
     color: #076FCA;
@@ -182,34 +204,40 @@ footer{
 /*for homePageCitizen&Employee.html pages*/
 Header{
   display: flex;
-  margin-left: 40px;
+  margin-left: 10px;
+  padding-top: 100px;
   align-items: center;
-
 }
 .profile-link{
   text-decoration: none;
   display: flex;
   align-items: center;
   color: #308075;
-  font-size: 24px;
-  margin-left: 700px;
+  margin-left: 430px;
+}
+.profile-link img{
+  width: 260px;
 }
 .profile-link p{
   text-align: right;
+  font-size: 40px;
+  font-weight:bold ;
 }
 .language-link {
   display: flex;
   flex-direction: column; 
   align-items: center;       
-  text-decoration: none;     
+  text-decoration: none;
 }
 .language-link img{
-  width: 60px;
+  width: 110px;
 }
 .language-link p{
   margin: 0;
   padding: 0;
   color: #308075;
+  font-size: 30px;
+  font-weight: bold;
 }
 .image-with-background{
   position: relative;
@@ -218,7 +246,7 @@ Header{
 }
 .logo-back-elipse {
   width: 1000px;
-  height: 400px;
+  height: 550px;
   display: block;
 }
 .front-logo {
@@ -226,11 +254,11 @@ Header{
   top: 80px;
   left: 100px;
   width: 800px;
-  height: 250px;
+  height: 370px;
 }
 .button-background {
-  width: 10000px;
-  height: 300px;
+  width: 1000px;
+  height: 500px;
   display: block;
 }
 .button-on-background {
@@ -238,44 +266,54 @@ Header{
   top: 50%;           /* מיקום אנכי */
   left: 50%;          /* מיקום אופקי */
   transform: translate(-50%, -50%); /* ממרכז את הכפתור */
-  width: 400px;
-  height: 100px;
+  width: 750px;
+  height: 300px;
   background-color: #3EC5DA;
   color: white;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  font-size: 40px;
+  box-shadow: 0 8px 6px rgba(0, 0, 0, 0.3);
+  font-size: 70px;
+  font-weight: bold;
   -webkit-text-stroke: 1px #3F98B8; /* מסגרת שחורה */
 }
 .icons-container{
+
   display: flex;
   flex-wrap: wrap;
-  column-gap: 200px; 
+  column-gap: 50px; 
   row-gap: 0px;   
+  column-gap: 50px;
   justify-content: center;
+  width: 1000px;
+  height: 560px;
 }
 .icon-with-background{
   position: relative;
   display: flex;
   justify-content: center; 
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 270px;
 }
 .icon-background{
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 270px;
   display: block;
-  opacity: 0.7; /* 0 = שקוף לגמרי, 1 = אטום לגמרי */
+  opacity: 0.3; /* 0 = שקוף לגמרי, 1 = אטום לגמרי */
 
 }
 .icon-on-background{
   position: absolute;
-  top: 60px;          
-  left: 45px;        
-  width: 100px;
-  height: 100px;
+  top: 10px;          
+  left: -5px;        
+  width: 300px;
+  height: 250px;
+}
+.icon-on-background img{
+         
+  width: 300px;
+  height: 270px;
 }
 /*for newReportPage.html page*/
 .app-container {
@@ -298,6 +336,7 @@ Header{
     flex-direction: column;
     gap: 40px; /* רווח בין שדות הטופס */
 }
+
 .form-label {
     font-size: 35px;
     font-weight: bold;
@@ -347,7 +386,7 @@ Header{
     margin-right: 5px;
 }
 .input-with-inside-icons select {
-    width: 98%;
+    width: 900px;
     padding: 12px 45px 12px 15px; 
     border: none;
     background-color: transparent;
@@ -355,6 +394,7 @@ Header{
     cursor: pointer;
     font-size: 30px;
 }
+
 .input-with-inside-icons:focus-within {
     border-color: #00BCD4; /* גבול טורקיז בפוקוס */
 }
@@ -362,7 +402,8 @@ select {
   outline: none;
   box-shadow: none;
   border: none;
-}  
+
+}   
 .report-form textarea {
     padding: 12px 15px;
     background-color: #f8f8f8;
@@ -406,40 +447,54 @@ textarea:focus{
 /* כותרת עליונה של דף התודה */
 .thank-you-header {
     display: block;
+    padding: 0;
+    background-image:url("../images/circle_background.png") ;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 100px;
+    padding-bottom: 30px;
+
 }
 .thank-you-header h1 {
     font-size: 100px; /* גודל כותרת "תודה!" */
     color: #3F98B8; /* צבע טורקיז */
     font-weight: bold;
     text-align: center;
+    margin: 0;
+    height: 120px;
+
 }
 .thank-you-header h2{
-    font-size: 50px;
+    margin: 0;
+    font-size: 60px;
     color: #256586;
-    margin-bottom: 5px;
     font-weight: bold;
     text-align: center;
 }
 .thank-you-header p{
     margin: 0px;
-    font-size: 40px;
+    font-size: 50px;
     color: #256586;
     font-weight: bold;
     text-align: center;
-}
+    letter-spacing: 1px;
+  }
 /* קונטיינר פרטי הדיווח (המלבן הלבן) */
 .report-details-container {
     background-color: #EBFFF8;
-    border-radius: 20px; 
-    padding: 25px;
-    margin-top: 30px;
-    margin-bottom: 40px; 
-    width: 950px;
+    border-radius: 45px; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 20px; 
+    width: 1000px;
     height: auto;
     text-align: right;
 }
 .report-details-container h2 {
-    font-size: 60px; /* גודל כותרת "פרטי הדיווח" */
+    font-size: 80px; /* גודל כותרת "פרטי הדיווח" */
+    margin-top: 30px;
+    margin-bottom: 0px;
     font-weight: bold;
     color: #1D7B7E;
     text-align: center; /* כותרת זו במרכז */
@@ -452,6 +507,9 @@ textarea:focus{
 .detail-item h3 {
     color: #000000;
     margin-left: 5px; /* רווח בין התווית לערך */
+    margin-right: 20px;
+    font-size: 35px;
+
 }
 .detail-item span {
     color: #000000;
@@ -468,15 +526,17 @@ textarea:focus{
 }
 .gray-frame{
   border: 1px solid #ddd;
-  padding: 20px;
-  margin-bottom: 30px;
+  margin-left: 70px;
+  margin-right: 70px;
+  margin-bottom: 45px;
+  margin-top: 45px;
 }
 .thank-you-footer {
     display: flex;               /* הפעלת Flexbox */
     flex-direction: column;      /* סידור אנכי */
     align-items: center;         /* יישור אופקי של תוכן למרכז */
     justify-content: center; 
-    gap: 10px; /* רווח בין הכפתורים */
+    gap: 30px; /* רווח בין הכפתורים */
     width: 1000px;
     margin-bottom: 30px;
 }
@@ -485,12 +545,13 @@ textarea:focus{
     color: #266686;
     padding: 15px 30px;
     border: none;
-    border-radius: 30px;
-    font-size: 30px;
+    border-radius: 50px;
+    font-size: 60px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
-    width: 900px;
+    width: 700px;
+    height: 140px;
 }
 .thank-you-footer button:hover{
   color: #10435c;
@@ -499,8 +560,9 @@ textarea:focus{
 .reports-title {
     display:flex;      
     direction: ltr;
-    margin: 0;    
-    margin-bottom: 40px;
+    padding: 0;
+    margin-top: 0px;   
+    margin-bottom: 20px;
 }
 .reports-title h1{
   width: 600px;
@@ -510,11 +572,13 @@ textarea:focus{
     white-space: nowrap;
     display: flex;
   justify-content: center;
+  margin: 0;
   margin-left: 75px;
+  padding-top:150px;
 }
 .reports-filters-container {
     background-color: #EBFFF8; /* רקע ירוק-תכלת בהיר */
-    border-radius: 20px;
+    border-radius: 45px;
     padding: 20px 25px;
     text-align: right;
 }
@@ -664,7 +728,6 @@ textarea:focus{
     cursor: pointer; /* סמן עכבר כ-pointer */
     white-space: nowrap; /* מונע שבירת שורה בטקסט הכפתור */
     background-color: #EBFFF8; /* רקע כמו של אזור המיון */
-
 }
 /* עיצוב לכפתור פעיל (נבחר) */
 .filter-button.active {
