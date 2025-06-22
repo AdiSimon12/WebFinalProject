@@ -1,3 +1,4 @@
+@media screen and (min-width: 1000px) {
 body {
   margin: 0;
   padding: 0;
@@ -762,6 +763,982 @@ textarea:focus{
 .view-details-link:hover {
   font-weight: bold;
 }
+}
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (max-width: 999px) {
+
+ html {
+    font-size: 1.6vw; /* מניח גודל בסיס של כ-16px על 1000px */
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/Background_image.png");
+    background-repeat: no-repeat; /* לא לחזור על התמונה */
+    background-size: cover; /* יכסה את כל השטח וישמור פרופורציות */
+    background-position: center center; /* ממקם את התמונה במרכז */
+    background-attachment: fixed; /* **התוספת החשובה: מקבע את הרקע למסך** */
+    min-height: 100vh; /* מבטיח שהגוף תמיד יתפוס לפחות 100% מגובה המסך */
+    font-family: 'Heebo', sans-serif;
+    overflow-x: hidden; /* ודא שאין גלילה אופקית מיותרת */
+    box-sizing: border-box;
+  }
+
+  /* --- Wrapper כללי --- */
+  .Wrapper {
+    width: 95vw; /* יתפוס 95% מרוחב אזור התצוגה */
+    height: 95vh; /* יתפוס 95% מגובה אזור התצוגה */
+    margin: 0 auto; /* ממורכז אוטומטית */
+    box-sizing: border-box;
+    overflow-y: auto; /* מאפשר גלילה רק בתוך הווראפר אם התוכן חורג */
+    padding-bottom: 2vw; /* מרווח תחתון למנוע חיתוך של תוכן אחרון */
+}
+  /* --- עבור עמוד index.html --- */
+  .none-header {
+    margin: 0;
+    padding: 0;
+  }
+
+  .logo {
+    /* מיקומים וגדלים באחוזים יחסית לרוחב של 1000px */
+    margin-top: 15vw; /* 150px / 1000px = 0.15 = 15vw */
+    margin-bottom: 9vw; /* 90px / 1000px = 0.09 = 9vw */
+    margin-left: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    padding: 0;
+    width: 100%;
+    /* נסיר padding-bottom כדי למנוע יצירת גובה עודף, נשתמש בגובה קבוע ב-vw */
+    height: 40vw; /* 400px / 1000px = 0.4 = 40vw */
+    position: relative;
+    background-image: url("../images/Backgroung_logo.png");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+  }
+
+  .index-page-text h1 {
+    margin: 0;
+    padding: 0;
+    color: black;
+    font-size: 8vw; /* 80px / 1000px = 0.08 = 8vw */
+    text-align: right;
+    direction: rtl;
+  }
+
+  .index-page-text h2 {
+    font-size: 8vw; /* 80px / 1000px = 0.08 = 8vw */
+    margin: 0;
+    padding: 0;
+    color: #256586;
+    text-align: right;
+    direction: rtl;
+    font-weight: normal;
+    margin-right: 0.5vw; /* 5px / 1000px = 0.005 = 0.5vw */
+  }
+
+  .index-page-text {
+    margin-bottom: 10vw; /* 100px / 1000px = 0.1 = 10vw */
+  }
+
+  .userBlock {
+    padding: 0;
+    margin-left: 2.5vw; /* 25px / 1000px = 0.025 = 2.5vw */
+    margin-top: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    margin-bottom: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    width: 97.5%;
+    min-height: 15vw; /* 150px / 1000px = 0.15 = 15vw */
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    text-align: right;
+    direction: rtl;
+    cursor: pointer;
+    box-shadow: 0 0.8vw 0.8vw rgba(0, 0, 0, 0.4); /* 8px / 1000px = 0.008 = 0.8vw */
+    box-sizing: border-box;
+  }
+
+  .userBlock img {
+    margin-right: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    margin-left: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    width: 8vw; /* 80px / 1000px = 0.08 = 8vw */
+    height: auto; /* שומר על יחס גובה-רוחב */
+  }
+
+  .userBlock h3 {
+    margin-right: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    font-size: 8vw; /* 80px / 1000px = 0.08 = 8vw */
+    font-weight: normal;
+  }
+
+  .selection {
+    margin-top: 7vw; /* 70px / 1000px = 0.07 = 7vw */
+    display: flex;
+    justify-content: center;
+    margin-top: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    margin-bottom: 15vw; /* 150px / 1000px = 0.15 = 15vw */
+  }
+
+  .selection button {
+    width: 60vw; /* 600px / 1000px = 0.6 = 60vw */
+    height: 13vw; /* 130px / 1000px = 0.13 = 13vw */
+    border-radius: 4.5vw; /* 45px / 1000px = 0.045 = 4.5vw */
+    font-size: 6vw; /* 60px / 1000px = 0.06 = 6vw */
+    font-weight: bold;
+    background-color: #55E8D5;
+    box-shadow: 0 0.8vw 0.4vw rgba(0, 0, 0, 0.4); /* 8px/4px -> 0.8vw/0.4vw */
+    border: none;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+
+  footer {
+    margin-top: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18vw; /* 180px / 1000px = 0.18 = 18vw */
+  }
+
+  .icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+  }
+
+  .icon img {
+    margin-bottom: 0.5vw; /* 5px / 1000px = 0.005 = 0.5vw */
+    width: 15vw; /* 150px / 1000px = 0.15 = 15vw */
+    height: auto;
+  }
+
+  .icon h3 {
+    font-size: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    font-weight: bold;
+    color: #0E4866;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .check-icon {
+    display: none !important;
+    height: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    width: auto; /* לשמור על פרופורציות */
+  }
+
+  .userBlock.selected .check-icon {
+    display: block !important;
+    margin-right: 55vw; /* 550px / 1000px = 0.55 = 55vw */
+  }
+
+  /* --- עבור עמוד login.html --- */
+  .space {
+    margin-top: 15vw; /* 150px / 1000px = 0.15 = 15vw */
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10vw; /* 100px / 1000px = 0.1 = 10vw */
+  }
+
+  .input-with-icon {
+    position: relative;
+    width: 95%; /* 975px המקוריים היו כמעט 100%, נשים 95% כדי לאפשר שוליים */
+    direction: rtl;
+    margin-bottom: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    margin-right: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    box-sizing: border-box;
+  }
+
+  .input-with-icon input {
+    border: 0.1vw solid #ccc; /* 1px / 1000px = 0.001 = 0.1vw */
+    font-size: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    border-radius: 9vw; /* 90px / 1000px = 0.09 = 9vw */
+    padding: 0;
+    margin-left: 2.5vw; /* 25px / 1000px = 0.025 = 2.5vw */
+    margin-top: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    width: calc(100% - 8.5vw);
+    height: 13vw; /* 130px / 1000px = 0.13 = 13vw */
+    text-align: right;
+    direction: rtl;
+    padding-right: 6vw; /* 60px / 1000px = 0.06 = 6vw */
+    font-size: 7vw; /* 70px / 1000px = 0.07 = 7vw */
+    box-sizing: border-box;
+  }
+
+  .input-with-icon input::placeholder {
+    color: #000;
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 60%;
+    margin-right: 87vw; /* 870px / 1000px = 0.87 = 87vw */
+    transform: translateY(-50%);
+    width: 6vw; /* 60px / 1000px = 0.06 = 6vw */
+    height: 6vw; /* 60px / 1000px = 0.06 = 6vw */
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .helpers-block {
+    margin-bottom: 17vw; /* 170px / 1000px = 0.17 = 17vw */
+  }
+
+  .helper {
+    display: flex;
+    align-items: center;
+    gap: 0.5vw; /* 5px / 1000px = 0.005 = 0.5vw */
+    margin-top: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+    direction: rtl;
+    margin-bottom: 0.5vw; /* 5px / 1000px = 0.005 = 0.5vw */
+    margin-right: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+  }
+
+  .helper h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    color: #256586;
+    margin-right: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    margin-left: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+  }
+
+  .helper a {
+    color: #076FCA;
+    text-decoration: none;
+    font-size: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .helper a:hover {
+    color: #065da8;
+  }
+
+  /* --- עבור עמודי homePageCitizen & Employee.html --- */
+  Header {
+    display: flex;
+    margin-left: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+    padding-top: 10vw; /* 100px / 1000px = 0.1 = 10vw */
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .profile-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #308075;
+    margin-left: 43vw; /* 430px / 1000px = 0.43 = 43vw */
+  }
+
+  .profile-link img {
+    width: 26vw; /* 260px / 1000px = 0.26 = 26vw */
+    height: auto;
+  }
+
+  .profile-link p {
+    text-align: right;
+    font-size: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    font-weight: bold;
+  }
+
+  .language-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .language-link img {
+    width: 11vw; /* 110px / 1000px = 0.11 = 11vw */
+    height: auto;
+  }
+
+  .language-link p {
+    margin: 0;
+    padding: 0;
+    color: #308075;
+    font-size: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    font-weight: bold;
+  }
+
+  .image-with-background {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    /* ננסה להגביל את גובה הקונטיינר כדי למנוע גלישה */
+    height: 60vw; /* התאמה לגובה התוכן בתוכו, בערך 600px */
+    max-height: 60vh; /* מגביל את הגובה המקסימלי לגובה ה-viewport */
+  }
+
+  .logo-back-elipse {
+    width: 100%; /* 1000px / 1000px = 1 = 100% */
+    height: auto;
+    /* נסיר padding-bottom ונשתמש ב-height ישירות */
+    height: 55vw; /* 550px / 1000px = 0.55 = 55vw */
+    display: block;
+    object-fit: contain; /* כדי שהתמונה לא תיחתך */
+  }
+
+  .front-logo {
+    position: absolute;
+    top: 8vw; /* 80px / 1000px = 0.08 = 8vw */
+    left: 10vw; /* 100px / 1000px = 0.1 = 10vw */
+    width: 80vw; /* 800px / 1000px = 0.8 = 80vw */
+    height: auto; /* שומר על פרופורציות */
+    /* נסיר padding-bottom ונשתמש ב-height ישירות */
+    height: 37vw; /* 370px / 1000px = 0.37 = 37vw */
+    object-fit: contain;
+  }
+
+  .button-background {
+    width: 100%; /* 1000px / 1000px = 1 = 100% */
+    height: auto;
+    /* נסיר padding-bottom ונשתמש ב-height ישירות */
+    height: 50vw; /* 500px / 1000px = 0.5 = 50vw */
+    display: block;
+    object-fit: contain;
+  }
+
+  .button-on-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75vw; /* 750px / 1000px = 0.75 = 75vw */
+    height: 30vw; /* 300px / 1000px = 0.3 = 30vw */
+    background-color: #3EC5DA;
+    color: white;
+    border: none;
+    border-radius: 50%; /* שומר על עגולות */
+    cursor: pointer;
+    box-shadow: 0 0.8vw 0.6vw rgba(0, 0, 0, 0.3); /* 8px/6px -> 0.8vw/0.6vw */
+    font-size: 7vw; /* 70px / 1000px = 0.07 = 7vw */
+    font-weight: bold;
+    -webkit-text-stroke: 0.1vw #3F98B8; /* 1px / 1000px = 0.001 = 0.1vw */
+    box-sizing: border-box;
+  }
+
+  .icons-container {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    justify-content: center;
+    width: 100%; /* 1000px / 1000px = 100% */
+    height: auto; /* גובה יותאם לתוכן */
+    min-height: 56vw; /* 560px / 1000px = 0.56 = 56vw (מינימום גובה) */
+    box-sizing: border-box;
+    /* ייתכן שתרצה להגביל את גובה הקונטיינר הזה כדי למנוע גלישה */
+    max-height: 50vh; /* לדוגמה, 50% מגובה המסך */
+    overflow-y: auto; /* מאפשר גלילה בתוך הקונטיינר אם יש יותר מדי אייקונים */
+  }
+
+  .icon-with-background {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 30vw; /* 300px / 1000px = 0.3 = 30vw */
+    height: 27vw; /* 270px / 1000px = 0.27 = 27vw */
+    box-sizing: border-box;
+  }
+
+  .icon-background {
+    width: 100%; /* 300px / 300px = 100% */
+    height: 100%; /* 270px / 270px = 100% */
+    display: block;
+    opacity: 0.3;
+  }
+
+  .icon-on-background {
+    position: absolute;
+    top: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+    left: -0.5vw; /* -5px / 1000px = -0.005 = -0.5vw */
+    width: 30vw; /* 300px / 1000px = 0.3 = 30vw */
+    height: 25vw; /* 250px / 1000px = 0.25 = 25vw */
+    box-sizing: border-box;
+  }
+
+  .icon-on-background img {
+    width: 100%; /* 300px / 300px = 100% */
+    height: 100%; /* 270px / 270px = 100% */
+    object-fit: contain; /* כדי שהתמונה לא תיחתך */
+  }
+
+  /* --- עבור עמוד newReportPage.html --- */
+  .app-container {
+    background-color: #EBFFF8;
+    border-radius: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    padding: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    margin-bottom: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    box-sizing: border-box;
+    /* הגבלת גובה הקונטיינר כדי למנוע גלישה */
+    max-height: 80vh; /* לדוגמה, 80% מגובה המסך */
+    overflow-y: auto; /* מאפשר גלילה בתוך הקונטיינר אם יש יותר מדי תוכן */
+  }
+
+  .header-logo {
+    height: 20vw; /* 200px / 1000px = 0.2 = 20vw */
+    width: auto;
+    margin-right: 7vw; /* 70px / 1000px = 0.07 = 7vw */
+  }
+
+  .back-arrow {
+    height: 10vw; /* 100px / 1000px = 0.1 = 10vw */
+    width: auto;
+    cursor: pointer;
+  }
+
+  .report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4vw; /* 40px / 1000px = 0.04 = 4vw */
+    box-sizing: border-box;
+  }
+
+  .form-label {
+    font-size: 3.5vw; /* 35px / 1000px = 0.035 = 3.5vw */
+    font-weight: bold;
+    color: #333;
+  }
+
+  .form-label .required {
+    color: #EB5252;
+  }
+
+  .form-label .optional {
+    color: #5bc0de;
+  }
+
+  .input-container {
+    display: flex;
+    align-items: center;
+    gap: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+    box-sizing: border-box;
+  }
+
+  .input-with-inside-icons {
+    position: relative;
+    flex-grow: 1;
+    background-color: #f8f8f8;
+    border: 0.1vw solid #ddd; /* 1px / 1000px = 0.001 = 0.1vw */
+    border-radius: 1vw; /* 10px / 1000px = 0.01 = 1vw */
+    box-sizing: border-box;
+  }
+
+  .input-container input {
+    font-size: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    height: 5vw; /* 50px / 1000px = 0.05 = 5vw */
+    width: calc(100% - 2.4vw);
+    padding: 0.4vw 0.8vw; /* 4px/8px -> 0.4vw/0.8vw */
+    box-sizing: border-box;
+  }
+
+  .input-with-inside-icons .svg-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 2.5vw; /* 25px / 1000px = 0.025 = 2.5vw */
+    width: auto;
+    padding-right: 1.5vw; /* 15px / 1000px = 0.015 = 1.5vw */
+  }
+
+  #media-file {
+    font-size: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    padding-left: 30vw; /* 300px / 1000px = 0.3 = 30vw */
+    padding-top: 2vw; /* 20px / 1000px = 0.02 = 2vw */
+    box-sizing: border-box;
+  }
+
+  .asterisk {
+    height: 2.4vw; /* 24px / 1000px = 0.024 = 2.4vw */
+    width: auto;
+    margin-right: 0.5vw; /* 5px / 1000px = 0.005 = 0.5vw */
+  }
+
+  .input-with-inside-icons select {
+    width: calc(100% - 6vw);
+    padding: 1.2vw 4.5vw 1.2vw 1.5vw; /* 12px/45px/12px/15px -> 1.2vw/4.5vw/1.2vw/1.5vw */
+    border: none;
+    background-color: transparent;
+    color: #333;
+    cursor: pointer;
+    font-size: 3vw; /* 30px / 1000px = 0.03 = 3vw */
+    box-sizing: border-box;
+  }
+
+  .input-with-inside-icons:focus-within {
+    border-color: #00BCD4;
+  }
+
+  select {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  .report-form textarea {
+    padding: 1.2vw 1.5vw; /* 12px/15px -> 1.2vw/1.5vw */
+    background-color: #f8f8f8;
+    border: 0.1vw solid #ddd; /* 1px -> 0.1vw */
+    border-radius: 1vw; /* 10px -> 1vw */
+    font-size: 3vw; /* 30px -> 3vw */
+    color: #333;
+    outline: none;
+    box-shadow: none;
+    width: calc(100% - 3vw); /* כדי להתאים ל-padding */
+    box-sizing: border-box;
+  }
+
+  textarea:focus {
+    border: 0.1vw solid #00BCD4; /* 1px -> 0.1vw */
+  }
+
+  .description-hint {
+    font-size: 3vw; /* 30px -> 3vw */
+    color: #666;
+    margin-top: 0.5vw; /* 5px -> 0.5vw */
+    line-height: 1.5;
+  }
+
+  .submit-button {
+    background: #41D2CF;
+    color: #266686;
+    padding: 1.5vw 3vw; /* 15px/30px -> 1.5vw/3vw */
+    border: none;
+    border-radius: 3vw; /* 30px -> 3vw */
+    font-size: 3vw; /* 30px -> 3vw */
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 2vw; /* 20px -> 2vw */
+    box-sizing: border-box;
+    width: 100%; /* כדי שיתפוס את כל רוחב הקונטיינר */
+  }
+
+  .submit-button:hover {
+    color: #10435c;
+  }
+
+  /* --- עבור עמוד reportReceivedPage.html --- */
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1vw; /* 10px -> 1vw */
+    box-sizing: border-box;
+    height: calc(100vh - 2vw); /* נסה להתאים לגובה הווראפר */
+    overflow-y: auto; /* אפשר גלילה פנימית אם יש צורך */
+  }
+
+  .thank-you-header {
+    display: block;
+    padding: 0;
+    background-image: url("../images/circle_background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 10vw; /* 100px -> 10vw */
+    padding-bottom: 3vw; /* 30px -> 3vw */
+    width: 100%; /* תמיד יתפוס 100% */
+    box-sizing: border-box;
+    height: auto; /* תן לתוכן לקבוע את הגובה */
+  }
+
+  .thank-you-header h1 {
+    font-size: 10vw; /* 100px -> 10vw */
+    color: #3F98B8;
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
+    height: 12vw; /* 120px -> 12vw */
+  }
+
+  .thank-you-header h2 {
+    margin: 0;
+    font-size: 6vw; /* 60px -> 6vw */
+    color: #256586;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .thank-you-header p {
+    margin: 0;
+    font-size: 5vw; /* 50px -> 5vw */
+    color: #256586;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 0.1vw; /* 1px -> 0.1vw */
+  }
+
+  .report-details-container {
+    background-color: #EBFFF8;
+    border-radius: 4.5vw; /* 45px -> 4.5vw */
+    padding-top: 2vw; /* 20px -> 2vw */
+    padding-bottom: 2vw; /* 20px -> 2vw */
+    margin-bottom: 2vw; /* 20px -> 2vw */
+    width: 100%; /* 1000px -> 100% */
+    height: auto; /* תן לתוכן לקבוע את הגובה */
+    text-align: right;
+    box-sizing: border-box;
+  }
+
+  .report-details-container h2 {
+    font-size: 8vw; /* 80px -> 8vw */
+    margin-top: 3vw; /* 30px -> 3vw */
+    margin-bottom: 0;
+    font-weight: bold;
+    color: #1D7B7E;
+    text-align: center;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 3vw; /* 30px -> 3vw */
+  }
+
+  .detail-item h3 {
+    color: #000000;
+    margin-left: 0.5vw; /* 5px -> 0.5vw */
+    margin-right: 2vw; /* 20px -> 2vw */
+    font-size: 3.5vw; /* 35px -> 3.5vw */
+  }
+
+  .detail-item span {
+    color: #000000;
+    flex-grow: 1;
+    text-align: right;
+  }
+
+  .uploaded-media-preview {
+    width: 8vw; /* 80px -> 8vw */
+    height: 8vw; /* 80px -> 8vw */
+    object-fit: cover;
+    border-radius: 0.8vw; /* 8px -> 0.8vw */
+    margin-top: 1vw; /* 10px -> 1vw */
+    border: 0.1vw solid #ddd; /* 1px -> 0.1vw */
+  }
+
+  .gray-frame {
+    border: 0.1vw solid #ddd; /* 1px -> 0.1vw */
+    margin-left: 7vw; /* 70px -> 7vw */
+    margin-right: 7vw; /* 70px -> 7vw */
+    margin-bottom: 4.5vw; /* 45px -> 4.5vw */
+    margin-top: 4.5vw; /* 45px -> 4.5vw */
+    box-sizing: border-box;
+  }
+
+  .thank-you-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3vw; /* 30px -> 3vw */
+    width: 100%; /* 1000px -> 100% */
+    margin-bottom: 3vw; /* 30px -> 3vw */
+    box-sizing: border-box;
+  }
+
+  .thank-you-footer button {
+    background: #41D2CF;
+    color: #266686;
+    padding: 1.5vw 3vw; /* 15px/30px -> 1.5vw/3vw */
+    border: none;
+    border-radius: 5vw; /* 50px -> 5vw */
+    font-size: 6vw; /* 60px -> 6vw */
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 2vw; /* 20px -> 2vw */
+    width: 70vw; /* 700px -> 70vw */
+    height: 14vw; /* 140px -> 14vw */
+    box-sizing: border-box;
+  }
+
+  .thank-you-footer button:hover {
+    color: #10435c;
+  }
+
+  /* --- עבור עמודי myReportsPage.html & reportingDetailsPage.html --- */
+  .reports-title {
+    display: flex;
+    direction: ltr; /* נראה שיש כאן שילוב כיוונים, וודא שזה מה שאתה רוצה */
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 2vw; /* 20px -> 2vw */
+    box-sizing: border-box;
+  }
+
+  .reports-title h1 {
+    width: 60vw; /* 600px -> 60vw */
+    font-size: 10vw; /* 100px -> 10vw */
+    color: #266686;
+    font-weight: bold;
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    margin-left: 7.5vw; /* 75px -> 7.5vw */
+    padding-top: 15vw; /* 150px -> 15vw */
+    box-sizing: border-box;
+  }
+
+  .reports-filters-container {
+    background-color: #EBFFF8;
+    border-radius: 4.5vw; /* 45px -> 4.5vw */
+    padding: 2vw 2.5vw; /* 20px/25px -> 2vw/2.5vw */
+    text-align: right;
+    box-sizing: border-box;
+    /* הגבלת גובה כדי למנוע גלישה */
+    max-height: 25vh; /* לדוגמה */
+    overflow-y: auto;
+  }
+
+  .filters-title {
+    font-size: 3vw; /* 30px -> 3vw */
+    font-weight: bold;
+    color: #266686;
+    margin-bottom: 1.5vw; /* 15px -> 1.5vw */
+    margin-top: 0;
+  }
+
+  .filter-dropdown-wrapper {
+    position: relative;
+    width: 100%;
+    background-color: #FFFFFF;
+    border-radius: 1vw; /* 10px -> 1vw */
+    box-shadow: 0 0.1vw 0.3vw rgba(0, 0, 0, 0.1); /* 1px/3px -> 0.1vw/0.3vw */
+    overflow: hidden;
+    margin-bottom: 2vw; /* 20px -> 2vw */
+    box-sizing: border-box;
+  }
+
+  .filter-dropdown-wrapper select {
+    width: calc(100% - 4vw); /* התאמה ל-padding */
+    font-family: 'Heebo', sans-serif;
+    box-sizing: border-box;
+  }
+
+  .sort-dropdown {
+    width: 100%;
+    padding: 1.2vw 2vw; /* 12px/20px -> 1.2vw/2vw */
+    font-size: 2.8vw; /* 28px -> 2.8vw */
+    color: #333;
+    border: none;
+    cursor: pointer;
+    text-align: right;
+    direction: rtl;
+    box-sizing: border-box;
+  }
+
+  .dropdown-arrow-icon {
+    position: absolute;
+    top: 50%;
+    left: 1.5vw; /* 15px -> 1.5vw */
+    transform: translateY(-50%);
+    height: 2vw; /* 20px -> 2vw */
+    width: auto;
+    pointer-events: none;
+  }
+
+  .sort-dropdown option {
+    background-color: #FFFFFF;
+    color: #333;
+    padding: 1vw 2vw; /* 10px/20px -> 1vw/2vw */
+    font-size: 2.2vw; /* 22px -> 2.2vw */
+  }
+
+  .reports-list-container {
+    padding: 0 2.5vw; /* 25px -> 2.5vw */
+    box-sizing: border-box;
+    /* הגבלת גובה כדי למנוע גלישה */
+    max-height: 50vh; /* לדוגמה */
+    overflow-y: auto;
+  }
+
+  .report-card {
+    background-color: #FFFFFF;
+    border-radius: 1.5vw; /* 15px -> 1.5vw */
+    padding: 1.5vw; /* 15px -> 1.5vw */
+    margin-bottom: 2vw; /* 20px -> 2vw */
+    display: flex;
+    align-items: flex-start;
+    box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1); /* 2px/5px -> 0.2vw/0.5vw */
+    text-align: right;
+    direction: rtl;
+    box-sizing: border-box;
+  }
+
+  .report-image-wrapper {
+    flex-shrink: 0;
+    width: 9vw; /* 90px -> 9vw */
+    height: 9vw; /* 90px -> 9vw */
+    border-radius: 1vw; /* 10px -> 1vw */
+    overflow: hidden;
+    margin-left: 1.5vw; /* 15px -> 1.5vw */
+    box-sizing: border-box;
+  }
+
+  .report-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .report-details {
+    flex-grow: 1;
+    box-sizing: border-box;
+  }
+
+  .report-type {
+    font-size: 2.8vw; /* 28px -> 2.8vw */
+    font-weight: bold;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 0.5vw; /* 5px -> 0.5vw */
+  }
+
+  .report-location,
+  .report-date {
+    font-size: 2.2vw; /* 22px -> 2.2vw */
+    color: #666;
+    margin-bottom: 0.5vw; /* 5px -> 0.5vw */
+  }
+
+  .report-status {
+    font-size: 2.2vw; /* 22px -> 2.2vw */
+    font-weight: bold;
+  }
+
+  .status-paid {
+    color: #388E3C;
+  }
+
+  .status-rejected {
+    color: #D32F2F;
+  }
+
+  .status-in-progress {
+    color: #2e23c2;
+  }
+
+  /* --- עבור עמוד reportEditPage.html --- */
+  .footer-employee {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3vw; /* 30px -> 3vw */
+    gap: 3vw; /* 30px -> 3vw */
+    box-sizing: border-box;
+  }
+
+  .footer-employee button {
+    background: #41D2CF;
+    color: #266686;
+    padding: 1.5vw 3vw; /* 15px/30px -> 1.5vw/3vw */
+    border: none;
+    border-radius: 3vw; /* 30px -> 3vw */
+    font-size: 3vw; /* 30px -> 3vw */
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 2vw; /* 20px -> 2vw */
+    width: 30vw; /* 300px -> 30vw */
+    box-sizing: border-box;
+  }
+
+  .footer-employee button:hover {
+    color: #10435c;
+  }
+
+  /* --- עבור עמוד reportsViewPage.html --- */
+  .reports-filter-buttons-container {
+    display: flex;
+    padding: 1vw 2.5vw; /* 10px/25px -> 1vw/2.5vw */
+    border-radius: 2vw; /* 20px -> 2vw */
+    margin: 4vw 2.5vw 2vw 2.5vw; /* 40px/25px/20px/25px -> 4vw/2.5vw/2vw/2.5vw */
+    direction: rtl;
+    gap: 1vw; /* 10px -> 1vw */
+    box-sizing: border-box;
+    /* הגבלת גובה */
+    max-height: 15vh; /* לדוגמה */
+    overflow-y: auto;
+  }
+
+  .filter-button {
+    flex-grow: 1;
+    flex-basis: 0;
+    padding: 1.2vw 1.5vw; /* 12px/15px -> 1.2vw/1.5vw */
+    margin: 0 0.5vw; /* 5px -> 0.5vw */
+    background-color: transparent;
+    border: none;
+    border-radius: 1vw; /* 10px -> 1vw */
+    font-size: 3vw; /* 30px -> 3vw */
+    font-weight: bold;
+    color: #3F98B8;
+    cursor: pointer;
+    white-space: nowrap;
+    background-color: #EBFFF8;
+    box-sizing: border-box;
+  }
+
+  .filter-button.active {
+    color: #256586;
+  }
+
+  .filter-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0.4vw 1.2vw rgba(0, 0, 0, 0.3); /* 4px/12px -> 0.4vw/1.2vw */
+  }
+
+  .report-summary-card {
+    display: flex;
+    justify-content: space-between;
+    background-color: #EBF7FB;
+    border-radius: 1vw; /* 10px -> 1vw */
+    padding: 1.5vw 2vw; /* 15px/20px -> 1.5vw/2vw */
+    box-sizing: border-box;
+  }
+
+  .report-id-type {
+    font-size: 2.8vw; /* 28px -> 2.8vw */
+    font-weight: bold;
+    color: #000000;
+    white-space: nowrap;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  .view-details-link {
+    font-size: 2.8vw; /* 28px -> 2.8vw */
+    color: #076FCA;
+    text-decoration: none;
+    font-weight: normal;
+    white-space: nowrap;
+  }
+
+  .view-details-link:hover {
+    font-weight: bold;
+  }
+
+}
