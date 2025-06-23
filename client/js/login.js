@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     // חשוב: נניח ש-selectedUserType נשמר ב-localStorage בדף הקודם (לדוגמה, דף הבחירה בין אזרח לעובד)
-    const selectedUserType = localStorage.getItem('selectedUserType'); 
+    const selectedUserType = localStorage.getItem('selectedUserType');
 
     // הגדרת ה-API BASE לנקודת הקצה של הלוגין בשרת
     const API_BASE_LOGIN = 'http://localhost:3000/login';
 
-    console.log('סוג משתמש שנבחר בדף הקודם (בדף לוגין):', selectedUserType); 
+    console.log('סוג משתמש שנבחר בדף הקודם (בדף לוגין):', selectedUserType);
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
@@ -33,12 +33,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const res = await fetch(API_BASE_LOGIN, { // שימוש ב-API_BASE_LOGIN
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password, userType: selectedUserType }) 
+                    body: JSON.stringify({ username, password, userType: selectedUserType })
                 });
 
                 const data = await res.json(); // קריאת ה-JSON מהתגובה
 
-                if (res.ok) { 
+                if (res.ok) {
                     console.log('Login successful:', data.message);
                     console.log('User data from server:', data.user);
 
@@ -55,28 +55,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.warn('Server response missing expected user data (username, userId, userType).');
                         // למרות שהלוגין הצליח, אם חסרים נתונים, עדיף להתריע.
                     }
-                    
+
+                    // *** ההוספה שביקשת: התראת "התחברות מוצלחת!" ***
+                    alert('התחברות מוצלחת!');
 
                     // ניתוב לפי סוג המשתמש (נתיבים מוחלטים)
                     // ייתכן שתרצה להוסיף setTimeout כדי לאפשר למשתמש לראות את ה-alert
                     setTimeout(() => {
                         if (selectedUserType === 'citizen') {
-                            window.location.href = '../html/homePageCitizen.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageCitizen.html'; // נתיב מוחלט
                         } else if (selectedUserType === 'employee') {
-                            window.location.href = '../html/homePageEmployee.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageEmployee.html'; // נתיב מוחלט
                         } else {
                             console.warn('Unknown user type, redirecting to general home page.');
-                            window.location.href = '../html/homePageGeneral.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageGeneral.html'; // נתיב מוחלט
                         }
                     }, 500); // השהייה קצרה כדי שהודעת ה-alert תופיע
                 } else {
                     // אם res.ok הוא false (לדוגמה, סטטוס 401 או 500)
-                    alert(data.error || 'שגיאה בהתחברות: שם משתמש או סיסמה שגויים.'); 
+                    alert(data.error || 'שגיאה בהתחברות: שם משתמש או סיסמה שגויים.');
                     console.error('Login failed from server:', data.error || 'Unknown error');
                 }
             } catch (err) {
                 // שגיאות רשת או בעיות ב-fetch API עצמו
-                alert('אירעה שגיאה בחיבור לשרת. אנא נסה שנית מאוחר יותר.'); 
+                alert('אירעה שגיאה בחיבור לשרת. אנא נסה שנית מאוחר יותר.');
                 console.error('Fetch error:', err);
             }
         });

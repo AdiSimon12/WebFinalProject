@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (myReportsButton) {
         myReportsButton.addEventListener('click', (event) => {
             event.preventDefault(); // מונע את התנהגות ברירת המחדל של קישור (מעבר מיידי לדף הריק ב-href="#")
-            window.location.href = '../html/myReportsPage.html'; 
+            window.location.href = '/html/myReportsPage.html'; 
         });
     } else {
         console.warn("Element with ID 'myReportsButton' not found. Cannot attach click listener for my reports.");

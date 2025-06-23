@@ -9,44 +9,46 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
 </head>
-<body class="Wrapper">
+<body class="page-wrapper">
     <header class="thank-you-header">
-        <h1 class="main-thank-you-title">תודה!</h1>
-        <h2 class="thank-you-message">הדיווח נשלח בהצלחה!</h2>
-        <p class="thank-you-sub-message">פרטים נוספים על סטטוס הפנייה <br>ניתן לראות ב"דיווחים שלי"</p>
-    </header>
-    <main class="report-details-container">
-        <h2 class="details-title">פרטי הדיווח:</h2>
+        <img class="header-logo" src="../images/Logo-report.png" alt="לוגו דיווח בטוח">
+        <h1>תודה!</h1>
+        <h2>הדיווח נשלח בהצלחה!</h2>
+        <p>פרטים נוספים על סטטוס הפנייה <br> ניתנים לראות ב"דיווחים שלי"</p>
+        </header>
+
+    <main class="app-container"> 
         <section class="gray-frame">
-            <section class="detail-item">
-                <h3>תקלה:</h3>
-                <span id="displayFaultType"></span>
-            </section>    
-            <section class="detail-item">
-                <h3>מיקום:</h3>
-                <span id="displayLocation"></span> 
+            <section class="report-details-container">
+                <h2>פרטי הדיווח:</h2>
+                <section  class="detail-item">
+                    <h3>תקלה:</h3> <span id="displayFaultType"></span>
+                </section >
+                <section  class="detail-item">
+                    <h3>מיקום:</h3> <span id="displayLocation"></span>
+                </section >
+                <section  class="detail-item">
+                    <h3>תאריך:</h3> <span id="displayDate"></span>
+                </section >
+                <section  class="detail-item">
+                    <h3>שעה:</h3> <span id="displayTime"></span>
+                </section >
+                <section  class="detail-item">
+                    <h3>תיאור:</h3> <span id="displayDescription"></span>
+                </section >
+                <section  class="detail-item">
+                    <h3>קובץ מצורף:</h3> <span id="displayMedia"></span>
+                </section >
+                <img id="mediaPreview" src="" alt="תצוגה מקדימה" class="uploaded-media-preview" style="display:none;">
             </section>
-            <section class="detail-item">
-                <h3>תאריך:</h3>
-                <span id="displayDate"></span> 
-            </section>
-            <section class="detail-item">
-                <h3>שעה:</h3>
-                <span id="displayTime"></span> 
-            </section>
-            <section class="detail-item">
-                <h3>תיאור:</h3>
-                <span id="displayDescription"></span> 
-            </section>
-            <section class="detail-item">
-                <h3>תמונה/סרטון:</h3>
-                <span id=""></span> 
-            </section>
-        </section>  
+        </section>
+
+        <section class="thank-you-footer">
+            <button id="goToMyReportsBtn">מעבר ל-"דיווחים שלי"</button>
+            <button id="goToHomeBtn">חזרה לעמוד הבית</button>
+        </section>
     </main>
-    <footer class="thank-you-footer">
-        <button>מעבר ל- "דיווחים שלי"</button>
-        <button>חזרה לעמוד הבית</button>
-    </footer>   
+
+    <script src="../js/reportReceivedPage.js"></script>
 </body>
 </html>

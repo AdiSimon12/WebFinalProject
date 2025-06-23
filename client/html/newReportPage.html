@@ -8,24 +8,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
-    <style>
-        /* הוסף את ה-CSS הזה לקובץ style.css שלך */
-        /* אם יש לך כבר הגדרה ל-span.required, וודא שהיא כוללת color: red; */
-        .required {
-            color: red;
-            font-weight: bold; /* אופציונלי: להדגשה נוספת */
-        }
-        .optional {
-            color: gray; /* אופציונלי: לצבע שונה עבור "לא חובה" */
-        }
-    </style>
 </head>
 <body class="Wrapper">
     <header>
         <img class="header-logo" src="../images/Logo-report.png" alt="דיווח חדש - לוגו">
-        <a id="backButton"><img class="back-arrow"  src="../images/arrow_left.svg" alt="חזור"></a>
+        <a id="backButton"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
     </header>
-    <main class="app-container"> 
+    <main class="app-container">    
         <form class="report-form">
             <label for="fault-type" class="form-label">סוג תקלה: <span class="required">(חובה)</span></label>
             <section class="input-container">
@@ -33,7 +22,7 @@
                 <section class="input-with-inside-icons">
                     <img class="svg-icon" src="../images/Input_icon.svg" alt="קלסר"> 
                     <select id="fault-type" name="fault-type" required>
-                        <option value="" disabled selected hidden>בחר תקלה</option> 
+                        <option value="" disabled selected hidden>בחר תקלה</option>    
                         <option value="type1">בור בכביש</option>
                         <option value="type2">דליפת מים</option>
                         <option value="type3">חוטי חשמל חשופים</option>
@@ -43,24 +32,25 @@
             </section>
             
             <label class="form-label" for="fault-description">
-                תיאור תקלה: 
+                תיאור תקלה:  
                 <span class="optional">(לא חובה)</span>
-                <span class="required" style="display: none;">(חובה)</span> 
+                <span class="required-asterisk-container" style="display: none;"> <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                </span>
             </label>
             <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
-            <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p> 
+            <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p>   
             
             <label class="form-label" for="location">מיקום: <span class="required">(חובה)</span></label>
             <section class="input-container">
                 <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
                 <section class="input-with-inside-icons">
-                    <img class="svg-icon" src="../images/Map.svg" alt="מפה"> 
+                    <img class="svg-icon" src="../images/Map.svg" alt="מפה">  
                     <select id="location" name="location" required>
                         <option value="" disabled selected hidden>בחר מיקום</option>
                         <option value="loc1">מיקומך הנוכחי</option>
                         <option value="loc2">הקלדת מיקום ידני</option>
                     </select>
-                </section> 
+                </section>    
             </section>
             
             <section id="manualAddressSection" style="display: none;">
@@ -77,9 +67,7 @@
                 </section>
 
                 <label class="form-label" for="houseNumberInput">מספר בית: <span class="optional">(לא חובה)</span></label>
-                <section class="input-container">
-                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
-                    <input class="input-with-inside-icons" type="text" id="houseNumberInput" name="houseNumber" placeholder="מספר בית" />
+                <section class="input-container no-asterisk-for-optional"> <input class="input-with-inside-icons" type="text" id="houseNumberInput" name="houseNumber" placeholder="מספר בית" />
                 </section>
                 
                 <p class="description-hint">נא הקלד את הכתובת המלאה של התקלה.</p>
@@ -89,7 +77,7 @@
             <section class="input-container">
                 <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
                 <section class="input-with-inside-icons">
-                    <img class="svg-icon" src="../images/Camera_icon.svg" alt="מצלמה"> 
+                    <img class="svg-icon" src="../images/Camera_icon.svg" alt="מצלמה">  
                     <select id="upload" name="upload" required>
                         <option value="" disabled selected hidden>בחר אפשרות</option>
                         <option value="option1">מצלמה</option>
@@ -97,16 +85,22 @@
                     </select>
                 </section>
             </section>
+
             <section id="mediaUploadSection" style="display: none;">
                 <label class="form-label" for="media-file">בחירת קובץ: <span class="required">(חובה)</span></label>
                 <section class="input-container">
                     <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
                     <section class="input-with-inside-icons">
-                        <input type="file" id="media-file" name="mediaFile" accept="image/,video/" />
+                        <input type="file" id="media-file" name="mediaFile" accept="image/*,video/*" />
                     </section>
                 </section>
                 <p class="description-hint">בחר קובץ תמונה או וידאו.</p>
             </section>
+
+            <video id="cameraPreview" autoplay playsinline></video>
+            <button id="capture" type="button">צלם תמונה</button>
+            <canvas id="canvas" style="display: none;"></canvas>
+
             <button class="submit-button" type="submit">שליחה</button>
         </form>
     </main>

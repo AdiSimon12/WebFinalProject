@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // מנתב לדף הבית של האזרח
             // הנתיב המומלץ הוא נתיב מוחלט מהשורש של השרת
             // בהנחה שדף הבית של האזרח הוא 'homePageCitizen.html' ונמצא בתיקיית '/html'
-            window.location.href = '../html/homePageCitizen.html'; 
+            window.location.href = '/html/homePageCitizen.html'; 
         });
     } else {
         console.warn("Element with ID 'backButton' not found on newReportPage.html. Cannot attach click listener.");

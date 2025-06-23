@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (continueButton) {
         continueButton.addEventListener('click', () => {
             if (selectedProfile) {
-                window.location.href = 'html/loginPage.html'; 
+                window.location.href = '/html/loginPage.html'; 
             } else {
                 alert('אנא בחר פרופיל כדי להמשיך.');
             }

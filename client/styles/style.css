@@ -445,6 +445,20 @@ textarea:focus{
 .submit-button:hover {
   color: #10435c;
 }
+/* --- התוספות ל-CSS שלך (סגנונות למצלמה) --- */
+#cameraPreview {
+    display: none; /* כברירת מחדל נסתר */
+    width: 100%;
+    max-width: 400px; /* או כל רוחב מקסימלי שתרצה */
+    margin-top: 15px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+}
+
+#capture {
+    display: none; /* כברירת מחדל נסתר */
+    margin-top: 10px;
+}
 /*for reportReceivedPage.html page*/
 .page-wrapper {
     display: flex;
@@ -487,68 +501,81 @@ textarea:focus{
     font-weight: bold;
     text-align: center;
     letter-spacing: 1px;
-  }
+}
 /* קונטיינר פרטי הדיווח (המלבן הלבן) */
 .report-details-container {
     background-color: #EBFFF8;
-    border-radius: 45px; 
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-bottom: 20px; 
+    border-radius: 45px;
+    padding: 20px 40px; /* שינוי: הוספת ריפוד אופקי */
+    margin-bottom: 20px;
     width: 1000px;
     height: auto;
-    text-align: right;
+    /* text-align: right;   הסר שורה זו */
 }
 .report-details-container h2 {
-    font-size: 80px; /* גודל כותרת "פרטי הדיווח" */
+    font-size: 80px;
     margin-top: 30px;
-    margin-bottom: 0px;
+    margin-bottom: 0px; /* נשאר 0 */
     font-weight: bold;
     color: #1D7B7E;
-    text-align: center; /* כותרת זו במרכז */
+    text-align: center;
+    padding-bottom: 20px; /* הוספה: רווח מתחת לכותרת */
 }
 .detail-item {
     display: flex;
-    justify-content: flex-end; /* יישור לימין של התווית והערך */
-    font-size: 30px; /* גודל טקסט לפרטים */
+    justify-content: flex-end; /* יישר את כל הפריט לימין של הקונטיינר שלו */
+    align-items: baseline; /* הוספה: יישור הטקסט של התווית והערך בקו בסיס אחד */
+    /* font-size: 30px; */ /* הסר או שנה: גודל גופן כללי של הפריט כבר לא נחוץ כאן */
+    margin-bottom: 5px; /* שינוי: הקטנת הרווח בין פריטי הפירוט */
+    padding-right: 20px; /* הוספה: רווח מהקצה הימני של ה-container */
+    padding-left: 20px; /* הוספה: רווח מהקצה השמאלי */
 }
 .detail-item h3 {
     color: #000000;
-    margin-left: 5px; /* רווח בין התווית לערך */
-    margin-right: 20px;
-    font-size: 35px;
-
+    font-size: 35px; /* גודל כותרת */
+    font-weight: bold; /* לוודא שזה בולט */
+    width: 200px; /* רוחב קבוע לתווית */
+    text-align: right; /* וודא שהתווית עצמה מיושרת לימין בתוך רוחב ה-width שלה */
+    flex-shrink: 0; /* מונע מהתווית להתכווץ */
+    margin-left: 10px; /* הוספה: רווח קטן בין התווית לערך - הגדלתי את זה קצת עבורך */
 }
 .detail-item span {
     color: #000000;
-    flex-grow: 1; /* מאפשר לערך לתפוס את המקום הנותר */
-    text-align: right; /* יישור הערך לימין */
+    flex-grow: 1;
+    text-align: right;
+    font-size: 35px; /* *** שינוי קריטי: הגדרת גודל גופן זהה לכותרות *** */
+    font-weight: normal; /* *** שינוי קריטי: הסרת הבולד *** */
+    /* padding-right: 10px; */ /* הסר: רווח זה לא נחוץ כאן יותר. ה-margin-left של h3 מטפל בזה */
 }
 .uploaded-media-preview {
-    width: 80px; /* גודל התמונה המוקטנת */
-    height: 80px; /* גודל התמונה המוקטנת */
-    object-fit: cover; /* חיתוך התמונה למילוי הקופסה */
-    border-radius: 8px; /* פינות מעוגלות לתמונה */
-    margin-top: 10px; /* רווח מהתווית */
-    border: 1px solid #ddd; /* גבול דק לתמונה */
+    width: 200px; /* גודל תצוגה מקדימה גדולה יותר */
+    height: auto; /* לשמור על יחס גובה-רוחב */
+    max-width: 100%; /* לוודא שלא חורג מהקונטיינר */
+    display: block; /* לוודא שהוא מקבל שורה משלו וניתן למרכז */
+    margin: 10px auto 20px auto; /* מרכז תמונה, רווח מעל ומתחת */
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    object-fit: contain; /* יכול להיות cover או contain בהתאם לרצונך */
 }
 .gray-frame{
-  border: 1px solid #ddd;
-  margin-left: 70px;
-  margin-right: 70px;
-  margin-bottom: 45px;
-  margin-top: 45px;
+    border: 1px solid #ddd;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 45px;
+    margin-top: 45px;
 }
 .thank-you-footer {
-    display: flex;               /* הפעלת Flexbox */
-    flex-direction: column;      /* סידור אנכי */
-    align-items: center;         /* יישור אופקי של תוכן למרכז */
-    justify-content: center; 
+    display: flex;
+    flex-direction: column; /* שומר על סידור אנכי של הכפתורים */
+    align-items: center;    /* *** זה החלק שמרכז אותם אופקית! *** */
+    justify-content: center; /* (לא חובה ליישור אופקי, אבל טוב למקרה של רווח פנוי) */
     gap: 30px; /* רווח בין הכפתורים */
-    width: 1000px;
-    margin-bottom: 30px;
+    width: 100%; /* וודא שהפוטר תופס את כל הרוחב הזמין */
+    max-width: 1000px; /* או כל רוחב מקסימלי אחר שאתה רוצה לו (אם יש קונטיינר עוטף עם רוחב קבוע) */
+    margin: 30px auto; /* מרכז את כל הפוטר בדף ונותן רווח מעל ומתחת */
 }
-.thank-you-footer button{
+
+.thank-you-footer button {
     background: #41D2CF;
     color: #266686;
     padding: 15px 30px;
@@ -557,12 +584,13 @@ textarea:focus{
     font-size: 60px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
-    width: 700px;
+    /* margin-top: 20px;   אפשר להסיר אם ה-gap מספיק */
+    width: 700px; /* שומר על רוחב הכפתורים */
     height: 140px;
 }
-.thank-you-footer button:hover{
-  color: #10435c;
+
+.thank-you-footer button:hover {
+    color: #10435c;
 }
 /*for myReportsPage.html & reportingDetailsPage.html pages*/
 .reports-title {
