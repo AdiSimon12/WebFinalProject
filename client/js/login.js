@@ -61,12 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // ייתכן שתרצה להוסיף setTimeout כדי לאפשר למשתמש לראות את ה-alert
                     setTimeout(() => {
                         if (selectedUserType === 'citizen') {
-                            window.location.href = '/html/homePageCitizen.html'; // נתיב מוחלט
+                            window.location.href = '../html/homePageCitizen.html'; // נתיב מוחלט
                         } else if (selectedUserType === 'employee') {
-                            window.location.href = '/html/homePageEmployee.html'; // נתיב מוחלט
+                            window.location.href = '../html/homePageEmployee.html'; // נתיב מוחלט
                         } else {
                             console.warn('Unknown user type, redirecting to general home page.');
-                            window.location.href = '/html/homePageGeneral.html'; // נתיב מוחלט
+                            window.location.href = '../html/homePageGeneral.html'; // נתיב מוחלט
                         }
                     }, 500); // השהייה קצרה כדי שהודעת ה-alert תופיע
                 } else {

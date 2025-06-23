@@ -426,6 +426,8 @@ textarea:focus{
     line-height: 1.5;
 }
 .submit-button {
+    width: 200px;
+    height: 50px;
     background: #41D2CF;
     color: #266686;
     padding: 15px 30px;
@@ -435,6 +437,10 @@ textarea:focus{
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
+    margin-right: 400px;
+    display: flex;
+    align-items: center;  
+    justify-content: center; 
 }
 .submit-button:hover {
   color: #10435c;

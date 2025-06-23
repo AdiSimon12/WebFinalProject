@@ -8,6 +8,17 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/style.css">
+    <style>
+        /* הוסף את ה-CSS הזה לקובץ style.css שלך */
+        /* אם יש לך כבר הגדרה ל-span.required, וודא שהיא כוללת color: red; */
+        .required {
+            color: red;
+            font-weight: bold; /* אופציונלי: להדגשה נוספת */
+        }
+        .optional {
+            color: gray; /* אופציונלי: לצבע שונה עבור "לא חובה" */
+        }
+    </style>
 </head>
 <body class="Wrapper">
     <header>
@@ -30,9 +41,15 @@
                     </select>
                 </section>
             </section>
-            <label class="form-label" for="fault-description">תיאור תקלה: <span class="optional">(לא חובה)</span></label>
+            
+            <label class="form-label" for="fault-description">
+                תיאור תקלה: 
+                <span class="optional">(לא חובה)</span>
+                <span class="required" style="display: none;">(חובה)</span> 
+            </label>
             <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
             <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p> 
+            
             <label class="form-label" for="location">מיקום: <span class="required">(חובה)</span></label>
             <section class="input-container">
                 <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
@@ -45,16 +62,29 @@
                     </select>
                 </section> 
             </section>
+            
             <section id="manualAddressSection" style="display: none;">
-                <label class="form-label" for="manual-address">כתובת ידנית: <span class="required">(חובה)</span></label>
+                <label class="form-label" for="cityInput">עיר: <span class="required">(חובה)</span></label>
                 <section class="input-container">
                     <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
-                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="עיר:" />
-                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="רחוב:" />
-                        <input class="input-with-inside-icons" type="text" id="manual-address" name="manual-address" placeholder="מספר בית:(לא חובה)" />
+                    <input class="input-with-inside-icons" type="text" id="cityInput" name="city" placeholder="הקלד עיר" />
                 </section>
+
+                <label class="form-label" for="streetInput">רחוב: <span class="required">(חובה)</span></label>
+                <section class="input-container">
+                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                    <input class="input-with-inside-icons" type="text" id="streetInput" name="street" placeholder="הקלד רחוב" />
+                </section>
+
+                <label class="form-label" for="houseNumberInput">מספר בית: <span class="optional">(לא חובה)</span></label>
+                <section class="input-container">
+                    <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
+                    <input class="input-with-inside-icons" type="text" id="houseNumberInput" name="houseNumber" placeholder="מספר בית" />
+                </section>
+                
                 <p class="description-hint">נא הקלד את הכתובת המלאה של התקלה.</p>
             </section>
+
             <label for="upload" class="form-label">העלאת תמונה/סרטון: <span class="required">(חובה)</span></label>
             <section class="input-container">
                 <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
