@@ -221,5 +221,15 @@
     "createdBy": "adi",
     "creatorId": "8ekzibk3ltl",
     "status": "pending"
+  },
+  {
+    "id": 23,
+    "faultType": "type4",
+    "faultDescription": "ניסיון",
+    "media": "1750715071816-captured_image.jpeg",
+    "timestamp": "2025-06-23T21:44:31.828Z",
+    "createdBy": "adi",
+    "creatorId": "8ekzibk3ltl",
+    "status": "pending"
   }
 ]

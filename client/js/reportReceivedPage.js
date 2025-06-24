@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // קבל את האלמנטים ב-HTML שבהם נציג את פרטי הדיווח
+    // Get HTML elements where report details will be displayed
     const displayFaultType = document.getElementById('displayFaultType');
     const displayLocation = document.getElementById('displayLocation');
     const displayDate = document.getElementById('displayDate');
@@ -8,66 +8,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const displayMedia = document.getElementById('displayMedia');
     const mediaPreview = document.getElementById('mediaPreview');
 
-    // ****** השינוי כאן: הסרת קבלת האלמנטים לסיכום התאריך והשעה בראש העמוד ******
-    // const displayDateSummary = document.getElementById('displayDateSummary');
-    // const displayTimeSummary = document = document.getElementById('displayTimeSummary');
-
-    // קבל את הכפתורים
+    // Get buttons
     const goToMyReportsBtn = document.getElementById('goToMyReportsBtn');
     const goToHomeBtn = document.getElementById('goToHomeBtn');
 
-    // טען את פרטי הדיווח מ-sessionStorage
+    // Load report details from sessionStorage
     const lastReportDetails = JSON.parse(sessionStorage.getItem('lastReportDetails'));
 
     if (lastReportDetails) {
-        console.log('פרטי דיווח אחרונים שנמצאו:', lastReportDetails);
+        console.log('Last report details found:', lastReportDetails);
 
-        // הצגת סוג התקלה
+        // Display fault type
         displayFaultType.textContent = lastReportDetails.faultType || 'לא ידוע';
 
-        // הצגת מיקום
+        // Display location
         displayLocation.textContent = lastReportDetails.location || 'לא ידוע';
 
-        // פרסור תאריך ושעה
+        // Parse date and time
         if (lastReportDetails.timestamp) {
             const date = new Date(lastReportDetails.timestamp);
-            
-            // מילוי התאריך והשעה בתוך "פרטי הדיווח" (כפי שביקשת)
-            displayDate.textContent = date.toLocaleDateString('he-IL'); // פורמט תאריך ישראלי
-            displayTime.textContent = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }); // פורמט שעה ישראלי
 
-            // ****** השינוי כאן: הסרת מילוי האלמנטים לסיכום בראש העמוד ******
-            // displayDateSummary.textContent = date.toLocaleDateString('he-IL');
-            // displayTimeSummary.textContent = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+            // Populate date and time within "Report Details"
+            displayDate.textContent = date.toLocaleDateString('he-IL'); // Israeli date format
+            displayTime.textContent = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }); // Israeli time format
 
         } else {
             displayDate.textContent = 'לא ידוע';
             displayTime.textContent = 'לא ידוע';
-            // אם אין timestamp, גם הסיכום היה 'לא ידוע', אבל הסרנו אותו.
-            // displayDateSummary.textContent = 'לא ידוע'; 
-            // displayTimeSummary.textContent = 'לא ידוע';
         }
 
-        // הצגת תיאור התקלה (אם קיים)
+        // Display fault description (if exists)
         displayDescription.textContent = lastReportDetails.faultDescription || 'אין תיאור';
 
-        // הצגת קובץ המדיה
+        // Display media file
         if (lastReportDetails.mediaFileName && lastReportDetails.mediaFileName !== 'אין קובץ') {
             displayMedia.textContent = lastReportDetails.mediaFileName;
 
-            const mediaUrl = `http://localhost:3000/uploads/${lastReportDetails.mediaFileName}`; // נתיב לקובץ מהשרת
+            // *** IMPORTANT: Replace 'https://your-backend-app-name.railway.app' with the actual public URL of your Backend on Railway ***
+            const mediaUrl = `mongodb://mongo:SsJPZbOJTuUmhRcdnCUXMNNCGuPSOPgc@mongodb.railway.internal:27017/uploads/${lastReportDetails.mediaFileName}`; // Changed this line to use the Railway backend URL
             const fileExtension = lastReportDetails.mediaFileName.split('.').pop().toLowerCase();
 
             if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
                 mediaPreview.src = mediaUrl;
-                mediaPreview.style.display = 'block'; // הצג את התמונה
+                mediaPreview.style.display = 'block'; // Show the image
             } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
                 const videoElement = document.createElement('video');
                 videoElement.controls = true;
                 videoElement.src = mediaUrl;
                 videoElement.classList.add('uploaded-media-preview');
                 displayMedia.appendChild(videoElement);
-                mediaPreview.style.display = 'none';
+                mediaPreview.style.display = 'none'; // Hide the <img> element
             } else {
                 mediaPreview.style.display = 'none';
             }
@@ -77,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     } else {
-        // אם אין נתונים ב-sessionStorage (לדוגמה, המשתמש הגיע לדף ישירות)
-        console.warn('לא נמצאו פרטי דיווח אחרונים ב-sessionStorage.');
+        // If no data in sessionStorage (e.g., user navigated directly to the page)
+        console.warn('No recent report details found in sessionStorage.');
         displayFaultType.textContent = 'אין נתונים';
         displayLocation.textContent = 'אין נתונים';
         displayDate.textContent = 'אין נתונים';
@@ -86,12 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
         displayDescription.textContent = 'אין נתונים';
         displayMedia.textContent = 'אין נתונים';
         mediaPreview.style.display = 'none';
-        // אם אין נתונים, גם הסיכום היה 'אין נתונים', אבל הסרנו אותו.
-        // displayDateSummary.textContent = 'אין נתונים'; 
-        // displayTimeSummary.textContent = 'אין נתונים';
     }
 
-    // --- טיפול בכפתורים ---
+    // --- Button handling ---
     if (goToMyReportsBtn) {
         goToMyReportsBtn.addEventListener('click', () => {
             window.location.href = '/html/myReportsPage.html';

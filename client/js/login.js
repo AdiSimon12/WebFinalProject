@@ -2,13 +2,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.querySelector('.login-form');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    // חשוב: נניח ש-selectedUserType נשמר ב-localStorage בדף הקודם (לדוגמה, דף הבחירה בין אזרח לעובד)
+    // Important: Assume selectedUserType is stored in localStorage on the previous page (e.g., the user type selection page)
     const selectedUserType = localStorage.getItem('selectedUserType');
 
-    // הגדרת ה-API BASE לנקודת הקצה של הלוגין בשרת
-    const API_BASE_LOGIN = 'http://localhost:3000/login';
+    const API_BASE_LOGIN = 'mongodb://mongo:SsJPZbOJTuUmhRcdnCUXMNNCGuPSOPgc@mongodb.railway.internal:27017/login'; // Changed this line
 
-    console.log('סוג משתמש שנבחר בדף הקודם (בדף לוגין):', selectedUserType);
+    console.log('Selected user type on the previous page (login page):', selectedUserType);
 
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
@@ -18,32 +17,32 @@ document.addEventListener('DOMContentLoaded', () => {
             const password = passwordInput.value.trim();
 
             if (!username || !password) {
-                alert('אנא הכנס שם משתמש וסיסמה.');
+                alert('Please enter username and password.');
                 return;
             }
 
-            // לוודא ש-selectedUserType אכן קיים
+            // Ensure selectedUserType exists
             if (!selectedUserType) {
-                alert('שגיאה: סוג משתמש לא נבחר. אנא חזור לדף הבחירה.');
+                alert('Error: User type not selected. Please return to the selection page.');
                 console.error('Error: selectedUserType is null or undefined.');
                 return;
             }
 
             try {
-                const res = await fetch(API_BASE_LOGIN, { // שימוש ב-API_BASE_LOGIN
+                const res = await fetch(API_BASE_LOGIN, { // Use API_BASE_LOGIN
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password, userType: selectedUserType })
                 });
 
-                const data = await res.json(); // קריאת ה-JSON מהתגובה
+                const data = await res.json(); // Read JSON from the response
 
                 if (res.ok) {
                     console.log('Login successful:', data.message);
                     console.log('User data from server:', data.user);
 
-                    // **שמירת פרטי המשתמש ב-sessionStorage**
-                    // השרת אמור להחזיר אובייקט `user` עם `username`, `userType`, ו-`userId`.
+                    // **Store user details in sessionStorage**
+                    // The server should return a `user` object with `username`, `userType`, and `userId`.
                     if (data.user && data.user.username && data.user.userId && data.user.userType) {
                         sessionStorage.setItem('loggedInUser', JSON.stringify({
                             username: data.user.username,
@@ -53,32 +52,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log('User data saved to sessionStorage.');
                     } else {
                         console.warn('Server response missing expected user data (username, userId, userType).');
-                        // למרות שהלוגין הצליח, אם חסרים נתונים, עדיף להתריע.
+                        // Although login was successful, if data is missing, it's better to warn.
                     }
 
-                    // *** ההוספה שביקשת: התראת "התחברות מוצלחת!" ***
-                    alert('התחברות מוצלחת!');
+                    alert('Login successful!');
 
-                    // ניתוב לפי סוג המשתמש (נתיבים מוחלטים)
-                    // ייתכן שתרצה להוסיף setTimeout כדי לאפשר למשתמש לראות את ה-alert
+                    // Redirect according to user type (absolute paths)
                     setTimeout(() => {
                         if (selectedUserType === 'citizen') {
-                            window.location.href = '/html/homePageCitizen.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageCitizen.html'; // Absolute path
                         } else if (selectedUserType === 'employee') {
-                            window.location.href = '/html/homePageEmployee.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageEmployee.html'; // Absolute path
                         } else {
                             console.warn('Unknown user type, redirecting to general home page.');
-                            window.location.href = '/html/homePageGeneral.html'; // נתיב מוחלט
+                            window.location.href = '/html/homePageGeneral.html'; // Absolute path
                         }
-                    }, 500); // השהייה קצרה כדי שהודעת ה-alert תופיע
+                    }, 500); // Short delay for the alert message to appear
                 } else {
-                    // אם res.ok הוא false (לדוגמה, סטטוס 401 או 500)
-                    alert(data.error || 'שגיאה בהתחברות: שם משתמש או סיסמה שגויים.');
+                    // If res.ok is false (e.g., status 401 or 500)
+                    alert(data.error || 'Login error: Incorrect username or password.');
                     console.error('Login failed from server:', data.error || 'Unknown error');
                 }
             } catch (err) {
-                // שגיאות רשת או בעיות ב-fetch API עצמו
-                alert('אירעה שגיאה בחיבור לשרת. אנא נסה שנית מאוחר יותר.');
+                // Network errors or issues with the fetch API itself
+                alert('An error occurred connecting to the server. Please try again later.');
                 console.error('Fetch error:', err);
             }
         });
