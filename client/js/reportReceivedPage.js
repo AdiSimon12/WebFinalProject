@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             displayMedia.textContent = lastReportDetails.mediaFileName;
 
             // *** IMPORTANT: Replace 'https://your-backend-app-name.railway.app' with the actual public URL of your Backend on Railway ***
-            const mediaUrl = `mongodb://mongo:SsJPZbOJTuUmhRcdnCUXMNNCGuPSOPgc@mongodb.railway.internal:27017/uploads/${lastReportDetails.mediaFileName}`; // Changed this line to use the Railway backend URL
+            const mediaUrl = `https://webfinalproject-j4tc.onrender.com/uploads/${lastReportDetails.mediaFileName}`; // Changed this line to use the Railway backend URL
             const fileExtension = lastReportDetails.mediaFileName.split('.').pop().toLowerCase();
 
             if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {

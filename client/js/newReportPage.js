@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 // *** IMPORTANT: Replace 'https://your-backend-app-name.railway.app' with the actual public URL of your Backend on Railway ***
-                const res = await fetch('mongodb://mongo:SsJPZbOJTuUmhRcdnCUXMNNCGuPSOPgc@mongodb.railway.internal:27017/api/reports', { // Changed this line
+                const res = await fetch('https://webfinalproject-j4tc.onrender.com/api/reports', { // Changed this line
                     method: 'POST',
                     body: formData
                 });
