@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Important: Assume selectedUserType is stored in localStorage on the previous page (e.g., the user type selection page)
     const selectedUserType = localStorage.getItem('selectedUserType');
 
-    const API_BASE_LOGIN = 'mongodb://mongo:SsJPZbOJTuUmhRcdnCUXMNNCGuPSOPgc@mongodb.railway.internal:27017/login'; // Changed this line
+    const API_BASE_LOGIN = 'https://webfinalproject-j4tc.onrender.com/api/login'; // Changed this line
 
     console.log('Selected user type on the previous page (login page):', selectedUserType);
 
