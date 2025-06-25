@@ -575,6 +575,7 @@ textarea:focus{
     margin-right: 70px;
     margin-bottom: 45px;
     margin-top: 45px;
+    border-radius: 40px;
 }
 .thank-you-footer {
     display: flex;
@@ -630,6 +631,9 @@ textarea:focus{
     padding: 20px 25px;
     text-align: right;
 }
+.sort-by{
+  margin-bottom: 20px;
+}
 .filters-title {
     font-size: 30px; /* גודל כותרת המיון */
     font-weight: bold;
@@ -676,15 +680,16 @@ textarea:focus{
 }
 .reports-list-container {
     padding: 0 25px;
+            background-color: #EBFFF8;
+        border-radius: 45px;
 }
 .report-card {
-    background-color: #FFFFFF;
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 20px;
     display: flex;
     align-items: flex-start;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
     text-align: right;
     direction: rtl;
 }
@@ -694,7 +699,10 @@ textarea:focus{
     height: 90px;
     border-radius: 10px;
     overflow: hidden;
-    margin-left: 15px;
+    margin-right: 40px;
+    text-align: right;
+
+    margin-top: 60px;
 }
 .report-thumbnail {
     width: 100%;
@@ -702,23 +710,21 @@ textarea:focus{
     object-fit: cover;
 }
 .report-details {
-    flex-grow: 1;
+    white-space: nowrap;
 }
 .report-type {
-    font-size: 28px;
+    font-size: 40px;
     font-weight: bold;
-    color: #333;
+    color: #000;
     margin-top: 0;
-    margin-bottom: 5px;
 }
 .report-location,
 .report-date {
-    font-size: 22px;
-    color: #666;
-    margin-bottom: 5px;
+    font-size: 40px;
+    color: #000;
 }
 .report-status {
-    font-size: 22px;
+    font-size: 40px;
     font-weight: bold;
 }
 .status-paid {
@@ -1587,7 +1593,6 @@ textarea:focus{
     text-align: right;
     box-sizing: border-box;
     /* הגבלת גובה כדי למנוע גלישה */
-    max-height: 25vh; /* לדוגמה */
     overflow-y: auto;
   }
 
@@ -1662,8 +1667,9 @@ textarea:focus{
     align-items: flex-start;
     box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.1); /* 2px/5px -> 0.2vw/0.5vw */
     text-align: right;
-    direction: rtl;
+    direction: ltr;
     box-sizing: border-box;
+    text-align: left;
   }
 
   .report-image-wrapper {
@@ -1686,24 +1692,21 @@ textarea:focus{
     flex-grow: 1;
     box-sizing: border-box;
   }
-
   .report-type {
-    font-size: 2.8vw; /* 28px -> 2.8vw */
+    font-size: 4vw;
     font-weight: bold;
     color: #333;
     margin-top: 0;
-    margin-bottom: 0.5vw; /* 5px -> 0.5vw */
   }
 
   .report-location,
   .report-date {
-    font-size: 2.2vw; /* 22px -> 2.2vw */
-    color: #666;
-    margin-bottom: 0.5vw; /* 5px -> 0.5vw */
+    font-size: 4vw; 
+    color: #000;
   }
 
   .report-status {
-    font-size: 2.2vw; /* 22px -> 2.2vw */
+    font-size: 4vw; 
     font-weight: bold;
   }
 

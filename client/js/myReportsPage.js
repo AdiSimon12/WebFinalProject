@@ -16,12 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         reportsListContainer.innerHTML = '<p class="no-reports-message">אנא התחבר כדי לראות את הדיווחים שלך.</p>';
         return; // יציאה אם אין משתמש מחובר
     }
-
+    
     // פונקציה לאחזור דיווחים מהשרת
     async function fetchReports() {
         try {
-            // הוספת ה-creatorId כפרמטר שאילתה אם המשתמש הוא citizen
-            // אם המשתמש הוא employee, הוא יקבל את כל הדיווחים
             let url = `${API_BASE_URL}/reports`;
             if (currentUserType === 'citizen') {
                 url += `?creatorId=${currentUserId}`;
@@ -54,6 +52,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         reportCard.classList.add('report-card');
         reportCard.dataset.reportId = report.id; // שמירת ה-ID של הדיווח
 
+        // Make the entire card clickable
+        reportCard.addEventListener('click', () => {
+            window.location.href = `/html/reportingDetailsPage.html?reportId=${report.id}`;
+        });
+
         const timestamp = report.timestamp ? new Date(report.timestamp) : null;
         const displayDate = timestamp ? timestamp.toLocaleDateString('he-IL') : 'לא ידוע';
         const displayTime = timestamp ? timestamp.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' }) : '';
@@ -62,16 +65,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         let statusClass = '';
         let statusText = '';
         switch (report.status) {
-            case 'pending':
-                statusClass = 'status-pending'; // הגדר צבע ל-pending ב-CSS אם עדיין לא קיים
-                statusText = 'ממתין';
-                break;
             case 'in-progress':
                 statusClass = 'status-in-progress';
                 statusText = 'בטיפול';
                 break;
             case 'completed':
-                statusClass = 'status-paid'; // משתמש ב-status-paid כ"טופל"
+                statusClass = 'status-completed'; // Changed from status-paid to status-completed
                 statusText = 'טופל';
                 break;
             case 'rejected':
@@ -91,29 +90,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
                 mediaHtml = `<section class="report-image-wrapper">
-                                <img src="${mediaUrl}" alt="תמונת דיווח" class="report-thumbnail">
+                                 <img src="${mediaUrl}" alt="תמונת דיווח" class="report-thumbnail">
                              </section>`;
             } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
                 mediaHtml = `<section class="report-image-wrapper">
-                                <video src="${mediaUrl}" controls class="report-thumbnail"></video>
+                                 <video src="${mediaUrl}" controls class="report-thumbnail"></video>
                              </section>`;
             }
         } else {
-             // תמונת פלייסהולדר אם אין מדיה
+            // תמונת פלייסהולדר אם אין מדיה
             mediaHtml = `<section class="report-image-wrapper">
-                            <img src="https://placehold.co/90x90/eeeeee/333333?text=אין+מדיה" alt="אין מדיה" class="report-thumbnail">
+                             <img src="https://placehold.co/90x90/eeeeee/333333?text=אין+מדיה" alt="אין מדיה" class="report-thumbnail">
                          </section>`;
         }
 
 
         reportCard.innerHTML = `
-            ${mediaHtml}
             <section class="report-details">
                 <h3 class="report-type">${report.faultType}</h3>
-                <h3 class="report-location">${report.location.city ? `${report.location.city}, ${report.location.street}` : (report.location.type === 'current' ? 'מיקום נוכחי' : 'לא ידוע')}</h3>
+                <h3 class="report-location">${report.location.city ? `${report.location.street}, ${report.location.city}` : (report.location.type === 'current' ? 'מיקום נוכחי' : 'לא ידוע')}</h3>
                 <h3 class="report-date">${displayDate}</h3>
                 <h3 class="report-status ${statusClass}">${statusText}</h3>
             </section>
+            ${mediaHtml}
+
         `;
         return reportCard;
     }
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 break;
             case 'status':
                 // מיון לפי סטטוס
-                const statusOrder = { 'pending': 1, 'in-progress': 2, 'completed': 3, 'rejected': 4 };
+                const statusOrder = {'in-progress': 1, 'completed': 2, 'rejected': 3 };
                 sortedReports.sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99));
                 break;
             case 'alphabetical':
@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (backButton) {
         backButton.addEventListener('click', (event) => {
             event.preventDefault();
-            window.location.href = '/html/homePageCitizen.html';
+            window.history.back(); // Go back to the previous page
         });
     }
 
