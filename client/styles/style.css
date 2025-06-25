@@ -338,6 +338,10 @@ Header{
     flex-direction: column;
     gap: 40px; /* רווח בין שדות הטופס */
 }
+.frame-textarea{
+  display: flex;
+  align-items: center;
+}
 
 .form-label {
     font-size: 35px;
@@ -407,7 +411,10 @@ select {
 
 }   
 .report-form textarea {
-    padding: 12px 15px;
+    margin-top: 30px;
+    margin-right: 10px;
+    padding-top: 12px;
+    padding-right: 15px;
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -415,6 +422,8 @@ select {
     color: #333;
     outline: none;
     box-shadow: none;
+    width: 900px;
+    height: 170px;
 }
 textarea:focus{
     border: 1px solid #00BCD4;

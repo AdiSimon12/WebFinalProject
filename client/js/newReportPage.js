@@ -6,9 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fields related to fault type
     const faultTypeSelect = document.getElementById('fault-type');
     const faultDescriptionTextarea = document.getElementById('fault-description');
-    const faultDescriptionLabelOptional = document.querySelector('label[for="fault-description"] .optional');
-    // --- Change: Reference to the asterisk container (avoid the old required) ---
-    const faultDescriptionAsteriskContainer = document.querySelector('label[for="fault-description"] .required-asterisk-container');
+    // --- שינוי: רפרנסים חדשים לאלמנטים בתוך ה-Label של תיאור תקלה ---
+    const faultDescriptionOptionalIndicator = document.querySelector('label[for="fault-description"] .optional-indicator');
+    const faultDescriptionRequiredIndicator = document.querySelector('label[for="fault-description"] .required-indicator');
+    const faultDescriptionValidationIconContainer = document.querySelector('label[for="fault-description"] .validation-icon-container');
 
 
     // Fields related to location
@@ -51,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Logged-in user:', currentUsername, 'ID:', currentUserId);
     } else {
         console.warn('No user logged in to sessionStorage.');
+        alert('שגיאה: משתמש לא מחובר. אנא התחבר שוב.');
+        window.location.href = '/html/userTypeSelection.html'; // חזור לדף הבחירה אם אין משתמש מחובר
     }
 
     // --- 2. Handle back arrow button ---
@@ -70,21 +73,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (selectedFaultType === 'type4') { // If "Other" option is selected
             faultDescriptionTextarea.setAttribute('required', 'true');
-            if (faultDescriptionLabelOptional) {
-                faultDescriptionLabelOptional.style.display = 'none';
+            // --- שינוי: הצג את הכיתוב והאייקון של חובה, הסתר את "לא חובה" ---
+            if (faultDescriptionOptionalIndicator) {
+                faultDescriptionOptionalIndicator.style.display = 'none';
             }
-            // --- Change: Show the asterisk container ---
-            if (faultDescriptionAsteriskContainer) {
-                faultDescriptionAsteriskContainer.style.display = 'inline-block';
+            if (faultDescriptionRequiredIndicator) {
+                faultDescriptionRequiredIndicator.style.display = 'inline'; // הצג "(חובה)"
+            }
+            if (faultDescriptionValidationIconContainer) {
+                faultDescriptionValidationIconContainer.style.display = 'inline-block'; // הצג את האייקון
             }
         } else {
             faultDescriptionTextarea.removeAttribute('required');
-            if (faultDescriptionLabelOptional) {
-                faultDescriptionLabelOptional.style.display = 'inline';
+            // --- שינוי: הסתר את הכיתוב והאייקון של חובה, הצג את "לא חובה" ---
+            if (faultDescriptionOptionalIndicator) {
+                faultDescriptionOptionalIndicator.style.display = 'inline';
             }
-            // --- Change: Hide the asterisk container ---
-            if (faultDescriptionAsteriskContainer) {
-                faultDescriptionAsteriskContainer.style.display = 'none';
+            if (faultDescriptionRequiredIndicator) {
+                faultDescriptionRequiredIndicator.style.display = 'none'; // הסתר "(חובה)"
+            }
+            if (faultDescriptionValidationIconContainer) {
+                faultDescriptionValidationIconContainer.style.display = 'none'; // הסתר את האייקון
             }
             faultDescriptionTextarea.value = '';
         }
@@ -209,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isDesktop()) { // For desktop, use <video> element and capture button
                 mediaUploadSection.style.display = 'none'; // Hide file input field
                 mediaFileInput.removeAttribute('required'); // Ensure file field is not required
+                
                 video.style.display = 'block';
                 captureButton.style.display = 'inline-block'; // Note inline-block
                 startCamera(); // Start the camera
@@ -304,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 video.style.display = 'none';
                 captureButton.style.display = 'none';
 
-            }, 'image/jpeg');
+            }, 'image/jpeg'); // User's code specifies 'image/jpeg'
         });
     }
 
@@ -366,24 +376,38 @@ document.addEventListener('DOMContentLoaded', () => {
             const uploadOption = uploadSelect.value;
             let mediaToUpload = null;
 
-            // --- Change: Handle media file based on upload option ---
-            if (uploadOption === 'option1' && isDesktop()) { // If camera selected and on desktop
-                if (capturedBlob) {
-                    mediaToUpload = new File([capturedBlob], 'captured_image.jpeg', { type: 'image/jpeg' });
-                    console.log("Captured blob will be uploaded.");
-                } else {
-                    alert('No image captured. Please capture an image or choose another option.');
-                    return;
+            // *** שינוי: טיפול בקובץ המדיה בהתאם לאפשרויות העלאה ומכשיר ***
+            if (uploadOption === 'option1') { // אם נבחרה אפשרות "מצלמה"
+                if (isDesktop()) { // אם המכשיר הוא דסקטופ, השתמש ב-Blob שצולם מהמצלמה
+                    if (capturedBlob) {
+                        mediaToUpload = new File([capturedBlob], 'captured_image.jpeg', { type: 'image/jpeg' });
+                        console.log("Captured blob will be uploaded (desktop camera).");
+                    } else {
+                        alert('לא צולמה תמונה. אנא צלם תמונה או בחר באפשרות אחרת.');
+                        return;
+                    }
+                } else { // אם המכשיר הוא מובייל, השתמש בקובץ שנבחר באמצעות קלט הקובץ (שמפעיל מצלמה)
+                    if (mediaFileInput.files.length > 0) {
+                        mediaToUpload = mediaFileInput.files[0];
+                        console.log("Captured file from mobile camera will be uploaded:", mediaToUpload.name);
+                    } else {
+                        alert('אנא השתמש במצלמת המכשיר שלך כדי לצלם תמונה/וידאו.');
+                        return;
+                    }
                 }
-            } else if (uploadOption === 'option1' || uploadOption === 'option2') { // If camera selected on mobile or photo library
+            } else if (uploadOption === 'option2') { // אם נבחרה אפשרות "ספריית תמונות"
                 if (mediaFileInput.files.length > 0) {
                     mediaToUpload = mediaFileInput.files[0];
-                    console.log("Selected media file will be uploaded:", mediaToUpload.name);
+                    console.log("Selected media file from gallery will be uploaded:", mediaToUpload.name);
                 } else {
-                    alert('Please select an image/video file.');
+                    alert('אנא בחר קובץ תמונה/וידאו מספריית המדיה שלך.');
                     return;
                 }
+            } else { // אם לא נבחרה אפשרות העלאה
+                alert('אנא בחר אפשרות להעלאת מדיה (מצלמה או ספריית תמונות).');
+                return;
             }
+            // *** סיום שינוי בלוגיקת העלאת המדיה ***
 
 
             const formData = new FormData();

@@ -31,13 +31,18 @@
                 </section>
             </section>
             
-            <label class="form-label" for="fault-description">
-                תיאור תקלה:  
-                <span class="optional">(לא חובה)</span>
-                <span class="required-asterisk-container" style="display: none;"> <img class="asterisk" src="../images/asterisk.png" alt="asterisk">
-                </span>
+            <label class="form-label fault-description-label" for="fault-description">
+                תיאור תקלה:
+                <span class="optional optional-indicator"> (לא חובה)</span>
+                <span class="required required-indicator" style="display: none;"> (חובה)</span>
+                <section class="frame-textarea">
+                    <span class="validation-icon-container" style="display: none;">
+                        <img class="asterisk validation-icon" src="../images/asterisk.png" alt="חובה">
+                    </span>
+                    <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
+                </section>
             </label>
-            <textarea id="fault-description" name="fault-description" placeholder="" rows="4"></textarea> 
+            
             <p class="description-hint">מומלץ לתאר את התקלה בצורה מורחבת. זה יעזור להבנה טובה יותר של התקלה וישפר את דרכי טיפול בה.</p>   
             
             <label class="form-label" for="location">מיקום: <span class="required">(חובה)</span></label>
