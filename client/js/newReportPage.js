@@ -490,9 +490,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (locationType === 'loc1') {
                         displayLocation = locationString || `Your current location (lat: ${currentLat}, lon: ${currentLon})`;
                     } else if (locationType === 'loc2') {
-                        displayLocation = `עיר: ${cityInput.value}, רחוב: ${streetInput.value},`;
+                        displayLocation = `עיר: ${cityInput.value} , רחוב: ${streetInput.value} ,`;
                         if (houseNumberInput.value) {
-                            displayLocation += `מספר בית: ${houseNumberInput.value}`;
+                            displayLocation += ` מספר בית: ${houseNumberInput.value}`;
                         }
                     }
 

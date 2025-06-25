@@ -9,10 +9,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentUserId = loggedInUser ? loggedInUser.userId : null;
     let currentUserType = loggedInUser ? loggedInUser.userType : null;
 
-    // הגדרת URL בסיס ל-API של ה-Backend (בהתאם למה שסיכמנו)
-    // אם ה-Backend רץ ב-Render, השתמש ב-URL שלו
-    // אם ה-Backend רץ ב-Railway, השתמש ב-URL הציבורי של Railway
-    // נניח שה-Backend רץ ב-Render כמו ה-Frontend ושה-URL הוא כזה:
     const API_BASE_URL = 'https://webfinalproject-j4tc.onrender.com/api'; // URL בסיס ל-API
 
     if (!currentUserId) {
@@ -54,7 +50,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // פונקציה ליצירת כרטיס דיווח HTML
     function createReportCard(report) {
-        const reportCard = document.createElement('div');
+        const reportCard = document.createElement('section');
         reportCard.classList.add('report-card');
         reportCard.dataset.reportId = report.id; // שמירת ה-ID של הדיווח
 
@@ -94,30 +90,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             const fileExtension = report.media.split('.').pop().toLowerCase();
 
             if (['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(fileExtension)) {
-                mediaHtml = `<div class="report-image-wrapper">
+                mediaHtml = `<section class="report-image-wrapper">
                                 <img src="${mediaUrl}" alt="תמונת דיווח" class="report-thumbnail">
-                             </div>`;
+                             </section>`;
             } else if (['mp4', 'webm', 'ogg'].includes(fileExtension)) {
-                mediaHtml = `<div class="report-image-wrapper">
+                mediaHtml = `<section class="report-image-wrapper">
                                 <video src="${mediaUrl}" controls class="report-thumbnail"></video>
-                             </div>`;
+                             </section>`;
             }
         } else {
              // תמונת פלייסהולדר אם אין מדיה
-            mediaHtml = `<div class="report-image-wrapper">
+            mediaHtml = `<section class="report-image-wrapper">
                             <img src="https://placehold.co/90x90/eeeeee/333333?text=אין+מדיה" alt="אין מדיה" class="report-thumbnail">
-                         </div>`;
+                         </section>`;
         }
 
 
         reportCard.innerHTML = `
             ${mediaHtml}
-            <div class="report-details">
-                <h3 class="report-type">${report.faultType || 'סוג תקלה לא ידוע'}</h3>
-                <p class="report-location">מיקום: ${report.location.city ? `${report.location.city}, ${report.location.street}` : (report.location.type === 'current' ? 'מיקום נוכחי' : 'לא ידוע')}</p>
-                <p class="report-date">תאריך: ${displayDate} ${displayTime}</p>
-                <p class="report-status ${statusClass}">סטטוס: ${statusText}</p>
-            </div>
+            <section class="report-details">
+                <h3 class="report-type">${report.faultType}</h3>
+                <h3 class="report-location">${report.location.city ? `${report.location.city}, ${report.location.street}` : (report.location.type === 'current' ? 'מיקום נוכחי' : 'לא ידוע')}</h3>
+                <h3 class="report-date">${displayDate}</h3>
+                <h3 class="report-status ${statusClass}">${statusText}</h3>
+            </section>
         `;
         return reportCard;
     }

@@ -465,7 +465,12 @@ textarea:focus{
 
 #capture {
     display: none; /* כברירת מחדל נסתר */
-    margin-top: 10px;
+    width: 200px;
+    height: 40px;
+    font-size: 30px;
+    margin-right: 100px; 
+    cursor: pointer;
+
 }
 /*for reportReceivedPage.html page*/
 .page-wrapper {
@@ -550,7 +555,9 @@ textarea:focus{
     text-align: right;
     font-size: 35px; /* *** שינוי קריטי: הגדרת גודל גופן זהה לכותרות *** */
     font-weight: normal; /* *** שינוי קריטי: הסרת הבולד *** */
-    /* padding-right: 10px; */ /* הסר: רווח זה לא נחוץ כאן יותר. ה-margin-left של h3 מטפל בזה */
+    width: 500px;
+    overflow-wrap: break-word;
+    display: inline-block;
 }
 .uploaded-media-preview {
     width: 200px; /* גודל תצוגה מקדימה גדולה יותר */

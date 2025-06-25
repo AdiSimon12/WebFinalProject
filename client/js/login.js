@@ -42,20 +42,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('User data from server:', data.user);
 
                     // **Store user details in sessionStorage**
-                    // The server should return a `user` object with `username`, `userType`, and `userId`.
-                    if (data.user && data.user.username && data.user.userId && data.user.userType) {
+                    // The server should return a `user` object with `username`, `userType`
+                    if (data.user && data.user.username && data.user._id && data.user.userType) {
                         sessionStorage.setItem('loggedInUser', JSON.stringify({
                             username: data.user.username,
-                            userId: data.user.userId,
+                            userId: data.user._id,
                             userType: data.user.userType
                         }));
                         console.log('User data saved to sessionStorage.');
+                        alert('Login successful!');
                     } else {
-                        console.warn('Server response missing expected user data (username, userId, userType).');
+                        console.warn('Server response missing expected user data (username, _id, userType).');
                         // Although login was successful, if data is missing, it's better to warn.
                     }
-
-                    alert('Login successful!');
 
                     // Redirect according to user type (absolute paths)
                     setTimeout(() => {
