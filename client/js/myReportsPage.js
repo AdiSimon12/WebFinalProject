@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let currentUserId = loggedInUser ? loggedInUser.userId : null;
     let currentUserType = loggedInUser ? loggedInUser.userType : null;
 
-    const API_BASE_URL = 'https://webfinalproject-j4tc.onrender.com/api'; // URL בסיס ל-API
-
+    const API_BASE_URL = 'https://webfinalproject-j4tc.onrender.com/api';
     if (!currentUserId) {
         console.warn('אין משתמש מחובר. לא ניתן לאחזר דיווחים.');
         reportsListContainer.innerHTML = '<p class="no-reports-message">אנא התחבר כדי לראות את הדיווחים שלך.</p>';
@@ -54,7 +53,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Make the entire card clickable
         reportCard.addEventListener('click', () => {
-            window.location.href = `/html/reportingDetailsPage.html?reportId=${report.id}`;
+            window.location.href = `/html/reportingDetailsPage.html?id=${report.id}`;
         });
 
         const timestamp = report.timestamp ? new Date(report.timestamp) : null;

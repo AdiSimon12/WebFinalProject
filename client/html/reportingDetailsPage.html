@@ -11,16 +11,14 @@
 </head>
 <body class="Wrapper">
     <header class="reports-title">
-        <a href="#"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
-        <h1 >:פרטי דיווח</h1>
+        <a id="backButton" href="#"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
+        <h1>:פרטי דיווח</h1>
     </header>
-    <main>
-        <section class="reports-filters-container">
-            <section class="gray-frame">
+    <main class="main-content-container"> <section class="reports-filters-container"> <section class="gray-frame">
                 <section class="detail-item">
                     <h3>תקלה:</h3>
                     <span id="displayFaultType"></span>
-                </section>    
+                </section>     
                 <section class="detail-item">
                     <h3>מיקום:</h3>
                     <span id="displayLocation"></span> 
@@ -29,7 +27,7 @@
                     <h3>תאריך:</h3>
                     <span id="displayDate"></span> 
                 </section>
-                 <section class="detail-item">
+                <section class="detail-item">
                     <h3>שעה:</h3>
                     <span id="displayTime"></span> 
                 </section>
@@ -39,21 +37,17 @@
                 </section>
                 <section class="detail-item">
                     <h3>תמונה/סרטון:</h3>
-                    <span id=""></span> 
-                </section>
+                    <span id="displayMedia"></span> </section>
                 <section class="detail-item">
                     <h3>סטטוס פנייה:</h3>
-                    <span id=""></span> 
-                </section>
+                    <span id="displayStatus"></span> </section>
                 <section class="detail-item">
                     <h3>תגובת הרשות המקומית:</h3>
-                    <span id=""></span> 
-                </section>  
+                    <span id="displayMunicipalityResponse"></span> </section>   
             </section>
         </section>
-    </main>  
+    </main>    
     <footer class="thank-you-footer">
-        <button>חזרה לעמוד הבית</button>
-    </footer> 
-</body>
+        <button id="homeButton">חזרה לעמוד הבית</button> </footer> 
+    <script src="../js/reportingDetailsPage.js"></script> </body>
 </html>
