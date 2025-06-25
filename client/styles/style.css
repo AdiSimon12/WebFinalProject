@@ -320,7 +320,7 @@ Header{
 /*for newReportPage.html page*/
 .app-container {
     background-color: #EBFFF8;
-    border-radius: 20px; 
+    border-radius: 50px; 
     padding: 20px;
     margin-bottom: 40px; 
 }
@@ -342,7 +342,6 @@ Header{
   display: flex;
   align-items: center;
 }
-
 .form-label {
     font-size: 35px;
     font-weight: bold;
@@ -384,7 +383,7 @@ Header{
 }
 #media-file{
   font-size: 20px;   /* מגדיל את הטקסט של הכפתור */
-  padding-left:  300px;     /* מגדיל את שטח הלחיצה */
+  padding-left:  400px;     /* מגדיל את שטח הלחיצה */
   padding-top: 20px;
 }
 .asterisk {
@@ -446,7 +445,7 @@ textarea:focus{
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
-    margin-right: 400px;
+    margin-right: 380px;
     display: flex;
     align-items: center;  
     justify-content: center; 
@@ -517,11 +516,10 @@ textarea:focus{
     border-radius: 45px;
     padding: 20px 40px; /* שינוי: הוספת ריפוד אופקי */
     margin-bottom: 20px;
-    width: 1000px;
-    height: auto;
+    width: 700px;
     /* text-align: right;   הסר שורה זו */
 }
-.report-details-container h2 {
+.app-container h2 {
     font-size: 80px;
     margin-top: 30px;
     margin-bottom: 0px; /* נשאר 0 */
@@ -532,9 +530,7 @@ textarea:focus{
 }
 .detail-item {
     display: flex;
-    justify-content: flex-end; /* יישר את כל הפריט לימין של הקונטיינר שלו */
     align-items: baseline; /* הוספה: יישור הטקסט של התווית והערך בקו בסיס אחד */
-    /* font-size: 30px; */ /* הסר או שנה: גודל גופן כללי של הפריט כבר לא נחוץ כאן */
     margin-bottom: 5px; /* שינוי: הקטנת הרווח בין פריטי הפירוט */
     padding-right: 20px; /* הוספה: רווח מהקצה הימני של ה-container */
     padding-left: 20px; /* הוספה: רווח מהקצה השמאלי */
@@ -559,7 +555,7 @@ textarea:focus{
 .uploaded-media-preview {
     width: 200px; /* גודל תצוגה מקדימה גדולה יותר */
     height: auto; /* לשמור על יחס גובה-רוחב */
-    max-width: 100%; /* לוודא שלא חורג מהקונטיינר */
+    max-width: 100%; /* לוודא שלא חורג מהקונטיינר *eport-details/
     display: block; /* לוודא שהוא מקבל שורה משלו וניתן למרכז */
     margin: 10px auto 20px auto; /* מרכז תמונה, רווח מעל ומתחת */
     border-radius: 8px;
@@ -726,10 +722,6 @@ textarea:focus{
 }
 .status-in-progress {
     color: #2e23c2;
-}
-/**/
-.status-pending {
-    color: #FFA500; /* כתום - ממתין לטיפול */
 }
 /* הוספה/עדכון: ריווח מתחת לקונטיינר המסננים */
 .reports-filters-container {
@@ -1481,7 +1473,7 @@ textarea:focus{
     box-sizing: border-box;
   }
 
-  .report-details-container h2 {
+  .app-container h2 {
     font-size: 8vw; /* 80px -> 8vw */
     margin-top: 3vw; /* 30px -> 3vw */
     margin-bottom: 0;

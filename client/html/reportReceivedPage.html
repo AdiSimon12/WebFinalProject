@@ -11,16 +11,15 @@
 </head>
 <body class="page-wrapper">
     <header class="thank-you-header">
-        <img class="header-logo" src="../images/Logo-report.png" alt="לוגו דיווח בטוח">
         <h1>תודה!</h1>
         <h2>הדיווח נשלח בהצלחה!</h2>
         <p>פרטים נוספים על סטטוס הפנייה <br> ניתנים לראות ב"דיווחים שלי"</p>
         </header>
 
     <main class="app-container"> 
+        <h2>פרטי הדיווח:</h2>
         <section class="gray-frame">
             <section class="report-details-container">
-                <h2>פרטי הדיווח:</h2>
                 <section  class="detail-item">
                     <h3>תקלה:</h3> <span id="displayFaultType"></span>
                 </section >
@@ -37,17 +36,16 @@
                     <h3>תיאור:</h3> <span id="displayDescription"></span>
                 </section >
                 <section  class="detail-item">
-                    <h3>קובץ מצורף:</h3> <span id="displayMedia"></span>
+                    <h3>תמונה/סרטון:</h3> <span id="displayMedia" style="display:none;"></span>
                 </section >
                 <img id="mediaPreview" src="" alt="תצוגה מקדימה" class="uploaded-media-preview" style="display:none;">
             </section>
         </section>
-
-        <section class="thank-you-footer">
-            <button id="goToMyReportsBtn">מעבר ל-"דיווחים שלי"</button>
-            <button id="goToHomeBtn">חזרה לעמוד הבית</button>
-        </section>
     </main>
+    <section class="thank-you-footer">
+        <button id="goToMyReportsBtn">מעבר ל-"דיווחים שלי"</button>
+        <button id="goToHomeBtn">חזרה לעמוד הבית</button>
+    </section>
 
     <script src="../js/reportReceivedPage.js"></script>
 </body>

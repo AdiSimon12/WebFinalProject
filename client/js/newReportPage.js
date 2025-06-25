@@ -3,48 +3,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const backButton = document.getElementById('backButton');
     const reportForm = document.querySelector('.report-form');
 
-    // Fields related to fault type
+    // Fault type elements
     const faultTypeSelect = document.getElementById('fault-type');
     const faultDescriptionTextarea = document.getElementById('fault-description');
-    // --- שינוי: רפרנסים חדשים לאלמנטים בתוך ה-Label של תיאור תקלה ---
     const faultDescriptionOptionalIndicator = document.querySelector('label[for="fault-description"] .optional-indicator');
     const faultDescriptionRequiredIndicator = document.querySelector('label[for="fault-description"] .required-indicator');
     const faultDescriptionValidationIconContainer = document.querySelector('label[for="fault-description"] .validation-icon-container');
+    const faultTypeStatusIcon = faultTypeSelect.closest('.input-container').querySelector('.asterisk');
+    const faultDescriptionStatusIcon = faultDescriptionTextarea.closest('.frame-textarea').querySelector('.validation-icon');
 
 
-    // Fields related to location
+    // Location elements
     const locationSelect = document.getElementById('location');
     const manualAddressSection = document.getElementById('manualAddressSection');
     const cityInput = document.getElementById('cityInput');
     const streetInput = document.getElementById('streetInput');
-    const houseNumberInput = document.getElementById('houseNumberInput');
+    const houseNumberInput = document.getElementById('houseNumberInput'); // Corrected typo here
+    const locationStatusIcon = locationSelect.closest('.input-container').querySelector('.asterisk');
+    const cityStatusIcon = cityInput.closest('.input-container').querySelector('.asterisk');
+    const streetStatusIcon = streetInput.closest('.input-container').querySelector('.asterisk');
 
-    // Fields related to media upload
+
+    // Media upload elements
     const uploadSelect = document.getElementById('upload');
     const mediaUploadSection = document.getElementById('mediaUploadSection');
     const mediaFileInput = document.getElementById('media-file');
+    const uploadStatusIcon = uploadSelect.closest('.input-container').querySelector('.asterisk');
+    // **New:** Reference to the asterisk icon for media file input
+    const mediaFileStatusIcon = mediaFileInput.closest('.input-container').querySelector('.asterisk');
 
-    // --- Addition: New elements related to the camera ---
+
+    // Camera elements
     const video = document.getElementById('cameraPreview');
     const captureButton = document.getElementById('capture');
     const canvas = document.getElementById('canvas');
-    let capturedBlob = null; // Will store the image file captured from the camera
-    let stream = null; // Will store the active camera stream
+    let capturedBlob = null;
+    let stream = null;
 
-
-    // Variables for temporary data storage
-    let selectedFaultType = '';
-    let selectedLocationType = '';
-    let selectedUploadOption = '';
-
-    // Variables for storing current location (latitude and longitude)
+    // Variables for location and address
     let currentLat = null;
     let currentLon = null;
+    let locationString = ''; // Full address from geocoding
 
-    // Get user details from sessionStorage
+    // User info from sessionStorage
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    let currentUsername = 'Anonymous'; // Default
-    let currentUserId = 'anonymous'; // Default
+    let currentUsername = 'Anonymous';
+    let currentUserId = 'anonymous';
 
     if (loggedInUser) {
         currentUsername = loggedInUser.username;
@@ -53,149 +57,183 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.warn('No user logged in to sessionStorage.');
         alert('שגיאה: משתמש לא מחובר. אנא התחבר שוב.');
-        window.location.href = '/html/userTypeSelection.html'; // חזור לדף הבחירה אם אין משתמש מחובר
+        window.location.href = '../index.html';
     }
 
-    // --- 2. Handle back arrow button ---
+    // Back button handler
     if (backButton) {
         backButton.addEventListener('click', (event) => {
             event.preventDefault();
-            // Path: from the static root (client/) to the html/ folder and then to homePageCitizen.html
             window.location.href = '/html/homePageCitizen.html';
         });
-    } else {
-        console.warn("Element with ID 'backButton' not found. Cannot attach click listener.");
     }
 
-    // --- 3. Function to update the status of the "Fault Description" field ---
-    function updateFaultDescriptionRequirement() {
-        selectedFaultType = faultTypeSelect.value;
+    // --- Path constants for icons ---
+    const V_ICON_PATH = '../images/v_icon.svg'; // Path to the checkmark icon
+    const ASTERISK_ICON_PATH = '../images/asterisk.svg'; // Path to the asterisk icon
 
-        if (selectedFaultType === 'type4') { // If "Other" option is selected
+    // --- Function to update icon based on input/selection ---
+    function updateStatusIcon(inputElement, iconElement) {
+        if (!iconElement) return; // Add a check to ensure the icon element exists
+
+        if (inputElement.tagName === 'SELECT') {
+            if (inputElement.value !== '') {
+                iconElement.src = V_ICON_PATH;
+            } else {
+                iconElement.src = ASTERISK_ICON_PATH;
+            }
+        } else if (inputElement.type === 'file') { // **New:** Special handling for file input
+            if (inputElement.files.length > 0) {
+                iconElement.src = V_ICON_PATH;
+            } else {
+                iconElement.src = ASTERISK_ICON_PATH;
+            }
+        }
+        else { // Assumes textarea or text input
+            if (inputElement.value.trim() !== '') {
+                iconElement.src = V_ICON_PATH;
+            } else {
+                iconElement.src = ASTERISK_ICON_PATH;
+            }
+        }
+    }
+
+    // Update fault description requirement and icon
+    function updateFaultDescriptionRequirement() {
+        const selectedFaultType = faultTypeSelect.value;
+        if (selectedFaultType === 'type4') {
             faultDescriptionTextarea.setAttribute('required', 'true');
-            // --- שינוי: הצג את הכיתוב והאייקון של חובה, הסתר את "לא חובה" ---
-            if (faultDescriptionOptionalIndicator) {
-                faultDescriptionOptionalIndicator.style.display = 'none';
-            }
-            if (faultDescriptionRequiredIndicator) {
-                faultDescriptionRequiredIndicator.style.display = 'inline'; // הצג "(חובה)"
-            }
-            if (faultDescriptionValidationIconContainer) {
-                faultDescriptionValidationIconContainer.style.display = 'inline-block'; // הצג את האייקון
-            }
+            if (faultDescriptionOptionalIndicator) faultDescriptionOptionalIndicator.style.display = 'none';
+            if (faultDescriptionRequiredIndicator) faultDescriptionRequiredIndicator.style.display = 'inline';
+            if (faultDescriptionValidationIconContainer) faultDescriptionValidationIconContainer.style.display = 'inline-block';
         } else {
             faultDescriptionTextarea.removeAttribute('required');
-            // --- שינוי: הסתר את הכיתוב והאייקון של חובה, הצג את "לא חובה" ---
-            if (faultDescriptionOptionalIndicator) {
-                faultDescriptionOptionalIndicator.style.display = 'inline';
-            }
-            if (faultDescriptionRequiredIndicator) {
-                faultDescriptionRequiredIndicator.style.display = 'none'; // הסתר "(חובה)"
-            }
-            if (faultDescriptionValidationIconContainer) {
-                faultDescriptionValidationIconContainer.style.display = 'none'; // הסתר את האייקון
-            }
+            if (faultDescriptionOptionalIndicator) faultDescriptionOptionalIndicator.style.display = 'inline';
+            if (faultDescriptionRequiredIndicator) faultDescriptionRequiredIndicator.style.display = 'none';
+            if (faultDescriptionValidationIconContainer) faultDescriptionValidationIconContainer.style.display = 'none';
             faultDescriptionTextarea.value = '';
         }
-        console.log('Selected fault type:', selectedFaultType);
-        console.log('Fault description is required:', faultDescriptionTextarea.hasAttribute('required'));
+        updateStatusIcon(faultTypeSelect, faultTypeStatusIcon); // Update fault type icon
+        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon); // Update fault description icon
     }
 
-    // --- 4. Function to handle location selection ---
+    // Handle location selection and related icons
     function handleLocationSelection() {
-        selectedLocationType = locationSelect.value;
-        console.log('Selected location type:', selectedLocationType);
+        const selectedLocationType = locationSelect.value;
 
-        if (selectedLocationType === 'loc2') { // If "Manual location entry" is selected
+        if (selectedLocationType === 'loc2') { // Manual location entry
             manualAddressSection.style.display = 'block';
             cityInput.setAttribute('required', 'true');
             streetInput.setAttribute('required', 'true');
-            // --- Change: House number remains optional, no need to remove required as it wasn't added in HTML ---
-            // houseNumberInput.removeAttribute('required'); 
 
-            // Ensure current location data is reset when switching to manual
+            // Set initial asterisk for city and street when section opens
+            updateStatusIcon(cityInput, cityStatusIcon);
+            updateStatusIcon(streetInput, streetStatusIcon);
+
             currentLat = null;
             currentLon = null;
-
-        } else if (selectedLocationType === 'loc1') { // If "Current location" is selected
-            manualAddressSection.style.display = 'none'; // Hide manual address fields
-            // Clear manual address fields
-            cityInput.removeAttribute('required');
-            cityInput.value = '';
-            streetInput.removeAttribute('required');
-            streetInput.value = '';
-            // --- Change: House number remains optional, no need to remove required as it wasn't added in HTML ---
-            // houseNumberInput.removeAttribute('required');
-            houseNumberInput.value = '';
-
-            // **Call the function to detect current location**
-            getCurrentLocation();
-
-        } else { // Default or empty selection
+            locationString = '';
+        } else if (selectedLocationType === 'loc1') { // Current location
             manualAddressSection.style.display = 'none';
             cityInput.removeAttribute('required');
             cityInput.value = '';
             streetInput.removeAttribute('required');
             streetInput.value = '';
-            // --- Change: House number remains optional, no need to remove required as it wasn't added in HTML ---
-            // houseNumberInput.removeAttribute('required');
             houseNumberInput.value = '';
-            currentLat = null; // Also reset here
+
+            // Reset icons for city and street when manual section hides
+            if (cityStatusIcon) cityStatusIcon.src = ASTERISK_ICON_PATH;
+            if (streetStatusIcon) streetStatusIcon.src = ASTERISK_ICON_PATH;
+
+            getCurrentLocation();
+        } else { // Default (nothing selected)
+            manualAddressSection.style.display = 'none';
+            cityInput.removeAttribute('required');
+            cityInput.value = '';
+            streetInput.removeAttribute('required');
+            streetInput.value = '';
+            houseNumberInput.value = '';
+
+            // Reset icons for city and street
+            if (cityStatusIcon) cityStatusIcon.src = ASTERISK_ICON_PATH;
+            if (streetStatusIcon) streetStatusIcon.src = ASTERISK_ICON_PATH;
+
+            currentLat = null;
             currentLon = null;
+            locationString = '';
         }
+        updateStatusIcon(locationSelect, locationStatusIcon); // Update location select icon
     }
 
-    // **Function: Detect current location using Geolocation API (without external service)**
-    function getCurrentLocation() {
-        if (navigator.geolocation) {
-            console.log("Geolocation is supported by this browser.");
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    currentLat = position.coords.latitude;
-                    currentLon = position.coords.longitude;
-                    console.log(`Current Location: Lat ${currentLat}, Lon ${currentLon}`);
-                    alert(`Location successfully detected. The system will convert it to a full address.`);
-                },
-                (error) => {
-                    console.error("Error getting current location:", error);
-                    let errorMessage = "An error occurred while detecting the location.";
-                    switch (error.code) {
-                        case error.PERMISSION_DENIED:
-                            errorMessage = "User denied the request for Geolocation. Please allow access to location in browser settings.";
-                            break;
-                        case error.POSITION_UNAVAILABLE:
-                            errorMessage = "Location information is unavailable.";
-                            break;
-                        case error.TIMEOUT:
-                            errorMessage = "The request to get location timed out.";
-                            break;
-                        case error.UNKNOWN_ERROR:
-                            errorMessage = "An unknown error occurred while detecting location.";
-                            break;
-                    }
-                    alert(errorMessage);
-                    // In case of an error, reset the location selection to empty or manual location
-                    locationSelect.value = '';
-                    handleLocationSelection(); // Call again to reset visual state and requirements
-                    currentLat = null;
-                    currentLon = null;
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                }
-            );
-        } else {
+    // Get current location and convert to address using Google Geocoding API
+    async function getCurrentLocation() {
+        if (!navigator.geolocation) {
             alert("Your browser does not support Geolocation. Please use the 'Manual location entry' option.");
             locationSelect.value = 'loc2';
             handleLocationSelection();
+            return;
         }
+
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                currentLat = position.coords.latitude;
+                currentLon = position.coords.longitude;
+                console.log(`Current Location: Lat ${currentLat}, Lon ${currentLon}`);
+
+                try {
+                    const apiKey = 'AIzaSyBnRHLdYCyHCyCZA30LeDv468lFXEvgbvA';
+                    const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${currentLat},${currentLon}&key=${apiKey}`);
+                    const data = await response.json();
+
+                    if (data.status === 'OK' && data.results.length > 0) {
+                        locationString = data.results[0].formatted_address;
+                        console.log("Resolved address:", locationString);
+                        alert(`Location detected: ${locationString}`);
+                    } else {
+                        locationString = `Lat: ${currentLat}, Lon: ${currentLon}`;
+                        alert("Location detected, but could not convert to full address.");
+                    }
+                } catch (err) {
+                    console.error("Geocoding error:", err);
+                    locationString = `Lat: ${currentLat}, Lon: ${currentLon}`;
+                    alert("Location detected, but failed to get full address.");
+                }
+            },
+            (error) => {
+                console.error("Error getting current location:", error);
+                let errorMessage = "An error occurred while detecting the location.";
+                switch (error.code) {
+                    case error.PERMISSION_DENIED:
+                        errorMessage = "User denied the request for Geolocation. Please allow access to location in browser settings.";
+                        break;
+                    case error.POSITION_UNAVAILABLE:
+                        errorMessage = "Location information is unavailable.";
+                        break;
+                    case error.TIMEOUT:
+                        errorMessage = "The request to get location timed out.";
+                        break;
+                    case error.UNKNOWN_ERROR:
+                        errorMessage = "An unknown error occurred while detecting location.";
+                        break;
+                }
+                alert(errorMessage);
+                locationSelect.value = '';
+                handleLocationSelection(); // This will reset location data and icons
+                currentLat = null;
+                currentLon = null;
+                locationString = '';
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000,
+                maximumAge: 0
+            }
+        );
     }
 
-    // --- 5. Function to handle media upload selection (updated for camera) ---
+    // Media upload handling and camera code
     function updateMediaUploadVisibility() {
-        selectedUploadOption = uploadSelect.value;
+        const selectedUploadOption = uploadSelect.value;
         console.log('Upload option selected:', selectedUploadOption);
 
         // Hide everything first
@@ -207,28 +245,24 @@ document.addEventListener('DOMContentLoaded', () => {
         video.style.display = 'none';
         captureButton.style.display = 'none';
         stopCamera(); // Ensure camera is off
-        // --- Addition: Hide the captured image preview ---
+
+        // Hide the captured image preview
         const existingPreview = document.getElementById('capturedImagePreview');
         if (existingPreview) {
             existingPreview.remove();
         }
         capturedBlob = null; // Also reset the captured blob
+        // **New:** Reset media file icon when hiding the section or changing option
+        updateStatusIcon(mediaFileInput, mediaFileStatusIcon); // Ensure the asterisk is shown
+
 
         if (selectedUploadOption === 'option1') { // If "Camera" is selected
-            if (isDesktop()) { // For desktop, use <video> element and capture button
-                mediaUploadSection.style.display = 'none'; // Hide file input field
-                mediaFileInput.removeAttribute('required'); // Ensure file field is not required
-                
-                video.style.display = 'block';
-                captureButton.style.display = 'inline-block'; // Note inline-block
-                startCamera(); // Start the camera
-            } else { // For mobile, use input type="file" with capture
-                mediaUploadSection.style.display = 'block';
-                mediaFileInput.setAttribute('required', 'true');
-                mediaFileInput.setAttribute('accept', 'image/*,video/*'); // Accept images and videos
-                mediaFileInput.setAttribute('capture', 'environment'); // Hint to open rear camera
-                mediaFileInput.value = ''; // Clear previous selection if any
-            }
+            mediaUploadSection.style.display = 'none'; // Hide file input field
+            mediaFileInput.removeAttribute('required'); // Ensure file field is not required
+
+            video.style.display = 'block';
+            captureButton.style.display = 'inline-block'; // Note inline-block
+            startCamera(); // Start the camera
 
         } else if (selectedUploadOption === 'option2') { // If "Photo library" is selected
             mediaUploadSection.style.display = 'block';
@@ -236,17 +270,14 @@ document.addEventListener('DOMContentLoaded', () => {
             mediaFileInput.setAttribute('accept', 'image/*,video/*'); // Accept images and videos
             mediaFileInput.removeAttribute('capture'); // Do not hint for camera, allow file selection
             mediaFileInput.value = ''; // Clear previous selection if any
+            // Initial call for the file input icon when the section becomes visible
+            updateStatusIcon(mediaFileInput, mediaFileStatusIcon); // **New**
 
         } else { // Default (or nothing selected)
             // Already handled by hiding everything and turning off the camera at the beginning of the function
-            // capturedBlob = null; // Already reset above in the function
         }
         console.log('Media file field required:', mediaFileInput.hasAttribute('required'));
-    }
-
-    // --- Addition: Camera helper functions ---
-    function isDesktop() {
-        return !/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        updateStatusIcon(uploadSelect, uploadStatusIcon); // Update upload icon
     }
 
     async function startCamera() {
@@ -260,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error('Error accessing camera:', err);
             alert('Cannot enable camera: ' + err.message + '\nPlease ensure you have a camera connected and allow access to it in your browser settings.');
-            // In case of an error, perhaps reset the selection or switch to another option
             uploadSelect.value = ''; // Perhaps reset the selection
             updateMediaUploadVisibility(); // And update the display
         }
@@ -279,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Camera stopped.");
     }
 
-    // --- Addition: Handle capture button ---
+    // --- Handle capture button ---
     if (captureButton) {
         captureButton.addEventListener('click', () => {
             if (!stream) {
@@ -293,14 +323,11 @@ document.addEventListener('DOMContentLoaded', () => {
             canvas.toBlob(blob => {
                 capturedBlob = blob;
                 alert("Image successfully captured and saved for the report.");
-                // Perhaps display the captured image to the user
                 const img = document.createElement('img');
                 img.src = URL.createObjectURL(blob);
                 img.style.maxWidth = '100px';
                 img.style.maxHeight = '100px';
                 img.style.marginTop = '10px';
-                // Replace the capture button with a preview, or add it
-                // For example, add it next to the button or above the video
                 const existingPreview = document.getElementById('capturedImagePreview');
                 if (existingPreview) {
                     existingPreview.src = img.src;
@@ -308,44 +335,73 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.id = 'capturedImagePreview';
                     captureButton.parentNode.insertBefore(img, captureButton.nextSibling);
                 }
-
-                // Can also turn off the camera or change the display
                 stopCamera();
                 video.style.display = 'none';
                 captureButton.style.display = 'none';
-
-            }, 'image/jpeg'); // User's code specifies 'image/jpeg'
+                // **New:** When an image is captured, treat it as a valid selection for the media file input
+                // This will make the mediaFileStatusIcon change to V_ICON_PATH
+                updateStatusIcon({ type: 'file', files: [capturedBlob] }, mediaFileStatusIcon); // Simulate a file selection
+            }, 'image/jpeg');
         });
     }
 
-
-    // --- 6. Add event listeners for selection changes ---
+    // --- Event listeners ---
     if (faultTypeSelect) {
         faultTypeSelect.addEventListener('change', updateFaultDescriptionRequirement);
         updateFaultDescriptionRequirement(); // Initial call
     }
+    // New: Event listener for fault description textarea
+    if (faultDescriptionTextarea) {
+        faultDescriptionTextarea.addEventListener('input', () => {
+            updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon);
+        });
+        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon); // Initial call
+    }
+
     if (locationSelect) {
         locationSelect.addEventListener('change', handleLocationSelection);
         handleLocationSelection(); // Initial call
     }
-    if (uploadSelect) {
-        uploadSelect.addEventListener('change', updateMediaUploadVisibility);
-        updateMediaUploadVisibility(); // Initial call of the function on page load
+    // New: Event listeners for city and street inputs
+    if (cityInput) {
+        cityInput.addEventListener('input', () => {
+            updateStatusIcon(cityInput, cityStatusIcon);
+        });
+        // Initial call only if manualAddressSection is visible on load (unlikely, but for consistency)
+        // This will be handled by handleLocationSelection() when loc2 is chosen.
+    }
+    if (streetInput) {
+        streetInput.addEventListener('input', () => {
+            updateStatusIcon(streetInput, streetStatusIcon);
+        });
+        // Initial call similar to cityInput
     }
 
-    // --- 7. Handle form submission ---
+    if (uploadSelect) {
+        uploadSelect.addEventListener('change', updateMediaUploadVisibility);
+        updateMediaUploadVisibility(); // Initial call
+    }
+    // **New:** Event listener for mediaFileInput
+    if (mediaFileInput) {
+        mediaFileInput.addEventListener('change', () => {
+            updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
+        });
+        // Initial call for file input, ensuring asterisk is there if no file is selected
+        updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
+    }
+
+
     if (reportForm) {
         reportForm.addEventListener('submit', async (event) => {
             event.preventDefault();
 
             if (!reportForm.checkValidity()) {
                 alert('Please fill in all required fields.');
-                // Add logic to display errors to the user more clearly
-                reportForm.reportValidity(); // Displays built-in browser error messages
+                reportForm.reportValidity();
                 return;
             }
 
-            const faultType = faultTypeSelect.value;
+            const faultType = faultTypeSelect.options[faultTypeSelect.selectedIndex].text;
             const faultDescription = faultDescriptionTextarea.value.trim();
             const locationType = locationSelect.value;
 
@@ -366,7 +422,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 locationData = {
                     type: 'current',
                     latitude: currentLat,
-                    longitude: currentLon
+                    longitude: currentLon,
+                    address: locationString || ''
                 };
             } else {
                 alert('Please select a location type.');
@@ -376,53 +433,36 @@ document.addEventListener('DOMContentLoaded', () => {
             const uploadOption = uploadSelect.value;
             let mediaToUpload = null;
 
-            // *** שינוי: טיפול בקובץ המדיה בהתאם לאפשרויות העלאה ומכשיר ***
-            if (uploadOption === 'option1') { // אם נבחרה אפשרות "מצלמה"
-                if (isDesktop()) { // אם המכשיר הוא דסקטופ, השתמש ב-Blob שצולם מהמצלמה
-                    if (capturedBlob) {
-                        mediaToUpload = new File([capturedBlob], 'captured_image.jpeg', { type: 'image/jpeg' });
-                        console.log("Captured blob will be uploaded (desktop camera).");
-                    } else {
-                        alert('לא צולמה תמונה. אנא צלם תמונה או בחר באפשרות אחרת.');
-                        return;
-                    }
-                } else { // אם המכשיר הוא מובייל, השתמש בקובץ שנבחר באמצעות קלט הקובץ (שמפעיל מצלמה)
-                    if (mediaFileInput.files.length > 0) {
-                        mediaToUpload = mediaFileInput.files[0];
-                        console.log("Captured file from mobile camera will be uploaded:", mediaToUpload.name);
-                    } else {
-                        alert('אנא השתמש במצלמת המכשיר שלך כדי לצלם תמונה/וידאו.');
-                        return;
-                    }
+            if (uploadOption === 'option1') {
+                if (capturedBlob) {
+                    mediaToUpload = new File([capturedBlob], 'captured_image.jpeg', { type: 'image/jpeg' });
+                } else {
+                    alert('לא צולמה תמונה. אנא צלם תמונה או בחר באפשרות אחרת.');
+                    return;
                 }
-            } else if (uploadOption === 'option2') { // אם נבחרה אפשרות "ספריית תמונות"
+            } else if (uploadOption === 'option2') {
                 if (mediaFileInput.files.length > 0) {
                     mediaToUpload = mediaFileInput.files[0];
-                    console.log("Selected media file from gallery will be uploaded:", mediaToUpload.name);
                 } else {
                     alert('אנא בחר קובץ תמונה/וידאו מספריית המדיה שלך.');
                     return;
                 }
-            } else { // אם לא נבחרה אפשרות העלאה
+            } else {
                 alert('אנא בחר אפשרות להעלאת מדיה (מצלמה או ספריית תמונות).');
                 return;
             }
-            // *** סיום שינוי בלוגיקת העלאת המדיה ***
-
 
             const formData = new FormData();
             formData.append('faultType', faultType);
             formData.append('faultDescription', faultDescription);
             formData.append('locationType', locationType);
             formData.append('locationDetails', JSON.stringify(locationData));
-
             formData.append('uploadOption', uploadOption);
-            if (mediaToUpload) { // Ensure mediaToUpload is not null
+            if (mediaToUpload) {
                 formData.append('mediaFile', mediaToUpload);
             }
             formData.append('createdBy', currentUsername);
             formData.append('creatorId', currentUserId);
-
 
             console.log('Report data ready for client submission:', {
                 faultType,
@@ -435,10 +475,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 creatorId: currentUserId
             });
 
-
             try {
-                // *** IMPORTANT: Replace 'https://your-backend-app-name.railway.app' with the actual public URL of your Backend on Railway ***
-                const res = await fetch('https://webfinalproject-j4tc.onrender.com/api/reports', { // Changed this line
+                const res = await fetch('https://webfinalproject-j4tc.onrender.com/api/reports', {
                     method: 'POST',
                     body: formData
                 });
@@ -450,43 +488,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     let displayLocation = '';
                     if (locationType === 'loc1') {
-                        // The client still doesn't know the full address, so display a general message
-                        displayLocation = `Your current location (address will be updated after report reception)`;
+                        displayLocation = locationString || `Your current location (lat: ${currentLat}, lon: ${currentLon})`;
                     } else if (locationType === 'loc2') {
-                        displayLocation = `City: ${cityInput.value}, Street: ${streetInput.value}`;
+                        displayLocation = `עיר: ${cityInput.value}, רחוב: ${streetInput.value},`;
                         if (houseNumberInput.value) {
-                            displayLocation += `, House No: ${houseNumberInput.value}`;
+                            displayLocation += `מספר בית: ${houseNumberInput.value}`;
                         }
                     }
 
-                    // *** IMPORTANT: Use data.reportId as the reportId received from the server ***
-                    // *** IMPORTANT: Use data.mediaFileNameOnServer for the mediaFileName, as this is the name assigned by the server ***
                     sessionStorage.setItem('lastReportDetails', JSON.stringify({
                         faultType: faultTypeSelect.options[faultTypeSelect.selectedIndex].text,
-                        faultDescription: faultDescription,
+                        faultDescription,
                         location: displayLocation,
-                        mediaFileName: data.mediaFileNameOnServer || 'No file', // Changed this line
-                        reportId: data.reportId || 'N/A', // Changed this line
+                        mediaFileName: data.mediaFileNameOnServer || 'No file',
+                        reportId: data.reportId || 'N/A',
                         timestamp: new Date().toISOString(),
                     }));
 
                     alert('Report submitted successfully!');
-                    // Path: from the static root (client/) to the html/ folder and then to reportReceivedPage.html
                     window.location.href = '/html/reportReceivedPage.html';
                 } else {
                     alert(data.message || 'Error submitting report: ' + (data.error || 'An error occurred.'));
-                    console.error('Report submission failed from server:', data.error || 'Unknown error');
+                    console.error('Report submission failed:', data.error || 'Unknown error');
                 }
             } catch (err) {
                 alert('An error occurred connecting to the server when submitting the report. Please try again later.');
-                console.error('Fetch error during report submission:', err);
+                console.error('Fetch error:', err);
             }
         });
-    } else {
-        console.warn("Report form not found. Ensure element with class 'report-form' exists.");
     }
 
-    // --- Cleanup: Ensure camera is stopped if user navigates away or closes tab ---
+    // Cleanup camera on unload
     window.addEventListener('beforeunload', () => {
         stopCamera();
     });
