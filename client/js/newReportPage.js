@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Path constants for icons ---
-    const V_ICON_PATH = '../images/v_icon.svg'; // Path to the checkmark icon
+    const V_ICON_PATH = '../images/V_icon.svg'; // Path to the checkmark icon
     const ASTERISK_ICON_PATH = '../images/asterisk.svg'; // Path to the asterisk icon
 
     // --- Function to update icon based on input/selection ---
