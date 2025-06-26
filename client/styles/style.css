@@ -556,6 +556,7 @@ textarea:focus{
     font-size: 35px; /* *** שינוי קריטי: הגדרת גודל גופן זהה לכותרות *** */
     font-weight: normal; /* *** שינוי קריטי: הסרת הבולד *** */
     width: 500px;
+    white-space: nowrap;
     overflow-wrap: break-word;
     display: inline-block;
 }
@@ -763,6 +764,9 @@ textarea:focus{
     color: #666;
     font-size: 24px;
     margin-top: 50px;
+}
+#displayMedia{
+  width: 25px; 
 }
 /**/
 /*for reportEditPage page*/
