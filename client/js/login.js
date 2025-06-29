@@ -2,45 +2,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.querySelector('.login-form');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    
     const selectedUserType = localStorage.getItem('selectedUserType');
-
     const API_BASE_LOGIN = 'https://webfinalproject-j4tc.onrender.com/api/login';
-
     console.log('Selected user type on the login page:', selectedUserType);
-
     if (loginForm) {
         loginForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-
             const username = usernameInput.value.trim();
             const password = passwordInput.value.trim();
-
             if (!username || !password) {
                 alert('אנא הזן שם משתמש וסיסמה.');
                 return;
             }
-
             if (!selectedUserType) {
                 alert('שגיאה: סוג משתמש לא נבחר. אנא חזור לדף הבחירה.');
                 console.error('שגיאה: selectedUserType הוא null או undefined.');
                 return;
             }
-
             try {
                 const res = await fetch(API_BASE_LOGIN, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, password, userType: selectedUserType })
                 });
-
                 const data = await res.json(); 
                 console.log('Full server response:', data); 
-                
                 if (res.ok) { 
                     console.log('Login successful:', data.message);
-                    console.log('User data from server:', data.user);
-                    
+                    console.log('User data from server:', data.user);         
                     if (data.user && data.user.username && data.user.userId && data.user.userType && data.user.city) {
                         localStorage.setItem('loggedInUser', JSON.stringify({
                             username: data.user.username,
@@ -52,9 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         console.warn('התשובה מהשרת חסרה נתוני משתמש צפויים (שם משתמש, userId, userType, או city).');
                     }
-
                     alert('התחברת בהצלחה!');
-
                     setTimeout(() => {
                         if (selectedUserType === 'citizen') {
                             window.location.href = '/html/homePageCitizen.html';

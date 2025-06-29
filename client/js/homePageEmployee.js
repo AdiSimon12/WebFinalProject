@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const reportsViewButton = document.getElementById('reportsViewButton');
-
     if (reportsViewButton) {
         reportsViewButton.addEventListener('click', () => {
             window.location.href = '../html/reportsViewPage.html'; 
