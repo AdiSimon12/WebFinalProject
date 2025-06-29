@@ -15,7 +15,7 @@
     </header>
     <main>
         <section class="reports-filter-buttons-container">
-            <button class="filter-button active">כל הדיווחים</button>
+            <button class="filter-button active" data-filter="all">כל הדיווחים</button>
             <button class="filter-button">דיווחים פתוחים</button>
             <button class="filter-button">דיווחים בטיפול</button>
             <button class="filter-button">דיווחים שנסגרו</button>
@@ -28,14 +28,10 @@
                 <option value="alphabetical">סדר א'-ב'</option>
                 </select>
             </section>
-            <section class="report-summary-card">
-                <section class="report-info">
-                    <span class="report-id-type">דיווח #<span class="report-id">132</span> 
-                    <span class="report-type-name">חוטי חשמל</span></span>
-                </section>
-                <a href="reportDetails.html?id=132" class="view-details-link">צפייה בפרטים</a>
+            <section id="reports-display-area">
             </section>
         </section>
     </main>    
+    <script src="../js/reportsViewPage.js"></script>
 </body>
 </html>
