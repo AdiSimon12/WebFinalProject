@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const faultTypeStatusIcon = faultTypeSelect.closest('.input-container').querySelector('.asterisk');
     const faultDescriptionStatusIcon = faultDescriptionTextarea.closest('.frame-textarea').querySelector('.validation-icon');
 
-
     // Location elements
     const locationSelect = document.getElementById('location');
     const manualAddressSection = document.getElementById('manualAddressSection');
@@ -23,15 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const cityStatusIcon = cityInput.closest('.input-container').querySelector('.asterisk');
     const streetStatusIcon = streetInput.closest('.input-container').querySelector('.asterisk');
 
-
     // Media upload elements
     const uploadSelect = document.getElementById('upload');
     const mediaUploadSection = document.getElementById('mediaUploadSection');
     const mediaFileInput = document.getElementById('media-file');
     const uploadStatusIcon = uploadSelect.closest('.input-container').querySelector('.asterisk');
-    // **New:** Reference to the asterisk icon for media file input
     const mediaFileStatusIcon = mediaFileInput.closest('.input-container').querySelector('.asterisk');
-
 
     // Camera elements
     const video = document.getElementById('cameraPreview');
@@ -44,9 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentLat = null;
     let currentLon = null;
     let locationString = ''; // Full address from geocoding
+    let currentCity = '';    // <-- חדש: לשמור את שם העיר מהמיקום הנוכחי
 
-    // User info from sessionStorage
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    // User info from localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     let currentUsername = 'Anonymous';
     let currentUserId = 'anonymous';
 
@@ -55,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUserId = loggedInUser.userId;
         console.log('Logged-in user:', currentUsername, 'ID:', currentUserId);
     } else {
-        console.warn('No user logged in to sessionStorage.');
+        console.warn('No user logged in to localStorage.');
         alert('שגיאה: משתמש לא מחובר. אנא התחבר שוב.');
         window.location.href = '../index.html';
     }
@@ -74,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Function to update icon based on input/selection ---
     function updateStatusIcon(inputElement, iconElement) {
-        if (!iconElement) return; // Add a check to ensure the icon element exists
+        if (!iconElement) return;
 
         if (inputElement.tagName === 'SELECT') {
             if (inputElement.value !== '') {
@@ -82,14 +79,14 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 iconElement.src = ASTERISK_ICON_PATH;
             }
-        } else if (inputElement.type === 'file') { // **New:** Special handling for file input
+        } else if (inputElement.type === 'file') {
             if (inputElement.files.length > 0) {
                 iconElement.src = V_ICON_PATH;
             } else {
                 iconElement.src = ASTERISK_ICON_PATH;
             }
         }
-        else { // Assumes textarea or text input
+        else {
             if (inputElement.value.trim() !== '') {
                 iconElement.src = V_ICON_PATH;
             } else {
@@ -113,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (faultDescriptionValidationIconContainer) faultDescriptionValidationIconContainer.style.display = 'none';
             faultDescriptionTextarea.value = '';
         }
-        updateStatusIcon(faultTypeSelect, faultTypeStatusIcon); // Update fault type icon
-        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon); // Update fault description icon
+        updateStatusIcon(faultTypeSelect, faultTypeStatusIcon);
+        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon);
     }
 
     // Handle location selection and related icons
@@ -126,13 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
             cityInput.setAttribute('required', 'true');
             streetInput.setAttribute('required', 'true');
 
-            // Set initial asterisk for city and street when section opens
             updateStatusIcon(cityInput, cityStatusIcon);
             updateStatusIcon(streetInput, streetStatusIcon);
 
             currentLat = null;
             currentLon = null;
             locationString = '';
+            currentCity = '';
         } else if (selectedLocationType === 'loc1') { // Current location
             manualAddressSection.style.display = 'none';
             cityInput.removeAttribute('required');
@@ -141,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
             streetInput.value = '';
             houseNumberInput.value = '';
 
-            // Reset icons for city and street when manual section hides
             if (cityStatusIcon) cityStatusIcon.src = ASTERISK_ICON_PATH;
             if (streetStatusIcon) streetStatusIcon.src = ASTERISK_ICON_PATH;
 
@@ -154,15 +150,15 @@ document.addEventListener('DOMContentLoaded', () => {
             streetInput.value = '';
             houseNumberInput.value = '';
 
-            // Reset icons for city and street
             if (cityStatusIcon) cityStatusIcon.src = ASTERISK_ICON_PATH;
             if (streetStatusIcon) streetStatusIcon.src = ASTERISK_ICON_PATH;
 
             currentLat = null;
             currentLon = null;
             locationString = '';
+            currentCity = '';
         }
-        updateStatusIcon(locationSelect, locationStatusIcon); // Update location select icon
+        updateStatusIcon(locationSelect, locationStatusIcon);
     }
 
     // Get current location and convert to address using Google Geocoding API
@@ -187,15 +183,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (data.status === 'OK' && data.results.length > 0) {
                         locationString = data.results[0].formatted_address;
-                        console.log("Resolved address:", locationString);
+                        
+                        // חיפוש העיר מתוך רכיבי הכתובת
+                        const addressComponents = data.results[0].address_components;
+                        const cityComponent = addressComponents.find(component =>
+                            component.types.includes('locality') || component.types.includes('administrative_area_level_1')
+                        );
+                        currentCity = cityComponent ? cityComponent.long_name : '';
+
+                        console.log("Resolved address:", locationString, "City:", currentCity);
                         alert(`Location detected: ${locationString}`);
                     } else {
                         locationString = `Lat: ${currentLat}, Lon: ${currentLon}`;
+                        currentCity = '';
                         alert("Location detected, but could not convert to full address.");
                     }
                 } catch (err) {
                     console.error("Geocoding error:", err);
                     locationString = `Lat: ${currentLat}, Lon: ${currentLon}`;
+                    currentCity = '';
                     alert("Location detected, but failed to get full address.");
                 }
             },
@@ -218,10 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 alert(errorMessage);
                 locationSelect.value = '';
-                handleLocationSelection(); // This will reset location data and icons
+                handleLocationSelection();
                 currentLat = null;
                 currentLon = null;
                 locationString = '';
+                currentCity = '';
             },
             {
                 enableHighAccuracy: true,
@@ -236,63 +243,55 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectedUploadOption = uploadSelect.value;
         console.log('Upload option selected:', selectedUploadOption);
 
-        // Hide everything first
         mediaUploadSection.style.display = 'none';
         mediaFileInput.removeAttribute('required');
         mediaFileInput.removeAttribute('accept');
         mediaFileInput.removeAttribute('capture');
-        mediaFileInput.value = ''; // Clear previous selection
+        mediaFileInput.value = '';
         video.style.display = 'none';
         captureButton.style.display = 'none';
-        stopCamera(); // Ensure camera is off
+        stopCamera();
 
-        // Hide the captured image preview
         const existingPreview = document.getElementById('capturedImagePreview');
         if (existingPreview) {
             existingPreview.remove();
         }
-        capturedBlob = null; // Also reset the captured blob
-        // **New:** Reset media file icon when hiding the section or changing option
-        updateStatusIcon(mediaFileInput, mediaFileStatusIcon); // Ensure the asterisk is shown
+        capturedBlob = null;
+        updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
 
-
-        if (selectedUploadOption === 'option1') { // If "Camera" is selected
-            mediaUploadSection.style.display = 'none'; // Hide file input field
-            mediaFileInput.removeAttribute('required'); // Ensure file field is not required
+        if (selectedUploadOption === 'option1') {
+            mediaUploadSection.style.display = 'none';
+            mediaFileInput.removeAttribute('required');
 
             video.style.display = 'block';
-            captureButton.style.display = 'inline-block'; // Note inline-block
-            startCamera(); // Start the camera
+            captureButton.style.display = 'inline-block';
+            startCamera();
 
-        } else if (selectedUploadOption === 'option2') { // If "Photo library" is selected
+        } else if (selectedUploadOption === 'option2') {
             mediaUploadSection.style.display = 'block';
             mediaFileInput.setAttribute('required', 'true');
-            mediaFileInput.setAttribute('accept', 'image/*,video/*'); // Accept images and videos
-            mediaFileInput.removeAttribute('capture'); // Do not hint for camera, allow file selection
-            mediaFileInput.value = ''; // Clear previous selection if any
-            // Initial call for the file input icon when the section becomes visible
-            updateStatusIcon(mediaFileInput, mediaFileStatusIcon); // **New**
+            mediaFileInput.setAttribute('accept', 'image/*,video/*');
+            mediaFileInput.removeAttribute('capture');
+            mediaFileInput.value = '';
+            updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
 
-        } else { // Default (or nothing selected)
-            // Already handled by hiding everything and turning off the camera at the beginning of the function
         }
         console.log('Media file field required:', mediaFileInput.hasAttribute('required'));
-        updateStatusIcon(uploadSelect, uploadStatusIcon); // Update upload icon
+        updateStatusIcon(uploadSelect, uploadStatusIcon);
     }
 
     async function startCamera() {
         try {
-            // Ensure no active stream before starting a new one
             stopCamera();
             stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
-            video.play(); // Start playing the video
+            video.play();
             console.log("Camera started successfully.");
         } catch (err) {
             console.error('Error accessing camera:', err);
             alert('Cannot enable camera: ' + err.message + '\nPlease ensure you have a camera connected and allow access to it in your browser settings.');
-            uploadSelect.value = ''; // Perhaps reset the selection
-            updateMediaUploadVisibility(); // And update the display
+            uploadSelect.value = '';
+            updateMediaUploadVisibility();
         }
     }
 
@@ -305,11 +304,10 @@ document.addEventListener('DOMContentLoaded', () => {
             stream = null;
         }
         video.srcObject = null;
-        video.pause(); // Ensure video is stopped
+        video.pause();
         console.log("Camera stopped.");
     }
 
-    // --- Handle capture button ---
     if (captureButton) {
         captureButton.addEventListener('click', () => {
             if (!stream) {
@@ -338,9 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 stopCamera();
                 video.style.display = 'none';
                 captureButton.style.display = 'none';
-                // **New:** When an image is captured, treat it as a valid selection for the media file input
-                // This will make the mediaFileStatusIcon change to V_ICON_PATH
-                updateStatusIcon({ type: 'file', files: [capturedBlob] }, mediaFileStatusIcon); // Simulate a file selection
+                updateStatusIcon({ type: 'file', files: [capturedBlob] }, mediaFileStatusIcon);
             }, 'image/jpeg');
         });
     }
@@ -348,48 +344,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Event listeners ---
     if (faultTypeSelect) {
         faultTypeSelect.addEventListener('change', updateFaultDescriptionRequirement);
-        updateFaultDescriptionRequirement(); // Initial call
+        updateFaultDescriptionRequirement();
     }
-    // New: Event listener for fault description textarea
     if (faultDescriptionTextarea) {
         faultDescriptionTextarea.addEventListener('input', () => {
             updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon);
         });
-        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon); // Initial call
+        updateStatusIcon(faultDescriptionTextarea, faultDescriptionStatusIcon);
     }
-
     if (locationSelect) {
         locationSelect.addEventListener('change', handleLocationSelection);
-        handleLocationSelection(); // Initial call
+        handleLocationSelection();
     }
-    // New: Event listeners for city and street inputs
     if (cityInput) {
         cityInput.addEventListener('input', () => {
             updateStatusIcon(cityInput, cityStatusIcon);
         });
-        // Initial call only if manualAddressSection is visible on load (unlikely, but for consistency)
-        // This will be handled by handleLocationSelection() when loc2 is chosen.
     }
     if (streetInput) {
         streetInput.addEventListener('input', () => {
             updateStatusIcon(streetInput, streetStatusIcon);
         });
-        // Initial call similar to cityInput
     }
-
     if (uploadSelect) {
         uploadSelect.addEventListener('change', updateMediaUploadVisibility);
-        updateMediaUploadVisibility(); // Initial call
+        updateMediaUploadVisibility();
     }
-    // **New:** Event listener for mediaFileInput
     if (mediaFileInput) {
         mediaFileInput.addEventListener('change', () => {
             updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
         });
-        // Initial call for file input, ensuring asterisk is there if no file is selected
         updateStatusIcon(mediaFileInput, mediaFileStatusIcon);
     }
-
 
     if (reportForm) {
         reportForm.addEventListener('submit', async (event) => {
@@ -421,6 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 locationData = {
                     type: 'current',
+                    city: currentCity || '',       // <-- הוספת שדה העיר כאן
                     latitude: currentLat,
                     longitude: currentLon,
                     address: locationString || ''
@@ -496,30 +483,23 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
 
-                    sessionStorage.setItem('lastReportDetails', JSON.stringify({
+                    localStorage.setItem('lastReportDetails', JSON.stringify({
                         faultType: faultTypeSelect.options[faultTypeSelect.selectedIndex].text,
                         faultDescription,
                         location: displayLocation,
-                        mediaFileName: data.mediaFileNameOnServer || 'No file',
-                        reportId: data.reportId || 'N/A',
-                        timestamp: new Date().toISOString(),
+                        mediaFileName: data.mediaFileNameOnServer || 'no media'
                     }));
 
-                    alert('Report submitted successfully!');
-                    window.location.href = '/html/reportReceivedPage.html';
+                    alert('הדיווח נשלח בהצלחה!');
+                    window.location.href = '/html/homePageCitizen.html';
                 } else {
-                    alert(data.message || 'Error submitting report: ' + (data.error || 'An error occurred.'));
-                    console.error('Report submission failed:', data.error || 'Unknown error');
+                    alert('Failed to submit report: ' + data.message);
                 }
-            } catch (err) {
-                alert('An error occurred connecting to the server when submitting the report. Please try again later.');
-                console.error('Fetch error:', err);
+            } catch (error) {
+                console.error('Error submitting report:', error);
+                alert('An error occurred while submitting the report. Please try again later.');
             }
         });
     }
 
-    // Cleanup camera on unload
-    window.addEventListener('beforeunload', () => {
-        stopCamera();
-    });
 });

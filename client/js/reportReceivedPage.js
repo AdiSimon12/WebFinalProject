@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const goToMyReportsBtn = document.getElementById('goToMyReportsBtn');
     const goToHomeBtn = document.getElementById('goToHomeBtn');
 
-    // Load report details from sessionStorage
-    const lastReportDetails = JSON.parse(sessionStorage.getItem('lastReportDetails'));
+    // Load report details from localStorage
+    const lastReportDetails = JSON.parse(localStorage.getItem('lastReportDetails'));
 
     if (lastReportDetails) {
         console.log('Last report details found:', lastReportDetails);
@@ -67,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     } else {
-        // If no data in sessionStorage (e.g., user navigated directly to the page)
-        console.warn('No recent report details found in sessionStorage.');
+        // If no data in localStorage (e.g., user navigated directly to the page)
+        console.warn('No recent report details found in localStorage.');
         displayFaultType.textContent = 'אין נתונים';
         displayLocation.textContent = 'אין נתונים';
         displayDate.textContent = 'אין נתונים';

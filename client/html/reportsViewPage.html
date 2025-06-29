@@ -11,14 +11,14 @@
 </head>
 <body class="Wrapper">
     <header class="reports-title">
-        <a href="#"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
+        <a id="backButton" href="#"><img class="back-arrow" src="../images/arrow_left.svg" alt="חזור"></a>
     </header>
     <main>
         <section class="reports-filter-buttons-container">
             <button class="filter-button active" data-filter="all">כל הדיווחים</button>
-            <button class="filter-button">דיווחים פתוחים</button>
-            <button class="filter-button">דיווחים בטיפול</button>
-            <button class="filter-button">דיווחים שנסגרו</button>
+            <button class="filter-button" data-filter="in-progress">דיווחים בטיפול</button>
+            <button class="filter-button" data-filter="completed">דיווחים שהושלמו</button>
+            <button class="filter-button" data-filter="rejected">דיווחים שנדחו</button>
         </section>
         <section class="reports-filters-container">
             <h2 class="filters-title">הדיווחים ממוינים לפי:</h2>

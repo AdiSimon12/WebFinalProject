@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const reportsListContainer = document.querySelector('.reports-list-container');
     const sortReportsDropdown = document.getElementById('sort-reports-dropdown');
 
-    // קבלת פרטי המשתמש המחובר מ-sessionStorage
-    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    // קבלת פרטי המשתמש המחובר מ-localStorage
+    const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
     let currentUserId = loggedInUser ? loggedInUser.userId : null;
     let currentUserType = loggedInUser ? loggedInUser.userType : null;
 
