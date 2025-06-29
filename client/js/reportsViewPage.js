@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <span class="report-id-type">דיווח #${seqNum}
                 <span class="report-type-name">${report.faultType}</span></span>
             </section>
-            <a href="/html/reportEditPage.html?id=${report.id}&seq=${seqNum}" class="view-details-link">צפייה בפרטים</a>        `;
+            <a href="/html/reportEditPage.html?id=${report._id}&seq=${seqNum}" class="view-details-link">צפייה בפרטים</a>        `;
         return card;
     }
 
