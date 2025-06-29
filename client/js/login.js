@@ -41,15 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log('Login successful:', data.message);
                     console.log('User data from server:', data.user);
                     
-                    // **התיקון המרכזי שצריך לוודא שהוא שם ומבוצע:**
-                    // ודא ש-data.user מכיל את כל השדות הנחוצים לפני השמירה.
-                    // השרת צריך להחזיר username, userId, userType ו-city.
                     if (data.user && data.user.username && data.user.userId && data.user.userType && data.user.city) {
                         localStorage.setItem('loggedInUser', JSON.stringify({
                             username: data.user.username,
                             userId: data.user.userId,
                             userType: data.user.userType,
-                            city: data.user.city // <-- זה השדה החשוב שאמור להישמר!
+                            city: data.user.city 
                         }));
                         console.log('User data saved to localStorage:', localStorage.getItem('loggedInUser'));
                     } else {
@@ -63,10 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                             window.location.href = '/html/homePageCitizen.html';
                         } else if (selectedUserType === 'employee') {
                             // ודא הפניה לדף שבו תרצה להציג את הדיווחים הרלוונטיים לעובד
-                            window.location.href = '/html/reportsViewPage.html'; 
+                            window.location.href = '/html/homePageEmployee.html'; 
                         } else {
                             console.warn('סוג משתמש לא ידוע, מפנה לדף הבית הכללי.');
-                            window.location.href = '/html/homePageGeneral.html';
+                            window.location.href = 'index.html';
                         }
                     }, 500);
                 } else {
