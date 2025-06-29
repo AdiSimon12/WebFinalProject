@@ -535,19 +535,21 @@ textarea:focus{
 }
 .detail-item {
     display: flex;
-    align-items: baseline; /* הוספה: יישור הטקסט של התווית והערך בקו בסיס אחד */
+    align-items: center; /* הוספה: יישור הטקסט של התווית והערך בקו בסיס אחד */
     margin-bottom: 5px; /* שינוי: הקטנת הרווח בין פריטי הפירוט */
     padding-right: 20px; /* הוספה: רווח מהקצה הימני של ה-container */
     padding-left: 20px; /* הוספה: רווח מהקצה השמאלי */
+    flex-wrap: wrap;
 }
 .detail-item h3 {
     color: #000000;
     font-size: 35px; /* גודל כותרת */
     font-weight: bold; /* לוודא שזה בולט */
-    width: 200px; /* רוחב קבוע לתווית */
     text-align: right; /* וודא שהתווית עצמה מיושרת לימין בתוך רוחב ה-width שלה */
     flex-shrink: 0; /* מונע מהתווית להתכווץ */
     margin-left: 10px; /* הוספה: רווח קטן בין התווית לערך - הגדלתי את זה קצת עבורך */
+    white-space: nowrap;
+    display: inline-block; 
 }
 .detail-item span {
     color: #000000;
@@ -558,7 +560,7 @@ textarea:focus{
     width: 500px;
     white-space: nowrap;
     overflow-wrap: break-word;
-    display: inline-block;
+    display: inline;
 }
 .uploaded-media-preview {
     width: 200px; /* גודל תצוגה מקדימה גדולה יותר */
@@ -734,7 +736,7 @@ textarea:focus{
 .status-rejected {
     color: #D32F2F;
 }
-.status-in-progress {
+  .status-in-progress {
     color: #2e23c2;
 }
 /* הוספה/עדכון: ריווח מתחת לקונטיינר המסננים */
@@ -847,6 +849,26 @@ textarea:focus{
 }
 .view-details-link:hover {
   font-weight: bold;
+}
+.detail-item span.status-paid {
+    color: #388E3C;
+}
+.detail-item span.status-rejected {
+    color: #D32F2F;
+}
+.detail-item span.status-in-progress {
+    color: #2e23c2;
+}
+#editStatus {
+  font-size: 35px;
+  padding: 8px;     
+}
+.detail-item textarea {
+  font-size: 35px;
+  padding: 10px;   /* ריווח פנימי נעים לעין */
+  width: 100%;     /* יתפוס את כל הרוחב של הקונטיינר */
+  box-sizing: border-box; /* יכלול את הריווחים בחישוב הרוחב */
+  resize: vertical; /* מאפשר למשתמש להגדיל רק לגובה */
 }
 }
 

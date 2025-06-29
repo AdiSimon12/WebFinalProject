@@ -1,121 +1,150 @@
+// reportEditPage.js
+// --------------------------------------------------------
+// טוען את פרטי הדיווח ומציג אותם בדף העריכה / צפייה לעובד
+// --------------------------------------------------------
+
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. קבלת ID הדיווח מה-URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const reportId = urlParams.get('id');
+    // ------------------ קבלת פרמטרים מה‑URL ------------------
+    const urlParams  = new URLSearchParams(window.location.search);
+    const reportId   = urlParams.get('id');   // מזהה MongoDB
+    const reportSeq  = urlParams.get('seq');  // מספר סידורי שהועבר מהעמוד הקודם (למשל 003)
 
-    const reportsTitleElement = document.querySelector('.reports-title h1'); // אלמנט הכותרת "דיווח #"
-    const backArrow = document.querySelector('.back-arrow'); // כפתור חזור
+    // אלמנטים בדף
+    const reportsTitleElement = document.querySelector('.reports-title h1');
+    const backArrow           = document.querySelector('.back-arrow');
 
+    // בדיקת תקינות ID
     if (!reportId) {
         reportsTitleElement.textContent = 'שגיאה: ID דיווח חסר';
         console.error('Report ID is missing from the URL.');
-        // אולי להפנות לדף שגיאה או לדף הדיווחים הראשי
         return;
     }
 
-    // עדכון כותרת הדף
-    reportsTitleElement.textContent = `דיווח #${reportId.substring(reportId.length - 4)}`; // מציג את 4 התווים האחרונים של ה-ID
+    // ------------------ כותרת הדף ------------------
+    if (reportSeq) {
+        // אם הועבר מספר סידורי – מציגים אותו כפי שהוא
+        reportsTitleElement.textContent = `דיווח #${reportSeq}`;
+    } else {
+        // אחרת – מציגים את 4 הספרות האחרונות של ה‑ID
+        reportsTitleElement.textContent = `דיווח #${reportId.slice(-4)}`;
+    }
 
-    // 2. שליפת פרטי הדיווח מהשרת
+    // מיפוי סטטוסים באנגלית לעברית
+    const statusTranslations = {
+        'in-progress': 'בטיפול',
+        'completed': 'הושלם',
+        'rejected': 'נדחה',
+        // הוסף כאן סטטוסים נוספים במידה ויש
+    };
+
+    // ------------------ שליפת פרטי הדיווח מהשרת ------------------
     try {
         const response = await fetch(`/api/reports/${reportId}`);
         if (!response.ok) {
-            if (response.status === 404) {
-                throw new Error('דיווח לא נמצא.');
-            }
+            if (response.status === 404) throw new Error('דיווח לא נמצא.');
             throw new Error(`שגיאה בשליפת דיווח: ${response.statusText}`);
         }
         const report = await response.json();
         console.log('Report details fetched:', report);
 
-        // 3. מילוי הנתונים בדף
+        // ------------------ מילוי הנתונים בדף ------------------
         document.getElementById('displayFaultType').textContent = report.faultType || 'לא ידוע';
-        
-        // טיפול בשדה המיקום
+
+        // מיקום
         if (report.location) {
             let locationText = '';
-            if (report.location.city) {
-                locationText += report.location.city;
-            }
-            if (report.location.street) {
-                locationText += `, ${report.location.street}`;
-            }
-            if (report.location.houseNumber) {
-                locationText += ` ${report.location.houseNumber}`;
-            }
+            if (report.location.city)        locationText += report.location.city;
+            if (report.location.street)      locationText += `, ${report.location.street}`;
+            if (report.location.houseNumber) locationText += ` ${report.location.houseNumber}`;
             document.getElementById('displayLocation').textContent = locationText || 'לא הוזן מיקום';
         } else {
             document.getElementById('displayLocation').textContent = 'לא הוזן מיקום';
         }
 
-        // טיפול בתאריך ושעה
+        // תאריך ושעה
         if (report.timestamp) {
-            const date = new Date(report.timestamp);
-            document.getElementById('displayDate').textContent = date.toLocaleDateString('he-IL');
-            document.getElementById('displayTime').textContent = date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+            const dateObj = new Date(report.timestamp);
+            document.getElementById('displayDate').textContent =
+                dateObj.toLocaleDateString('he-IL');
+            document.getElementById('displayTime').textContent =
+                dateObj.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
         } else {
-            document.getElementById('displayDate').textContent = 'לא ידוע';
-            document.getElementById('displayTime').textContent = 'לא ידוע';
+            document.getElementById('displayDate').textContent  = 'לא ידוע';
+            document.getElementById('displayTime').textContent  = 'לא ידוע';
         }
-        
-        document.getElementById('displayDescription').textContent = report.description || 'אין תיאור.';
 
-        // 4. הצגת מדיה (תמונה/סרטון)
-        const mediaContainer = document.getElementById('mediaContainer'); // נצטרך להוסיף div זה ל-HTML
+        // תיאור
+        document.getElementById('displayDescription').textContent =
+            report.description || 'אין תיאור.';
+
+        // ------------------ הצגת מדיה ------------------
+        const mediaContainer = document.getElementById('mediaContainer');
         if (report.media) {
-            const mediaUrl = `/uploads/${report.media}`; // נתיב לקובץ בשרת
-            if (report.media.match(/\.(jpeg|jpg|gif|png)$/i)) { // אם זו תמונה
+            const mediaUrl = `/uploads/${report.media}`;
+            if (/\.(jpeg|jpg|gif|png)$/i.test(report.media)) {
                 const img = document.createElement('img');
                 img.src = mediaUrl;
                 img.alt = 'תמונה מצורפת לדיווח';
                 img.style.maxWidth = '100%';
-                img.style.height = 'auto';
                 mediaContainer.appendChild(img);
-            } else if (report.media.match(/\.(mp4|webm|ogg)$/i)) { // אם זה וידאו
+            } else if (/\.(mp4|webm|ogg)$/i.test(report.media)) {
                 const video = document.createElement('video');
                 video.src = mediaUrl;
                 video.controls = true;
                 video.style.maxWidth = '100%';
-                video.style.height = 'auto';
                 mediaContainer.appendChild(video);
             } else {
                 mediaContainer.textContent = 'קובץ מדיה לא נתמך.';
             }
-        } else {
-            // אם אין מדיה, אתה יכול להוסיף הודעה או להשאיר ריק
-            // mediaContainer.textContent = 'אין תמונה/סרטון מצורף.';
         }
 
-        // עדכון סטטוס ותגובת רשות
-        document.getElementById('displayStatus').textContent = report.status || 'לא ידוע'; // נצטרך להוסיף ID ל-HTML
-        document.getElementById('displayMunicipalityResponse').textContent = report.municipalityResponse || 'טרם התקבלה תגובה מהרשות המקומית.'; // נצטרך להוסיף ID ל-HTML
+        // סטטוס + תגובת רשות - כאן מציגים את הסטטוס בעברית ומוסיפים מחלקת צבע מתאימה
+        let normalizedStatus = (report.status || '').toLowerCase().replace(/_/g, '-');
 
+        const statusHebrew = statusTranslations[normalizedStatus] || report.status || 'לא ידוע';
+
+        const statusElement = document.getElementById('displayStatus');
+        statusElement.textContent = statusHebrew;
+
+        // הסרת כל מחלקות הסטטוס לפני הוספה
+        statusElement.classList.remove('status-paid', 'status-rejected', 'status-in-progress');
+
+        // הוספת מחלקה לפי סטטוס
+        if (normalizedStatus === 'completed') {
+            statusElement.classList.add('status-paid');
+        } else if (normalizedStatus === 'rejected') {
+            statusElement.classList.add('status-rejected');
+        } else if (normalizedStatus === 'in-progress') {
+            statusElement.classList.add('status-in-progress');
+        }
+
+        document.getElementById('displayMunicipalityResponse').textContent =
+            report.municipalityResponse || 'טרם התקבלה תגובה מהרשות המקומית.';
 
     } catch (error) {
         console.error('Error loading report details:', error);
         reportsTitleElement.textContent = 'שגיאה בטעינת דיווח';
-        // הצג הודעת שגיאה למשתמש
         const mainContent = document.querySelector('main');
         if (mainContent) {
-            mainContent.innerHTML = `<p style="color: red; text-align: center;">${error.message}</p>`;
+            mainContent.innerHTML =
+                `<p style="color:red;text-align:center;">${error.message}</p>`;
         }
     }
 
-    // 5. טיפול בכפתור "עריכת דף"
+    // ------------------ כפתור "עריכת דף" ------------------
     const editPageButton = document.querySelector('.footer-employee button');
-    if (editPageButton) {
-        editPageButton.addEventListener('click', () => {
-           window.location.href = `/html/reportChangePage.html?id=${reportId}`;
-            // כרגע נשתמש ב-alert כדי להדגים
-            alert('כפתור עריכת דף נלחץ! (יש ליישם ניווט לדף עריכה)');
-        });
-    }
+if (editPageButton) {
+    editPageButton.addEventListener('click', () => {
+        // הוסף את reportSeq לפרמטרי ה-URL
+        window.location.href = `/html/reportChangePage.html?id=${reportId}&seq=${reportSeq || ''}`;
+    });
+}
 
-    // 6. טיפול בכפתור "חזור"
+    // ------------------ כפתור חזור ------------------
     if (backArrow) {
-        backArrow.addEventListener('click', (event) => {
-            event.preventDefault(); // מונע את התנהגות ברירת המחדל של הקישור
-            window.history.back(); // חזרה לדף הקודם
+        backArrow.addEventListener('click', evt => {
+            evt.preventDefault();
+            window.history.back();
         });
     }
 });
