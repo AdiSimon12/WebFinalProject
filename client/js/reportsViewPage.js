@@ -38,17 +38,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         return arr;
     }
 
-    function createReportCard(report, index) {
+    function createReportCard(report) { // הסרנו את index מכיוון שהוא לא נחוץ יותר למספר התצוגה
         const card = document.createElement('section');
         card.classList.add('report-summary-card');
 
-        const seqNum = (index + 1).toString().padStart(3, '0');
+        // השתמש ב-4 הספרות האחרונות של ה-ID הייחודי
+        const displayId = report._id.slice(-4);
+
         card.innerHTML = `
             <section class="report-info">
-                <span class="report-id-type">דיווח #${seqNum}
+                <span class="report-id-type">דיווח #${displayId}
                 <span class="report-type-name">${report.faultType}</span></span>
             </section>
-            <a href="/html/reportEditPage.html?id=${report._id}&seq=${seqNum}" class="view-details-link">צפייה בפרטים</a>        `;
+            <a href="/html/reportEditPage.html?id=${report._id}&seq=${displayId}" class="view-details-link">צפייה בפרטים</a>
+        `;
         return card;
     }
 
@@ -63,7 +66,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             reportsDisplayArea.appendChild(p);
             return;
         }
-        sorted.forEach((r, idx) => reportsDisplayArea.appendChild(createReportCard(r, idx)));
+        // העברנו רק את הדיווח עצמו ל-createReportCard
+        sorted.forEach(r => reportsDisplayArea.appendChild(createReportCard(r)));
     }
 
     async function handleFilterChange(evt) {

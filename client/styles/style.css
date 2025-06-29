@@ -623,10 +623,11 @@ textarea:focus{
     font-weight: bold;
     white-space: nowrap;
     display: flex;
-  justify-content: center;
-  margin: 0;
-  margin-left: 75px;
-  padding-top:150px;
+    justify-content: center;
+    margin: 0;
+    margin-left: 75px;
+    padding-top:150px;
+    direction: rtl;
 }
 .reports-filters-container {
     background-color: #EBFFF8; /* רקע ירוק-תכלת בהיר */

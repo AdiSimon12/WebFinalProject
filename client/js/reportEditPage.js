@@ -5,13 +5,13 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     // ------------------ קבלת פרמטרים מה‑URL ------------------
-    const urlParams  = new URLSearchParams(window.location.search);
-    const reportId   = urlParams.get('id');   // מזהה MongoDB
-    const reportSeq  = urlParams.get('seq');  // מספר סידורי שהועבר מהעמוד הקודם (למשל 003)
+    const urlParams = new URLSearchParams(window.location.search);
+    const reportId = urlParams.get('id');   // מזהה MongoDB
+    // const reportSeq = urlParams.get('seq'); // *** שורה זו הוסרה ***
 
     // אלמנטים בדף
     const reportsTitleElement = document.querySelector('.reports-title h1');
-    const backArrow           = document.querySelector('.back-arrow');
+    const backArrow = document.querySelector('.back-arrow');
 
     // בדיקת תקינות ID
     if (!reportId) {
@@ -21,13 +21,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // ------------------ כותרת הדף ------------------
-    if (reportSeq) {
-        // אם הועבר מספר סידורי – מציגים אותו כפי שהוא
-        reportsTitleElement.textContent = `דיווח #${reportSeq}`;
-    } else {
-        // אחרת – מציגים את 4 הספרות האחרונות של ה‑ID
-        reportsTitleElement.textContent = `דיווח #${reportId.slice(-4)}`;
-    }
+    // *** בלוק ה-if/else עבור reportSeq הוחלף בשימוש ישיר ב-reportId.slice(-4) ***
+    reportsTitleElement.textContent = `דיווח #${reportId.slice(-4)}`;
 
     // מיפוי סטטוסים באנגלית לעברית
     const statusTranslations = {
@@ -101,7 +96,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         // סטטוס + תגובת רשות - כאן מציגים את הסטטוס בעברית ומוסיפים מחלקת צבע מתאימה
         let normalizedStatus = (report.status || '').toLowerCase().replace(/_/g, '-');
 
-        const statusHebrew = statusTranslations[normalizedStatus] || report.status || 'לא ידוע';
+        // *** שונה: ודא שהגיבוי הוא רק "לא ידוע" ולא report.status ***
+        const statusHebrew = statusTranslations[normalizedStatus] || 'לא ידוע';
 
         const statusElement = document.getElementById('displayStatus');
         statusElement.textContent = statusHebrew;
@@ -133,12 +129,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ------------------ כפתור "עריכת דף" ------------------
     const editPageButton = document.querySelector('.footer-employee button');
-if (editPageButton) {
-    editPageButton.addEventListener('click', () => {
-        // הוסף את reportSeq לפרמטרי ה-URL
-        window.location.href = `/html/reportChangePage.html?id=${reportId}&seq=${reportSeq || ''}`;
-    });
-}
+    if (editPageButton) {
+        editPageButton.addEventListener('click', () => {
+            // *** הפרמטר &seq הוסר מה-URL בעת המעבר לדף העריכה ***
+            window.location.href = `/html/reportChangePage.html?id=${reportId}`;
+        });
+    }
 
     // ------------------ כפתור חזור ------------------
     if (backArrow) {
