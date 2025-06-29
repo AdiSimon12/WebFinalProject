@@ -193,6 +193,9 @@ app.get('/api/reports/:id', async (req, res) => {
 
 /* ---------- נתיב PUT חדש לעדכון דיווח ---------- */
 app.put('/api/reports/:id', async (req, res) => {
+    console.log('PUT /api/reports/:id called');
+  console.log('Params:', req.params);
+  console.log('Body:', req.body);
   const { status, municipalityResponse } = req.body;
   if (status === undefined && municipalityResponse === undefined) {
     return res.status(400).json({ message: 'Nothing to update.' });

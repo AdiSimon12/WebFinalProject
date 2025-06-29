@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 status: editStatus.value,
                 municipalityResponse: editMunicipalityResponse.value
             };
-
+            console.log('Updating report:', updatedData);
             const result = await updateReport(reportId, updatedData);
             if (result) {
                 alert('השינויים נשמרו בהצלחה!');

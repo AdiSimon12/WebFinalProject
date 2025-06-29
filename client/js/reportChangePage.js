@@ -1,13 +1,12 @@
-// reportEditPage.js (או reportChangePage.js)
-// --------------------------------------------------------
-// טוען את פרטי הדיווח ומציג אותם בדף העריכה / צפייה לעובד
-// --------------------------------------------------------
-
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('DOMContentLoaded - starting script');
+
+    const BASE_URL = 'https://webfinalproject-j4tc.onrender.com'; // הוסף פה את כתובת השרת שלך
+
     // ------------------ קבלת פרמטרים מה‑URL ------------------
     const urlParams = new URLSearchParams(window.location.search);
     const reportId = urlParams.get('id');   // מזהה MongoDB
-    // const reportSeq = urlParams.get('seq'); // *** שורה זו הוסרה/הועברה להערה ***
+    console.log('Extracted reportId from URL:', reportId);
 
     // אלמנטים בדף
     const reportsTitleElement = document.querySelector('.reports-title h1');
@@ -39,22 +38,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         'rejected': 'נדחה',
     };
 
-    // ------------------ פונקציות עזר ------------------
-
     function getLoggedInUser() {
         const user = localStorage.getItem('loggedInUser');
+        console.log('getLoggedInUser returns:', user);
         return user ? JSON.parse(user) : null;
     }
 
     async function fetchReportDetails(id) {
         try {
-            const BASE_URL = 'https://webfinalproject-j4tc.onrender.com';
+            console.log('Fetching report details from:', `${BASE_URL}/api/reports/${id}`);
             const response = await fetch(`${BASE_URL}/api/reports/${id}`);
+            console.log('Fetch response status:', response.status);
             if (!response.ok) {
                 if (response.status === 404) throw new Error('דיווח לא נמצא.');
                 throw new Error(`שגיאה בשליפת דיווח: ${response.statusText}`);
             }
-            return await response.json();
+            const data = await response.json();
+            console.log('Report details fetched:', data);
+            return data;
         } catch (error) {
             console.error('Error fetching report:', error);
             alert('אירעה שגיאה בטעינת פרטי הדיווח.');
@@ -64,16 +65,35 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     async function updateReport(id, updatedData) {
         try {
-            const BASE_URL = 'https://webfinalproject-j4tc.onrender.com';
+            console.log(`Sending PUT update to: ${BASE_URL}/api/reports/${id}`);
+            console.log('PUT body:', updatedData);
+
             const response = await fetch(`${BASE_URL}/api/reports/${id}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(updatedData)
+                headers: { 
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData),
             });
-            if (!response.ok) {
-                throw new Error((await response.json()).message || `Failed to update report: ${response.statusText}`);
+
+            console.log('Response status:', response.status);
+            const responseText = await response.text();
+            console.log('Response text:', responseText);
+
+            let responseData = null;
+            try {
+                responseData = JSON.parse(responseText);
+            } catch (jsonError) {
+                console.warn('Response is not valid JSON:', responseText);
             }
-            return await response.json();
+
+            if (!response.ok) {
+                const errorMessage = responseData?.message || response.statusText || 'Unknown error';
+                throw new Error(`Server responded with status ${response.status}: ${errorMessage}`);
+            }
+
+            return responseData;
+
         } catch (error) {
             console.error('Error updating report:', error);
             alert('אירעה שגיאה בשמירת השינויים: ' + error.message);
@@ -82,6 +102,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function populateReportData(report) {
+        console.log('Populating report data:', report);
         displayFaultType.textContent = report.faultType || 'לא ידוע';
 
         // מיקום
@@ -103,45 +124,39 @@ document.addEventListener('DOMContentLoaded', async () => {
             displayTime.textContent = 'לא ידוע';
         }
 
-        // תיאור - ודא שזה report.description ולא report.faultDescription
-        displayDescription.textContent = report.description || 'אין תיאור.';
+        displayDescription.textContent = report.faultDescription || 'אין תיאור.';
 
-        // הצגת מדיה
+        // הצגת מדיה - כאן תיקנתי לטעון מהשרת עם BASE_URL מלא:
         mediaContainer.innerHTML = '';
         if (report.media) {
-            const mediaUrl = `/uploads/${report.media}`;
+            const mediaUrl = `${BASE_URL}/uploads/${report.media}`;
             if (/\.(jpeg|jpg|gif|png)$/i.test(report.media)) {
                 const img = document.createElement('img');
                 img.src = mediaUrl;
                 img.alt = 'תמונה מצורפת לדיווח';
                 img.style.maxWidth = '100%';
-                img.style.height = 'auto'; // נוסף לוודא פרופורציות
+                img.style.height = 'auto';
                 mediaContainer.appendChild(img);
             } else if (/\.(mp4|webm|ogg)$/i.test(report.media)) {
                 const video = document.createElement('video');
                 video.src = mediaUrl;
                 video.controls = true;
                 video.style.maxWidth = '100%';
-                video.style.height = 'auto'; // נוסף לוודא פרופורציות
+                video.style.height = 'auto';
                 mediaContainer.appendChild(video);
             } else {
                 mediaContainer.textContent = 'קובץ מדיה לא נתמך.';
             }
         }
 
-        // סטטוס ותגובת רשות - כאן מציגים את הסטטוס בעברית ומוסיפים מחלקת צבע מתאימה
+        // סטטוס ותגובת רשות
         let normalizedStatus = (report.status || '').toLowerCase().replace(/_/g, '-');
         const statusHebrew = statusTranslations[normalizedStatus] || 'לא ידוע';
 
-        // ודא שהאלמנט displayStatus קיים לפני שאתה מנסה לגשת אליו (אם זה דף עריכה, הוא לא תמיד קיים)
         const displayStatus = document.getElementById('displayStatus');
         if (displayStatus) {
             displayStatus.textContent = statusHebrew;
-
-            // הסרת כל מחלקות הסטטוס לפני הוספה
             displayStatus.classList.remove('status-paid', 'status-rejected', 'status-in-progress');
-
-            // הוספת מחלקה לפי סטטוס
             if (normalizedStatus === 'completed') {
                 displayStatus.classList.add('status-paid');
             } else if (normalizedStatus === 'rejected') {
@@ -152,11 +167,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         const displayMunicipalityResponse = document.getElementById('displayMunicipalityResponse');
-        if (displayMunicipalityResponse) { // ודא שהאלמנט קיים
+        if (displayMunicipalityResponse) {
             displayMunicipalityResponse.textContent = report.municipalityResponse || 'טרם התקבלה תגובה מהרשות המקומית.';
         }
 
-        // מילוי שדות העריכה אם הם קיימים בדף (בדף reportChangePage.html)
         if (editStatus) {
             editStatus.value = report.status || 'in-progress';
         }
@@ -167,29 +181,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ------------------ תחילת לוגיקת הדף ------------------
 
-    // בדיקת תקינות ID
     if (!reportId) {
         reportsTitleElement.textContent = 'שגיאה: ID דיווח חסר';
         console.error('Report ID is missing from the URL.');
         return;
     }
-    
+
     if (reportNumberDisplay) {
          reportsTitleElement.textContent = `דיווח #${reportId.slice(-4)}`;
     }
 
-
-    // בדיקת הרשאת משתמש (רלוונטי לדף עריכה)
     const user = getLoggedInUser();
-    // אם זה דף עריכה (נזהה ע"י קיום כפתור שמירה), נבדוק הרשאות
     if (saveChangesButton) {
         if (!user || user.userType !== 'employee') {
             alert('אין לך הרשאה לערוך דיווחים.');
-            window.location.href = '../html/login.html'; // מפנה לדף ההתחברות
+            window.location.href = '../html/login.html';
             return;
         }
     }
-
 
     currentReport = await fetchReportDetails(reportId);
     if (currentReport) {
@@ -200,26 +209,23 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (mainContent) {
             mainContent.innerHTML = '<p style="color: red; text-align: center;">הדיווח לא נמצא או אירעה שגיאה בטעינה.</p>';
         }
-        // הסתרת כפתורי שמירה וביטול אם הדיווח לא נמצא (בדף עריכה)
         if (saveChangesButton) saveChangesButton.style.display = 'none';
         if (cancelChangesButton) cancelChangesButton.style.display = 'none';
     }
 
-    // ------------------ הגדרת מאזיני אירועים ------------------
-
-    // כפתורי שמירה וביטול (אם קיימים - ב-reportChangePage.html)
     if (saveChangesButton) {
         saveChangesButton.addEventListener('click', async () => {
             const updatedData = {
                 status: editStatus.value,
                 municipalityResponse: editMunicipalityResponse.value
             };
-
+            console.log('Save button clicked. Data to update:', updatedData);
             const result = await updateReport(reportId, updatedData);
             if (result) {
                 alert('השינויים נשמרו בהצלחה!');
-                // חזרה לדף התצוגה לאחר שמירה, מעבירים רק את ה-ID
                 window.location.href = `/html/finalReportPage.html?id=${reportId}`;
+            } else {
+                console.warn('Update failed or returned null result');
             }
         });
     }
@@ -227,28 +233,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (cancelChangesButton) {
         cancelChangesButton.addEventListener('click', () => {
             if (currentReport) {
-                populateReportData(currentReport); // חזרה לנתונים המקוריים
+                populateReportData(currentReport);
+                console.log('Cancel button clicked. Reverted changes.');
             }
             alert('השינויים בוטלו.');
         });
     }
 
-    // כפתור חזור (חץ או כפתור חזרה)
-    if (backButton) { // זה יכול להיות גם ה-backArrow שצוין למעלה
+    if (backButton) {
         backButton.addEventListener('click', e => {
             e.preventDefault();
+            console.log('Back button clicked, going back.');
             window.history.back();
         });
     }
 
-    // כפתור "עריכת דף" (אם קיים - ב-finalReportPage.html)
-    // שים לב: הקובץ הזה הוא reportEditPage/ChangePage, אז כפתור כזה יהיה רק ב-finalReportPage.js
-    // אבל אם במקרה הכפתור הזה נמצא כאן (בדף העריכה עצמו), הלוגיקה הבאה מתאימה:
-    const editPageButton = document.querySelector('.footer-employee button'); // כפתור עריכה מתוך דף תצוגה
+    const editPageButton = document.querySelector('.footer-employee button');
     if (editPageButton) {
         editPageButton.addEventListener('click', () => {
-            // מעבר לדף העריכה עם ה-ID
+            console.log('Edit page button clicked, navigating to edit page.');
             window.location.href = `/html/reportChangePage.html?id=${reportId}`;
         });
     }
+
+    console.log('Script initialization complete.');
 });
